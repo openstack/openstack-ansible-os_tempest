@@ -19,6 +19,7 @@
     token: "{{ keystone_auth_admin_token }}"
     tenant_name: admin
     endpoint: "{{ keystone_service_adminurl }}"
+    insecure: "{{ keystone_service_adminuri_insecure }}"
   register: add_service
   until: add_service|success
   retries: 5
