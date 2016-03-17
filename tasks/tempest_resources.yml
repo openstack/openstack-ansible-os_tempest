@@ -62,10 +62,12 @@
 - name: Ensure tempest tenants
   keystone:
     command: ensure_tenant
-    token: "{{ keystone_auth_admin_token }}"
     tenant_name: "{{ item }}"
     description: "{{ item }} Tenant"
     endpoint: "{{ keystone_service_adminurl }}"
+    login_user: "{{ keystone_admin_user_name }}"
+    login_password: "{{ keystone_auth_admin_password }}"
+    login_project_name: "{{ keystone_admin_tenant_name }}"
     insecure: "{{ keystone_service_adminuri_insecure }}"
   register: add_service
   until: add_service|success
@@ -80,12 +82,14 @@
 - name: Ensure tempest users
   keystone:
     command: ensure_user
-    token: "{{ keystone_auth_admin_token }}"
     tenant_name: "{{ item }}"
     user_name: "{{ item }}"
     password: "{{ item }}"
     description: "{{ item }} User"
     endpoint: "{{ keystone_service_adminurl }}"
+    login_user: "{{ keystone_admin_user_name }}"
+    login_password: "{{ keystone_auth_admin_password }}"
+    login_project_name: "{{ keystone_admin_tenant_name }}"
     insecure: "{{ keystone_service_adminuri_insecure }}"
   register: add_service
   until: add_service|success
@@ -100,11 +104,13 @@
 - name: Ensure tempest users have heat_stack_owner role
   keystone:
     command: ensure_user_role
-    token: "{{ keystone_auth_admin_token }}"
     tenant_name: "{{ item }}"
     user_name: "{{ item }}"
     role_name: heat_stack_owner
     endpoint: "{{ keystone_service_adminurl }}"
+    login_user: "{{ keystone_admin_user_name }}"
+    login_password: "{{ keystone_auth_admin_password }}"
+    login_project_name: "{{ keystone_admin_tenant_name }}"
     insecure: "{{ keystone_service_adminuri_insecure }}"
   register: add_service
   until: add_service|success
@@ -120,8 +126,10 @@
 - name: Ensure reseller_admin role
   keystone:
     command: ensure_role
-    token: "{{ keystone_auth_admin_token }}"
     endpoint: "{{ keystone_service_adminurl }}"
+    login_user: "{{ keystone_admin_user_name }}"
+    login_password: "{{ keystone_auth_admin_password }}"
+    login_project_name: "{{ keystone_admin_tenant_name }}"
     role_name: "reseller_admin"
     insecure: "{{ keystone_service_adminuri_insecure }}"
   register: add_service
@@ -134,9 +142,11 @@
 - name: Ensure remote_image role exists
   keystone:
     command: ensure_role
-    token: "{{ keystone_auth_admin_token }}"
     role_name: remote_image
     endpoint: "{{ keystone_service_adminurl }}"
+    login_user: "{{ keystone_admin_user_name }}"
+    login_password: "{{ keystone_auth_admin_password }}"
+    login_project_name: "{{ keystone_admin_tenant_name }}"
     insecure: "{{ keystone_service_adminuri_insecure }}"
   register: add_service
   until: add_service|success
@@ -148,9 +158,11 @@
 - name: Get demo tenant id
   keystone:
     command: get_tenant
-    token: "{{ keystone_auth_admin_token }}"
     tenant_name: demo
     endpoint: "{{ keystone_service_adminurl }}"
+    login_user: "{{ keystone_admin_user_name }}"
+    login_password: "{{ keystone_auth_admin_password }}"
+    login_project_name: "{{ keystone_admin_tenant_name }}"
     insecure: "{{ keystone_service_adminuri_insecure }}"
   register: add_service
   until: add_service|success

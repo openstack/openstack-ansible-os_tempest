@@ -16,9 +16,11 @@
 - name: Get admin tenant id
   keystone:
     command: get_tenant
-    token: "{{ keystone_auth_admin_token }}"
     tenant_name: admin
     endpoint: "{{ keystone_service_adminurl }}"
+    login_user: "{{ keystone_admin_user_name }}"
+    login_password: "{{ keystone_auth_admin_password }}"
+    login_project_name: "{{ keystone_admin_tenant_name }}"
     insecure: "{{ keystone_service_adminuri_insecure }}"
   register: add_service
   until: add_service|success
