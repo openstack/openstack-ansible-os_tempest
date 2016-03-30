@@ -95,7 +95,7 @@
     state: present
     virtualenv: "{{ tempest_git_dest }}"
     virtualenv_site_packages: "no"
-    extra_args: "{{ tempest_pip_instructions }}"
+    extra_args: "{{ pip_install_options|default('') }}"
   register: install_packages
   until: install_packages|success
   retries: 5
@@ -112,7 +112,7 @@
     state: present
     virtualenv: "{{ tempest_git_dest }}"
     virtualenv_site_packages: "no"
-    extra_args: "{{ tempest_pip_instructions }}"
+    extra_args: "{{ pip_install_options|default('') }}"
   register: install_packages
   until: install_packages|success
   retries: 5

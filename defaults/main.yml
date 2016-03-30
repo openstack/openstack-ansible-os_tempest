@@ -119,7 +119,6 @@ tempest_images:
     sha256: "34987d0d5702f8813f3ff9efe90e9e39e6926ec78658763580a79face67f3394"
 
 tempest_enable_instance_password: True
-tempest_pip_instructions: "--isolated"
 
 ## Tunable overrides
 tempest_tempest_conf_overrides: {}
