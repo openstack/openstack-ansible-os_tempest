@@ -237,6 +237,7 @@
     subnet_name: public-subnet
     cidr: "{{ tempest_public_subnet_cidr }}"
     insecure: "{{ keystone_service_internaluri_insecure }}"
+    allocation_pools: "{{ tempest_public_subnet_allocation_pools }}"
   tags:
     - tempest-setup
 
