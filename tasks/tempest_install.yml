@@ -119,9 +119,7 @@
   delay: 2
   when:
     - tempest_get_venv | failed
-  with_items:
-    - tempest_pip_packages
-    - tempest_git_dest
+  with_items: tempest_pip_packages
   tags:
     - tempest-pip-packages
     - tempest-pip-install
