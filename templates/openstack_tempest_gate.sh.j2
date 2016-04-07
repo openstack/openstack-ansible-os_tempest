@@ -194,9 +194,9 @@ result=$?
 # Create junit xml report from test results
 testr last --subunit | subunit2junitxml > tempest_results.xml
 cp tempest_results.xml /tmp
-if [ -d "/var/log/utility" ];then
-  # Copy the log to the utility logging directory
-  cp tempest_results.xml /var/log/utility/tempest_results_$(date +%Y%d%m-%H%M%S).xml
+if [ -d "{{ tempest_log_dir }}" ];then
+  # Copy the log to the tempest_log_dir logging directory
+  cp tempest_results.xml {{ tempest_log_dir }}/tempest_results_$(date +%Y%d%m-%H%M%S).xml
 fi
 popd
 
