@@ -30,6 +30,9 @@ tempest_fatal_deprecations: False
 # tempest_network_tenant_network_mask_bits below
 tempest_private_subnet_cidr: "192.168.74.0/28"
 tempest_public_subnet_cidr: "10.1.13.0/24"
+# Example allocation range:
+#tempest_public_subnet_allocation_pools: "10.1.13.150-10.1.13.200"
+tempest_public_subnet_allocation_pools: ""
 
 tempest_compute_ssh_user: cirros
 tempest_compute_image_ssh_user: cirros
