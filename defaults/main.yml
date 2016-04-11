@@ -96,7 +96,9 @@ tempest_pip_packages:
   - fixtures
   - junitxml
   - nose
+  - oslo.concurrency
   - oslo.serialization
+  - pyOpenSSL
   - python-ceilometerclient
   - python-cinderclient
   - python-glanceclient
@@ -129,3 +131,5 @@ tempest_enable_instance_password: True
 
 ## Tunable overrides
 tempest_tempest_conf_overrides: {}
+
+tempest_log_dir: "/var/log/tempest"
