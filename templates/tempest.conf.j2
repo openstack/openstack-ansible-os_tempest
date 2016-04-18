@@ -14,6 +14,7 @@ allow_tenant_isolation = True
 
 
 [baremetal]
+endpoint_type = internalURL
 
 
 [boto]
@@ -71,6 +72,7 @@ dashboard_url = {{ tempest_dashboard_url }}
 
 
 [data_processing]
+endpoint_type = internalURL
 
 
 [database]
@@ -84,7 +86,9 @@ disable_ssl_certificate_validation = {{ keystone_service_internaluri_insecure | 
 uri = {{ keystone_service_internaluri }}/v2.0
 uri_v3 = {{ keystone_service_internalurl }}
 auth_version = v3
+v2_admin_endpoint_type = adminURL
 v2_public_endpoint_type = internalURL
+v3_endpoint_type = adminURL
 endpoint_type = internalURL
 username = demo
 tenant_name = demo
@@ -184,6 +188,10 @@ aodh = {{ tempest_service_available_aodh }}
 
 
 [telemetry]
+endpoint_type = internalURL
+
+
+[alarming]
 endpoint_type = internalURL
 
 
