@@ -57,6 +57,7 @@
     dest: "{{ tempest_image_dir }}"
     sha256sum: "{{ item.sha256 }}"
   with_items: tempest_images
+  when: tempest_service_available_glance | bool
   tags:
     - tempest-config
     - tempest-image
@@ -65,6 +66,7 @@
   shell: |
     ls -1 {{ tempest_image_dir }} | grep '.gz'
   register: tempest_archives
+  when: tempest_service_available_glance | bool
   tags:
     - tempest-config
     - tempest-image
@@ -76,6 +78,7 @@
     dest: "{{ tempest_image_dir }}"
     copy: "no"
   with_items: tempest_archives.stdout
+  when: tempest_service_available_glance | bool
   tags:
     - tempest-config
     - tempest-image

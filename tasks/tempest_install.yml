@@ -123,3 +123,32 @@
   tags:
     - tempest-pip-packages
     - tempest-pip-install
+
+- name: Get tempest plugins from git
+  git:
+    repo: "{{ item.repo }}"
+    dest: "/opt/{{ item.name }}_{{ item.branch|replace('/', '_') }}"
+    version: "{{ item.branch }}"
+    force: yes
+  with_items: "{{ tempest_plugins) }}"
+  register: git_clone
+  until: git_clone|success
+  retries: 5
+  delay: 2
+  tags:
+    - git-clone
+
+- name: Install tempest plugins
+  pip:
+    name: "/opt/{{ item.name }}_{{ item.branch|replace('/', '_') }}"
+    state: present
+    virtualenv: "{{ tempest_git_dest }}"
+    virtualenv_site_packages: "no"
+    extra_args: "{{ pip_install_options|default('') }}"
+  with_items: "{{ tempest_plugins }}"
+  register: install_packages
+  until: install_packages|success
+  retries: 5
+  delay: 2
+  tags:
+    - pip-install

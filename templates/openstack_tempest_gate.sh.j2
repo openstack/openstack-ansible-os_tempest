@@ -80,6 +80,11 @@ function gen_test_list_smoke {
   grep smoke | grep -v tempest.scenario.test_network_basic_ops.TestNetworkBasicOps.test_update_router_admin_state
 }
 
+# Run designate scenario tests
+function gen_test_list_designate_scenario {
+  egrep 'designate_tempest_plugin\.tests\.scenario'
+}
+
 # Run all tests
 function gen_test_list_all {
   cat
@@ -171,7 +176,7 @@ set +o pipefail
 # every test list function.
 truncate --size 0 tmp_test_list
 for test_list_name in ${test_lists}; do
-  grep '^tempest\.' < full_test_list \
+  egrep '^(tempest|.*_tempest_plugin)\.' < full_test_list \
     | gen_test_list_${test_list_name} >> tmp_test_list \
     || exit_msg "Filter $test_list_name failed. Output: $(cat test_list)" 1
 done

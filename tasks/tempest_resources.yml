@@ -27,6 +27,7 @@
   until: cirros_image_create | success
   retries: 5
   delay: 15
+  when: tempest_service_available_glance | bool
   tags:
     - tempest-setup
     - tempest-config
@@ -34,6 +35,17 @@
 - name: Store cirros image id
   set_fact:
     tempest_glance_image_id: "{{ glance_images.cirros.id }}"
+  when: tempest_service_available_glance | bool
+  tags:
+    - tempest-setup
+    - tempest-config
+
+# This fact is used in tempest.conf.j2; we set an empty string if it doesn't get
+# set above to ensure the template will parse correctly.
+- name: Store empty tempest_glance_image_id fact
+  set_fact:
+    tempest_glance_image_id: ''
+  when: not tempest_service_available_glance | bool
   tags:
     - tempest-setup
     - tempest-config
@@ -48,6 +60,7 @@
     image_disk_format: qcow2
     image_is_public: True
     insecure: "{{ keystone_service_internaluri_insecure }}"
+  when: tempest_service_available_glance | bool
   tags:
     - tempest-setup
     - tempest-config
@@ -55,6 +68,17 @@
 - name: Store alt cirros image id
   set_fact:
     tempest_glance_image_alt_id: "{{ glance_images.cirros_alt.id }}"
+  when: tempest_service_available_glance | bool
+  tags:
+    - tempest-setup
+    - tempest-config
+
+# This fact is used in tempest.conf.j2; we set an empty string if it doesn't get
+# set above to ensure the template will parse correctly.
+- name: Store empty tempest_glance_image_alt_id fact
+  set_fact:
+    tempest_glance_image_alt_id: ''
+  when: not tempest_service_available_glance | bool
   tags:
     - tempest-setup
     - tempest-config
@@ -186,6 +210,7 @@
     net_name: private
     tenant_id: "{{ keystone_demo_tenant_id }}"
     insecure: "{{ keystone_service_internaluri_insecure }}"
+  when: tempest_service_available_neutron | bool
   tags:
     - tempest-setup
     - tempest-config
@@ -193,6 +218,7 @@
 - name: Store neutron private network id
   set_fact:
     tempest_neutron_private_network_id: "{{ neutron_networks.private.id }}"
+  when: tempest_service_available_neutron | bool
   tags:
     - tempest-setup
     - tempest-config
@@ -206,6 +232,7 @@
     provider_physical_network: flat
     router_external: true
     insecure: "{{ keystone_service_internaluri_insecure }}"
+  when: tempest_service_available_neutron | bool
   tags:
     - tempest-setup
     - tempest-config
@@ -213,6 +240,17 @@
 - name: Store neutron public network id
   set_fact:
     tempest_neutron_public_network_id: "{{ neutron_networks.public.id }}"
+  when: tempest_service_available_neutron | bool
+  tags:
+    - tempest-setup
+    - tempest-config
+
+# This fact is used in tempest.conf.j2; we set an empty string if it doesn't get
+# set above to ensure the template will parse correctly.
+- name: Store empty tempest_neutron_public_network_id fact
+  set_fact:
+    tempest_neutron_public_network_id: ''
+  when: not tempest_service_available_neutron | bool
   tags:
     - tempest-setup
     - tempest-config
@@ -226,6 +264,7 @@
     cidr: "{{ tempest_private_subnet_cidr }}"
     tenant_id: "{{ keystone_demo_tenant_id }}"
     insecure: "{{ keystone_service_internaluri_insecure }}"
+  when: tempest_service_available_neutron | bool
   tags:
     - tempest-setup
 
@@ -238,6 +277,7 @@
     cidr: "{{ tempest_public_subnet_cidr }}"
     insecure: "{{ keystone_service_internaluri_insecure }}"
     allocation_pools: "{{ tempest_public_subnet_allocation_pools }}"
+  when: tempest_service_available_neutron | bool
   tags:
     - tempest-setup
 
@@ -249,6 +289,7 @@
     external_gateway_info: public
     tenant_id: "{{ keystone_demo_tenant_id }}"
     insecure: "{{ keystone_service_internaluri_insecure }}"
+  when: tempest_service_available_neutron | bool
   tags:
     - tempest-setup
 
@@ -259,6 +300,7 @@
     router_name: router
     subnet_name: private-subnet
     insecure: "{{ keystone_service_internaluri_insecure }}"
+  when: tempest_service_available_neutron | bool
   tags:
     - tempest-setup
 
@@ -269,6 +311,7 @@
   register: tempest1
   failed_when: False
   changed_when: tempest1.rc != 0
+  when: tempest_service_available_nova | bool
   tags:
     - tempest-setup
 
@@ -276,7 +319,9 @@
   shell: |
     . /root/openrc
     nova flavor-create tempest1 201 256 1 1
-  when: tempest1.rc != 0
+  when:
+    - tempest_service_available_nova | bool
+    - tempest1.rc != 0
   tags:
     - tempest-setup
 
@@ -287,6 +332,7 @@
   register: tempest2
   failed_when: False
   changed_when: tempest2.rc != 0
+  when: tempest_service_available_nova | bool
   tags:
     - tempest-setup
 
@@ -294,6 +340,8 @@
   shell: |
     . /root/openrc
     nova flavor-create tempest2 202 512 1 1
-  when: tempest2.rc != 0
+  when:
+    - tempest_service_available_nova | bool
+    - tempest2.rc != 0
   tags:
     - tempest-setup
