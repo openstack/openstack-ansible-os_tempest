@@ -22,6 +22,7 @@ verbose: True
 
 tempest_git_repo: https://git.openstack.org/openstack/tempest
 tempest_git_install_branch: master
+tempest_developer_mode: false
 
 tempest_venv_download_url: http://127.0.0.1/venvs/untagged/ubuntu/tempest.tgz
 tempest_fatal_deprecations: False

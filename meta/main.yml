@@ -31,5 +31,10 @@ galaxy_info:
     - openstack
 dependencies:
   - apt_package_pinning
+  - role: pip_lock_down
+    when:
+      - not tempest_developer_mode | bool
+  - role: pip_install
+    when:
+      - tempest_developer_mode | bool
   - openstack_openrc
-  - pip_lock_down
