@@ -130,7 +130,7 @@
     dest: "/opt/{{ item.name }}_{{ item.branch|replace('/', '_') }}"
     version: "{{ item.branch }}"
     force: yes
-  with_items: "{{ tempest_plugins) }}"
+  with_items: "{{ tempest_plugins }}"
   register: git_clone
   until: git_clone|success
   retries: 5

@@ -1,5 +1,5 @@
 ---
-# Copyright 2015, Rackspace US, Inc.
+# Copyright 2016, Rackspace US, Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -13,23 +13,15 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# Prepare the user ssh keys
-- include: test-prepare-keys.yml
-
-# Prepare the host
-- include: test-prepare-host.yml
-
-# Prepare the containers
-- include: test-prepare-containers.yml
-
-# Install RabbitMQ/MariaDB
-- include: test-install-infra.yml
-
-# Install Keystone
-- include: test-install-keystone.yml
-
-# Install Tempest
-- include: test-install-tempest.yml
-
-# Test Tempest
-- include: test-tempest-functional.yml
+ansible_ssh_host: "{{ ansible_host }}"
+container_name: "{{ inventory_hostname }}"
+container_networks:
+  management_address:
+    address: "{{ ansible_host }}"
+    bridge: "lxcbr0"
+    interface: "eth1"
+    netmask: "255.255.252.0"
+    type: "veth"
+physical_host: localhost
+properties:
+  service_name: "{{ inventory_hostname }}"

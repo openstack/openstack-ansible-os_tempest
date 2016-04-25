@@ -10,6 +10,30 @@
   src: https://git.openstack.org/openstack/openstack-ansible-pip_lock_down
   scm: git
   version: master
+- name: memcached_server
+  src: https://git.openstack.org/openstack/openstack-ansible-memcached_server
+  scm: git
+  version: master
+- name: lxc_hosts
+  src: https://git.openstack.org/openstack/openstack-ansible-lxc_hosts
+  scm: git
+  version: master
+- name: lxc_container_create
+  src: https://git.openstack.org/openstack/openstack-ansible-lxc_container_create
+  scm: git
+  version: master
+- name: galera_client
+  src: https://git.openstack.org/openstack/openstack-ansible-galera_client
+  scm: git
+  version: master
+- name: galera_server
+  src: https://git.openstack.org/openstack/openstack-ansible-galera_server
+  scm: git
+  version: master
+- name: os_keystone
+  src: https://git.openstack.org/openstack/openstack-ansible-os_keystone
+  scm: git
+  version: master
 - name: openstack_openrc
   src: https://git.openstack.org/openstack/openstack-ansible-openstack_openrc
   scm: git

@@ -13,23 +13,16 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# Prepare the user ssh keys
-- include: test-prepare-keys.yml
-
-# Prepare the host
-- include: test-prepare-host.yml
-
-# Prepare the containers
-- include: test-prepare-containers.yml
-
-# Install RabbitMQ/MariaDB
-- include: test-install-infra.yml
-
-# Install Keystone
-- include: test-install-keystone.yml
-
-# Install Tempest
-- include: test-install-tempest.yml
-
-# Test Tempest
-- include: test-tempest-functional.yml
+- name: Playbook for functional testing of tempest
+  hosts: keystone_all
+  user: root
+  gather_facts: false
+  tasks:
+    - name: Run tempest
+      shell: |
+        . /opt/tempest_{{ tempest_git_install_branch }}/bin/activate
+        /opt/tempest_{{ tempest_git_install_branch }}/run_tempest.sh --no-virtual-env ${RUN_TEMPEST_OPTS} tempest.api.identity.v3
+      environment:
+        RUN_TEMPEST_OPTS: "--serial"
+  vars_files:
+    - test-vars.yml

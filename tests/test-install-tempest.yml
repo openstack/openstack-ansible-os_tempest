@@ -1,3 +1,4 @@
+
 ---
 # Copyright 2015, Rackspace US, Inc.
 #
@@ -13,23 +14,11 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# Prepare the user ssh keys
-- include: test-prepare-keys.yml
-
-# Prepare the host
-- include: test-prepare-host.yml
-
-# Prepare the containers
-- include: test-prepare-containers.yml
-
-# Install RabbitMQ/MariaDB
-- include: test-install-infra.yml
-
-# Install Keystone
-- include: test-install-keystone.yml
-
-# Install Tempest
-- include: test-install-tempest.yml
-
-# Test Tempest
-- include: test-tempest-functional.yml
+- name: Playbook for deploying tempest
+  hosts: infra1
+  user: root
+  gather_facts: true
+  roles:
+    - role: "{{ rolename | basename }}"
+  vars_files:
+    - test-vars.yml

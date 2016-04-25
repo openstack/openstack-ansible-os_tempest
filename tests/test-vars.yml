@@ -1,0 +1,54 @@
+---
+# Copyright 2015, Rackspace US, Inc.
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+external_lb_vip_address: 10.100.100.2
+galera_client_drop_config_file: false
+internal_lb_vip_address: 10.100.100.2
+keystone_admin_tenant_name: admin
+keystone_admin_user_name: admin
+keystone_auth_admin_password: "SuperSecretePassword"
+keystone_container_mysql_password: "SuperSecrete"
+keystone_developer_mode: true
+keystone_galera_address: 10.100.100.2
+keystone_galera_database: keystone
+keystone_git_install_branch: master
+keystone_messaging_enabled: false
+keystone_requirements_git_install_branch: master
+keystone_service_adminuri: "http://{{ internal_lb_vip_address }}:35357"
+keystone_service_adminuri_insecure: false
+keystone_service_adminurl: "{{ keystone_service_adminuri }}/v3"
+keystone_service_internaluri: "http://{{ internal_lb_vip_address }}:5000"
+keystone_service_internaluri_insecure: false
+keystone_service_internalurl: "{{ keystone_service_internaluri }}/v3"
+keystone_service_password: "secrete"
+keystone_venv_tag: "testing"
+openrc_os_auth_url: "http://127.0.0.1:5000/v3"
+openrc_os_domain_name: "Default"
+openrc_os_password: "{{ keystone_auth_admin_password }}"
+tempest_developer_mode: True
+tempest_git_repo: https://git.openstack.org/openstack/tempest
+tempest_git_install_branch: 534a8dc60dfef116156b8f9ee60071a9bf4e4f90
+tempest_git_dest: "/opt/tempest_{{ tempest_git_install_branch | replace('/', '_') }}"
+tempest_log_dir: "/var/log/"
+tempest_main_group: keystone_all
+tempest_service_available_aodh: False
+tempest_service_available_ceilometer: False
+tempest_service_available_cinder: False
+tempest_service_available_glance: False
+tempest_service_available_heat: False
+tempest_service_available_horizon: False
+tempest_service_available_neutron: False
+tempest_service_available_nova: False
+tempest_service_available_swift: False

@@ -1,2 +1,15 @@
 [all]
 localhost ansible_connection=local ansible_become=True
+infra1 ansible_host=10.100.100.2 ansible_become=True ansible_user=root
+
+[all_containers]
+infra1
+
+[galera_all]
+infra1
+
+[service_all:children]
+galera_all
+
+[keystone_all]
+infra1
