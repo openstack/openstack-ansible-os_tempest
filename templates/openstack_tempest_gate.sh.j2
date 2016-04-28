@@ -144,10 +144,10 @@ for test_list_name in $test_lists; do
 done
 
 # work in tempest directory
-pushd {{ tempest_git_dest }}
+pushd {{ tempest_venv_bin | dirname }}
 
 # Load the tempest venv for a tempest run
-source {{ tempest_git_dest }}/bin/activate
+source {{ tempest_venv_bin | dirname }}/bin/activate
 
 # read creds into environment
 source /root/openrc

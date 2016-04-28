@@ -160,7 +160,7 @@ instance_type = tempest1
 
 
 [oslo_concurrency]
-lock_path = {{ tempest_git_dest }}/locks
+lock_path = {{ tempest_venv_bin | dirname }}/locks
 
 
 [scenario]

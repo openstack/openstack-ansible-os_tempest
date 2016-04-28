@@ -19,6 +19,35 @@ is_metal: true
 ## Verbosity Options
 debug: False
 verbose: True
+
+tempest_git_repo: https://git.openstack.org/openstack/tempest
+tempest_git_install_branch: master
+tempest_requirements_git_repo: https://git.openstack.org/openstack/requirements
+tempest_requirements_git_install_branch: master
+tempest_developer_mode: false
+tempest_developer_constraints:
+  - "git+{{ tempest_git_repo }}@{{ tempest_git_install_branch }}#egg=tempest"
+
+# Name of the virtual env to deploy into
+tempest_venv_tag: untagged
+# NOTE(mattt): The eventual goal is to get the tempest installed into
+#              /openstack/venvs like all other venvs, but for now we point
+#              ``tempest_venv_bin`` where we currently install tempest.
+#tempest_venv_bin: "/openstack/venvs/tempest-{{ tempest_venv_tag }}/bin"
+tempest_venv_bin: "/opt/tempest_{{ tempest_venv_tag }}/bin"
+
+# Set this to enable or disable installing in a venv
+tempest_venv_enabled: true
+
+## Tempest Plugins
+# By default, no tempest plugins are installed.  Override ``tempest_plugins``
+# as follows:
+# tempest_plugins:
+#   - name: designate_tempest_plugin
+#     repo: https://github.com/openstack/designate-tempest-plugin
+#     branch: master
+tempest_plugins: []
+
 tempest_venv_download_url: http://127.0.0.1/venvs/untagged/ubuntu/tempest.tgz
 tempest_fatal_deprecations: False
 
@@ -86,12 +115,9 @@ tempest_requires_pip_packages:
   - virtualenv-tools
 
 tempest_pip_packages:
-  - fixtures
+  - tempest
   - junitxml
   - nose
-  - oslo.concurrency
-  - oslo.serialization
-  - pyOpenSSL
   - python-ceilometerclient
   - python-cinderclient
   - python-glanceclient
@@ -103,10 +129,6 @@ tempest_pip_packages:
   - python-openstackclient
   - python-subunit
   - python-swiftclient
-  - tempest-lib
-  - testrepository
-  - testscenarios
-  - testtools
 
 # Please update SHA in tempest_images below when changing the cirros version.
 cirros_version: 0.3.4
