@@ -38,9 +38,8 @@ openrc_os_auth_url: "http://127.0.0.1:5000/v3"
 openrc_os_domain_name: "Default"
 openrc_os_password: "{{ keystone_auth_admin_password }}"
 tempest_developer_mode: True
-tempest_git_repo: https://git.openstack.org/openstack/tempest
-tempest_git_install_branch: 534a8dc60dfef116156b8f9ee60071a9bf4e4f90
-tempest_git_dest: "/opt/tempest_{{ tempest_git_install_branch | replace('/', '_') }}"
+tempest_git_install_branch: master
+tempest_requirements_git_install_branch: master
 tempest_log_dir: "/var/log/"
 tempest_main_group: keystone_all
 tempest_service_available_aodh: False
@@ -52,3 +51,4 @@ tempest_service_available_horizon: False
 tempest_service_available_neutron: False
 tempest_service_available_nova: False
 tempest_service_available_swift: False
+tempest_venv_tag: "{{ tempest_git_install_branch }}"

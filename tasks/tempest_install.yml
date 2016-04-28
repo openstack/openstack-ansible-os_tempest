@@ -13,41 +13,105 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-- name: Install required pip packages
+- name: Create developer mode constraint file
+  copy:
+    dest: "/opt/developer-pip-constraints.txt"
+    content: |
+      {% for item in tempest_developer_constraints %}
+      {{ item }}
+      {% endfor %}
+  when:
+    - tempest_developer_mode | bool
+  tags:
+    - tempest-install
+    - tempest-pip-packages
+
+- name: Clone requirements git repository
+  git:
+    repo: "{{ tempest_requirements_git_repo }}"
+    dest: "/opt/requirements"
+    clone: yes
+    update: yes
+    version: "{{ tempest_requirements_git_install_branch }}"
+  when:
+    - tempest_developer_mode | bool
+  tags:
+    - tempest-install
+    - tempest-pip-packages
+
+- name: Add constraints to pip_install_options fact for developer mode
+  set_fact:
+    pip_install_options_fact: "{{ pip_install_options|default('') }} --constraint /opt/developer-pip-constraints.txt --constraint /opt/requirements/upper-constraints.txt"
+  when:
+    - tempest_developer_mode | bool
+  tags:
+    - tempest-install
+    - tempest-pip-packages
+
+- name: Set pip_install_options_fact when not in developer mode
+  set_fact:
+    pip_install_options_fact: "{{ pip_install_options|default('') }}"
+  when:
+    - not tempest_developer_mode | bool
+  tags:
+    - tempest-install
+    - tempest-pip-packages
+
+- name: Install requires pip packages
   pip:
     name: "{{ item }}"
     state: latest
-    extra_args: "{{ pip_install_options|default('') }}"
+    extra_args: "{{ pip_install_options_fact }}"
   register: install_packages
   until: install_packages|success
   retries: 5
   delay: 2
-  with_items: tempest_requires_pip_packages
+  with_items: "{{ tempest_requires_pip_packages }}"
   tags:
-    - tempest-pip-requires-packages
     - tempest-install
     - tempest-pip-packages
 
-- name: Get tempest from git
-  git:
-    repo: "{{ tempest_git_repo }}"
-    dest: "{{ tempest_git_dest }}"
-    version: "{{ tempest_git_install_branch }}"
-    force: yes
-  register: git_clone
-  until: git_clone|success
-  retries: 5
-  delay: 2
+- name: Get local venv checksum
+  stat:
+    path: "/var/cache/{{ tempest_venv_download_url | basename }}"
+    get_md5: False
+  when:
+    - not tempest_developer_mode | bool
+    - tempest_venv_enabled | bool
+  register: local_venv_stat
   tags:
-    - tempest-git-clone
-    - tempest-pip-install
+    - tempest-install
+    - tempest-pip-packages
 
+- name: Get remote venv checksum
+  uri:
+    url: "{{ tempest_venv_download_url | replace('tgz', 'checksum') }}"
+    return_content: True
+  when:
+    - not tempest_developer_mode | bool
+    - tempest_venv_enabled | bool
+  register: remote_venv_checksum
+  tags:
+    - tempest-install
+    - tempest-pip-packages
+
+# TODO: When project moves to ansible 2 we can pass this a sha256sum which will:
+#       a) allow us to remove force: yes
+#       b) allow the module to calculate the checksum of dest file which would
+#          result in file being downloaded only if provided and dest sha256sum
+#          checksums differ
 - name: Attempt venv download
   get_url:
     url: "{{ tempest_venv_download_url }}"
     dest: "/var/cache/{{ tempest_venv_download_url | basename }}"
+    force: yes
   ignore_errors: true
   register: get_venv
+  when:
+    - not tempest_developer_mode | bool
+    - tempest_venv_enabled | bool
+    - (local_venv_stat.stat.exists == False or
+        {{ local_venv_stat.stat.checksum is defined and local_venv_stat.stat.checksum != remote_venv_checksum.content | trim }})
   tags:
     - tempest-install
     - tempest-pip-packages
@@ -55,16 +119,48 @@
 - name: Set tempest get_venv fact
   set_fact:
     tempest_get_venv: "{{ get_venv }}"
+  when: tempest_venv_enabled | bool
   tags:
     - tempest-install
     - tempest-pip-packages
 
+- name: Remove existing venv
+  file:
+    path: "{{ tempest_venv_bin | dirname }}"
+    state: absent
+  when:
+    - tempest_venv_enabled | bool
+    - tempest_get_venv | changed
+  tags:
+    - tempest-install
+    - tempest-pip-packages
+
+# NOTE(mattt): The goal is to get tempest installed into /openstack/venvs like
+#              all other services, and then use the tempest cli to create our
+#              working dir.  This will mean we no longer need to git clone
+#              tempest.
+- name: Get tempest from git
+  git:
+    repo: "{{ tempest_git_repo }}"
+    dest: "{{ tempest_venv_bin | dirname }}"
+    version: "{{ tempest_git_install_branch }}"
+    force: yes
+  register: git_clone
+  until: git_clone|success
+  retries: 5
+  delay: 2
+  tags:
+    - tempest-install
+    - tempest-git-clone
+
 - name: Create tempest venv dir
   file:
-    path: "{{ tempest_git_dest }}"
+    path: "{{ tempest_venv_bin | dirname }}"
     state: directory
   when:
-    - tempest_get_venv | success
+    - not tempest_developer_mode | bool
+    - tempest_venv_enabled | bool
+    - tempest_get_venv | changed
   tags:
     - tempest-install
     - tempest-pip-packages
@@ -72,57 +168,62 @@
 - name: Unarchive pre-built venv
   unarchive:
     src: "/var/cache/{{ tempest_venv_download_url | basename }}"
-    dest: "{{ tempest_git_dest }}"
+    dest: "{{ tempest_venv_bin | dirname }}"
     copy: "no"
   when:
-    - tempest_get_venv | success
+    - not tempest_developer_mode | bool
+    - tempest_venv_enabled | bool
+    - tempest_get_venv | changed
   tags:
     - tempest-install
     - tempest-pip-packages
 
 - name: Update virtualenv path
   command: >
-    virtualenv-tools --update-path=auto {{ tempest_git_dest }}
+    virtualenv-tools --update-path=auto {{ tempest_venv_bin | dirname }}
   when:
+    - not tempest_developer_mode | bool
+    - tempest_venv_enabled | bool
     - tempest_get_venv | success
   tags:
     - tempest-install
     - tempest-pip-packages
 
-- name: Install pip packages for tempest (prebuilt venv)
-  pip:
-    name: "{{ tempest_git_dest }}"
-    state: latest
-    virtualenv: "{{ tempest_git_dest }}"
-    virtualenv_site_packages: "no"
-    extra_args: "{{ pip_install_options|default('') }}"
-  register: install_packages
-  until: install_packages|success
-  retries: 5
-  delay: 2
-  when:
-    - tempest_get_venv | success
-  tags:
-    - tempest-pip-packages
-    - tempest-pip-install
-
-- name: Install pip packages for tempest (no prebuilt venv)
+- name: Install pip packages (venv)
   pip:
     name: "{{ item }}"
     state: latest
-    virtualenv: "{{ tempest_git_dest }}"
+    virtualenv: "{{ tempest_venv_bin | dirname }}"
     virtualenv_site_packages: "no"
-    extra_args: "{{ pip_install_options|default('') }}"
+    extra_args: "{{ pip_install_options_fact }}"
   register: install_packages
   until: install_packages|success
   retries: 5
   delay: 2
+  with_items: "{{ tempest_pip_packages }}"
   when:
-    - tempest_get_venv | failed
-  with_items: tempest_pip_packages
+    - tempest_venv_enabled | bool
+    - tempest_get_venv | failed or tempest_developer_mode | bool
   tags:
+    - tempest-install
     - tempest-pip-packages
-    - tempest-pip-install
+
+- name: Install pip packages (no venv)
+  pip:
+    name: "{{ item }}"
+    state: latest
+    extra_args: "{{ pip_install_options_fact }}"
+  register: install_packages
+  until: install_packages|success
+  retries: 5
+  delay: 2
+  with_items: "{{ tempest_pip_packages }}"
+  when:
+    - not tempest_venv_enabled | bool
+    - not tempest_developer_mode | bool
+  tags:
+    - tempest-install
+    - tempest-pip-packages
 
 - name: Get tempest plugins from git
   git:
@@ -136,19 +237,39 @@
   retries: 5
   delay: 2
   tags:
-    - git-clone
+    - tempest-install
+    - tempest-plugins-git-clone
 
-- name: Install tempest plugins
+- name: Install tempest plugins (venv)
   pip:
     name: "/opt/{{ item.name }}_{{ item.branch|replace('/', '_') }}"
     state: latest
     virtualenv: "{{ tempest_git_dest }}"
     virtualenv_site_packages: "no"
-    extra_args: "{{ pip_install_options|default('') }}"
+    extra_args: "{{ pip_install_options_fact }}"
   with_items: "{{ tempest_plugins }}"
   register: install_packages
   until: install_packages|success
   retries: 5
   delay: 2
+  when:
+    - tempest_venv_enabled | bool
   tags:
-    - pip-install
+    - tempest-install
+    - tempest-plugins-pip-install
+
+- name: Install tempest plugins (no venv)
+  pip:
+    name: "/opt/{{ item.name }}_{{ item.branch|replace('/', '_') }}"
+    state: present
+    extra_args: "{{ pip_install_options_fact }}"
+  with_items: "{{ tempest_plugins }}"
+  register: install_packages
+  until: install_packages|success
+  retries: 5
+  delay: 2
+  when:
+    - not tempest_venv_enabled | bool
+  tags:
+    - tempest-install
+    - tempest-plugins-pip-install

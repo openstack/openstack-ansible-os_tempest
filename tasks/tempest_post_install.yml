@@ -43,8 +43,8 @@
     group: "root"
     mode: "{{ item.mode|default('0755') }}"
   with_items:
-    - { path: "{{ tempest_git_dest }}/locks", mode: "0777" }
-    - { path: "{{ tempest_git_dest }}/etc" }
+    - { path: "{{ tempest_venv_bin | dirname }}/locks", mode: "0777" }
+    - { path: "{{ tempest_venv_bin | dirname }}/etc" }
     - { path: "{{ tempest_image_dir }}" }
   tags:
     - tempest-dirs
@@ -87,7 +87,7 @@
 - name: Copy tempest config
   config_template:
     src: "tempest.conf.j2"
-    dest: "{{ tempest_git_dest }}/etc/tempest.conf"
+    dest: "{{ tempest_venv_bin | dirname }}/etc/tempest.conf"
     owner: "root"
     group: "root"
     mode: "0644"
