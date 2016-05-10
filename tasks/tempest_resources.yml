@@ -184,6 +184,8 @@
     command: create_network
     openrc_path: /root/openrc
     net_name: private
+    provider_network_type: "{{ tempest_private_net_provider_type }}"
+    provider_segmentation_id: "{{ tempest_private_net_seg_id }}"
     tenant_id: "{{ keystone_demo_tenant_id }}"
     insecure: "{{ keystone_service_internaluri_insecure }}"
   tags:
@@ -197,15 +199,36 @@
     - tempest-setup
     - tempest-config
 
-- name: Ensure public network exists
+- name: Ensure public network exists (if flat)
   neutron:
     command: create_network
     openrc_path: /root/openrc
     net_name: public
-    provider_network_type: flat
-    provider_physical_network: flat
-    router_external: true
+    provider_network_type: "{{ tempest_public_net_provider_type }}"
+    provider_physical_network: "{{ tempest_public_net_physical_type }}"
+    router_external: "{{ tempest_public_router_external }}"
     insecure: "{{ keystone_service_internaluri_insecure }}"
+  when:
+    - tempest_service_available_neutron | bool
+    - tempest_public_net_provider_type == "flat"
+  tags:
+    - tempest-setup
+    - tempest-config
+
+- name: Ensure public network exists (if vlan)
+  neutron:
+    command: create_network
+    openrc_path: /root/openrc
+    net_name: public
+    provider_network_type: "{{ tempest_public_net_provider_type }}"
+    provider_physical_network: "{{ tempest_public_physical_net_type }}"
+    provider_segmentation_id: "{{ tempest_public_net_seg_id }}"
+    router_external: "{{ tempest_public_router_external }}"
+    tenant_id: "{{ keystone_demo_tenant_id }}"
+    insecure: "{{ keystone_service_internaluri_insecure }}"
+  when:
+    - tempest_service_available_neutron | bool
+    - tempest_public_net_provider_type == "vlan"
   tags:
     - tempest-setup
     - tempest-config
