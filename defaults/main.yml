@@ -36,10 +36,26 @@ tempest_plugins: []
 tempest_venv_download_url: http://127.0.0.1/venvs/untagged/ubuntu/tempest.tgz
 tempest_fatal_deprecations: False
 
+# Private network configuration
+# Currently supports 2 types
+# vlan - will need to make sure your seg id and subnet cidr are correct
+# vxlan - default, can change subnet cidr and seg id
+
 # This needs to coincide with tempest_network_tenant_network_cidr and
 # tempest_network_tenant_network_mask_bits below
 tempest_private_subnet_cidr: "192.168.74.0/28"
+tempest_private_net_provider_type: "vxlan"
+tempest_private_net_seg_id: 1
+
+# Public network configuration
+# Currently supports 2 types
+# Flat - default
+# Vlan - make sure you override seg id, cidr, provider and physical
 tempest_public_subnet_cidr: "10.1.13.0/24"
+tempest_public_net_provider_type: "flat"
+tempest_public_net_physical_type: "flat"
+tempest_public_net_seg_id: ""
+tempest_public_router_external: "true"
 # Example allocation range:
 #tempest_public_subnet_allocation_pools: "10.1.13.150-10.1.13.200"
 tempest_public_subnet_allocation_pools: ""
