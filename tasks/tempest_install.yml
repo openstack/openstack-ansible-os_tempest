@@ -228,7 +228,7 @@
 - name: Get tempest plugins from git
   git:
     repo: "{{ item.repo }}"
-    dest: "/opt/{{ item.name }}_{{ item.branch|replace('/', '_') }}"
+    dest: "/opt/{{ item.name|replace('-', '_') }}_{{ item.branch|replace('/', '_') }}"
     version: "{{ item.branch }}"
     force: yes
   with_items: "{{ tempest_plugins }}"
@@ -242,9 +242,9 @@
 
 - name: Install tempest plugins (venv)
   pip:
-    name: "/opt/{{ item.name }}_{{ item.branch|replace('/', '_') }}"
+    name: "/opt/{{ item.name|replace('-', '_') }}_{{ item.branch|replace('/', '_') }}"
     state: latest
-    virtualenv: "{{ tempest_git_dest }}"
+    virtualenv: "{{ tempest_venv_bin | dirname }}"
     virtualenv_site_packages: "no"
     extra_args: "{{ pip_install_options_fact }}"
   with_items: "{{ tempest_plugins }}"
@@ -260,7 +260,7 @@
 
 - name: Install tempest plugins (no venv)
   pip:
-    name: "/opt/{{ item.name }}_{{ item.branch|replace('/', '_') }}"
+    name: "/opt/{{ item.name|replace('-', '_') }}_{{ item.branch|replace('/', '_') }}"
     state: present
     extra_args: "{{ pip_install_options_fact }}"
   with_items: "{{ tempest_plugins }}"

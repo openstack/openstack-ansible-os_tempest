@@ -18,6 +18,9 @@
   user: root
   gather_facts: false
   tasks:
+    - name: Ensure tempest plugins have been installed
+      command: "{{ tempest_venv_bin }}/pip show {{ item.name }}"
+      with_items: "{{ tempest_plugins }}"
     - name: Run tempest
       shell: |
         . {{ tempest_venv_bin }}/activate

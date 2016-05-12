@@ -43,8 +43,8 @@ tempest_venv_enabled: true
 # By default, no tempest plugins are installed.  Override ``tempest_plugins``
 # as follows:
 # tempest_plugins:
-#   - name: designate_tempest_plugin
-#     repo: https://github.com/openstack/designate-tempest-plugin
+#   - name: designate-tempest-plugin
+#     repo: https://git.openstack.org/openstack/designate-tempest-plugin
 #     branch: master
 tempest_plugins: []
 
