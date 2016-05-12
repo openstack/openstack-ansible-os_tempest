@@ -39,7 +39,10 @@ openrc_os_domain_name: "Default"
 openrc_os_password: "{{ keystone_auth_admin_password }}"
 tempest_developer_mode: True
 tempest_git_install_branch: master
-tempest_requirements_git_install_branch: master
+tempest_venv_tag: "{{ tempest_git_install_branch }}"
+# tempest_venv_bin is the same as the default in os_tempest role, but we set
+# it again here so we can refer to it in test-tempest-functional.yml
+tempest_venv_bin: "/opt/tempest_{{ tempest_venv_tag }}/bin"
 tempest_log_dir: "/var/log/"
 tempest_main_group: keystone_all
 tempest_service_available_aodh: False
@@ -51,4 +54,3 @@ tempest_service_available_horizon: False
 tempest_service_available_neutron: False
 tempest_service_available_nova: False
 tempest_service_available_swift: False
-tempest_venv_tag: "{{ tempest_git_install_branch }}"
