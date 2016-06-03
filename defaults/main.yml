@@ -98,6 +98,7 @@ tempest_service_available_heat: True
 tempest_service_available_horizon: True
 tempest_service_available_neutron: True
 tempest_service_available_nova: True
+tempest_service_available_sahara: False
 tempest_service_available_swift: True
 
 tempest_image_api_v1_enabled: true
@@ -145,6 +146,7 @@ tempest_pip_packages:
   - python-neutronclient
   - python-novaclient
   - python-openstackclient
+  - python-saharaclient
   - python-subunit
   - python-swiftclient
 
