@@ -18,7 +18,7 @@ galaxy_info:
   description: Installation and setup of tempest
   company: Rackspace
   license: Apache2
-  min_ansible_version: 1.6.6
+  min_ansible_version: 1.9
   platforms:
     - name: Ubuntu
       versions:
@@ -30,11 +30,6 @@ galaxy_info:
     - development
     - openstack
 dependencies:
+  - pip_install
   - apt_package_pinning
-  - role: pip_lock_down
-    when:
-      - not tempest_developer_mode | bool
-  - role: pip_install
-    when:
-      - tempest_developer_mode | bool
   - openstack_openrc
