@@ -56,7 +56,7 @@
     url: "{{ item.url }}"
     dest: "{{ tempest_image_dir }}"
     sha256sum: "{{ item.sha256 }}"
-  with_items: tempest_images
+  with_items: "{{ tempest_images }}"
   when: tempest_service_available_glance | bool
   tags:
     - tempest-config
@@ -77,7 +77,7 @@
     src: "{{ tempest_image_dir }}/{{ item }}"
     dest: "{{ tempest_image_dir }}"
     copy: "no"
-  with_items: tempest_archives.stdout
+  with_items: "{{ tempest_archives.stdout | default([]) }}"
   when: tempest_service_available_glance | bool
   tags:
     - tempest-config
