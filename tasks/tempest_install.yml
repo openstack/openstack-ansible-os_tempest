@@ -16,7 +16,7 @@
 - name: Install required pip packages
   pip:
     name: "{{ item }}"
-    state: present
+    state: latest
     extra_args: "{{ pip_install_options|default('') }}"
   register: install_packages
   until: install_packages|success
@@ -92,7 +92,7 @@
 - name: Install pip packages for tempest (prebuilt venv)
   pip:
     name: "{{ tempest_git_dest }}"
-    state: present
+    state: latest
     virtualenv: "{{ tempest_git_dest }}"
     virtualenv_site_packages: "no"
     extra_args: "{{ pip_install_options|default('') }}"
@@ -109,7 +109,7 @@
 - name: Install pip packages for tempest (no prebuilt venv)
   pip:
     name: "{{ item }}"
-    state: present
+    state: latest
     virtualenv: "{{ tempest_git_dest }}"
     virtualenv_site_packages: "no"
     extra_args: "{{ pip_install_options|default('') }}"
