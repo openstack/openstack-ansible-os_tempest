@@ -143,7 +143,10 @@
     repo: "{{ tempest_git_repo }}"
     dest: "{{ tempest_venv_bin | dirname }}"
     version: "{{ tempest_git_install_branch }}"
-    force: yes
+    clone: "yes"
+    update: "yes"
+    accept_hostkey: "yes"
+    force: "yes"
   register: git_clone
   until: git_clone|success
   retries: 5
