@@ -54,6 +54,7 @@ tempest_service_available_horizon: False
 tempest_service_available_neutron: False
 tempest_service_available_nova: False
 tempest_service_available_swift: False
+tempest_service_available_zaqar: False
 tempest_plugins:
   - name: designate-tempest-plugin
     repo: https://git.openstack.org/openstack/designate-tempest-plugin
