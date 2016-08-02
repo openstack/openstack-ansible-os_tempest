@@ -155,6 +155,7 @@ tempest_pip_packages:
 cirros_version: 0.3.4
 cirros_tgz_url: "http://download.cirros-cloud.net/{{ cirros_version }}/cirros-{{ cirros_version }}-x86_64-uec.tar.gz"
 cirros_img_url: "{{ cirros_tgz_url|replace('uec.tar.gz','disk.img') }}"
+cirros_img_disk_format: qcow2
 
 tempest_image_dir: "/opt/images"
 tempest_images:
