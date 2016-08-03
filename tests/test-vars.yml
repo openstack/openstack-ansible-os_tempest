@@ -13,18 +13,45 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-external_lb_vip_address: 10.100.100.2
+cinder_backends_rbd_inuse: false
+cinder_ceph_client: cinder
+debug: true
+external_lb_vip_address: 10.100.102.102
 galera_client_drop_config_file: false
-internal_lb_vip_address: 10.100.100.2
+galera_root_user: root
+galera_root_password: secrete
+glance_container_mysql_password: "SuperSecrete"
+glance_developer_mode: true
+glance_galera_address: 10.100.102.101
+glance_galera_database: glance
+glance_git_install_branch: master
+glance_host: "{{ internal_lb_vip_address }}"
+glance_profiler_hmac_key: "secrete"
+glance_rabbitmq_port: "{{ rabbitmq_port }}"
+glance_rabbitmq_servers: "{{ rabbitmq_servers }}"
+glance_rabbitmq_use_ssl: "{{ rabbitmq_use_ssl }}"
+glance_rabbitmq_password: "secrete"
+glance_rabbitmq_userid: glance
+glance_rabbitmq_vhost: /glance
+glance_requirements_git_install_branch: master
+glance_service_password: "secrete"
+glance_service_port: 9292
+glance_venv_tag: "testing"
+internal_lb_vip_address: 10.100.102.102
 keystone_admin_tenant_name: admin
 keystone_admin_user_name: admin
-keystone_auth_admin_password: "SuperSecretePassword"
+keystone_auth_admin_password: SuperSecretePassword
 keystone_container_mysql_password: "SuperSecrete"
 keystone_developer_mode: true
-keystone_galera_address: 10.100.100.2
+keystone_galera_address: 10.100.102.101
 keystone_galera_database: keystone
 keystone_git_install_branch: master
-keystone_messaging_enabled: false
+keystone_rabbitmq_password: "secrete"
+keystone_rabbitmq_port: "{{ rabbitmq_port }}"
+keystone_rabbitmq_servers: "{{ rabbitmq_servers }}"
+keystone_rabbitmq_use_ssl: "{{ rabbitmq_use_ssl }}"
+keystone_rabbitmq_userid: keystone
+keystone_rabbitmq_vhost: /keystone
 keystone_requirements_git_install_branch: master
 keystone_service_adminuri: "http://{{ internal_lb_vip_address }}:35357"
 keystone_service_adminuri_insecure: false
@@ -33,10 +60,74 @@ keystone_service_internaluri: "http://{{ internal_lb_vip_address }}:5000"
 keystone_service_internaluri_insecure: false
 keystone_service_internalurl: "{{ keystone_service_internaluri }}/v3"
 keystone_service_password: "secrete"
+keystone_service_region: RegionOne
 keystone_venv_tag: "testing"
+lxd_trust_password: "SuperSecrete"
+memcached_encryption_key: "secrete"
+memcached_servers: 127.0.0.1
+neutron_container_mysql_password: SuperSecrete
+neutron_developer_mode: true
+neutron_galera_address: 10.100.102.101
+neutron_galera_database: neutron
+neutron_git_install_branch: master
+neutron_ha_vrrp_auth_password: secrete
+neutron_management_address: "{{ internal_lb_vip_address }}"
+neutron_rabbitmq_port: "{{ rabbitmq_port }}"
+neutron_rabbitmq_servers: "{{ rabbitmq_servers }}"
+neutron_rabbitmq_use_ssl: "{{ rabbitmq_use_ssl }}"
+neutron_rabbitmq_password: secrete
+neutron_rabbitmq_userid: neutron
+neutron_rabbitmq_vhost: /neutron
+neutron_requirements_git_install_branch: master
+neutron_service_adminurl: http://{{ internal_lb_vip_address }}:9696
+neutron_service_password: "secrete"
+neutron_service_project_name: service
+neutron_service_region: RegionOne
+neutron_service_user_name: neutron
+neutron_venv_tag: testing
+nova_api_container_mysql_password: "SuperSecrete"
+nova_api_galera_address: 10.100.102.101
+nova_api_galera_database: nova_api
+nova_api_galera_user: nova_api
+nova_container_mysql_password: "SuperSecrete"
+nova_developer_mode: true
+nova_galera_address: 10.100.102.101
+nova_galera_database: nova
+nova_git_install_branch: master
+nova_glance_api_servers: "http://{{ glance_host }}:{{ glance_service_port }}"
+nova_keystone_auth_plugin: password
+nova_management_address: "10.100.102.1"
+nova_metadata_port: 8775
+nova_metadata_proxy_secret: "secrete"
+nova_novncproxy_vncserver_listen: localhost
+nova_novncproxy_vncserver_proxyclient_address: localhost
+nova_rabbitmq_port: "{{ rabbitmq_port }}"
+nova_rabbitmq_servers: "{{ rabbitmq_servers }}"
+nova_rabbitmq_use_ssl: "{{ rabbitmq_use_ssl }}"
+nova_rabbitmq_password: "secrete"
+nova_rabbitmq_userid: nova
+nova_rabbitmq_vhost: /nova
+nova_requirements_git_install_branch: master
+nova_service_adminurl: "http://{{ internal_lb_vip_address }}:8774"
+nova_service_password: "secrete"
+nova_service_project_domain_id: default
+nova_service_project_name: service
+nova_service_region: RegionOne
+nova_service_user_domain_id: default
+nova_service_user_name: nova
+nova_bin: "/openstack/venvs/nova-{{ nova_venv_tag }}/bin"
+nova_venv_tag: "testing"
 openrc_os_auth_url: "http://127.0.0.1:5000/v3"
 openrc_os_domain_name: "Default"
 openrc_os_password: "{{ keystone_auth_admin_password }}"
+# This ensures that libvirt-python is built from source. A pre-built wheel
+# can be missing libvirt capabilities from the installed version of
+# libvirt-bin, leading to nova-compute failing to start.
+# TODO(jmccrory) Revisit this at some point
+pip_install_options: "--no-binary libvirt-python"
+rabbitmq_port: 5672
+rabbitmq_servers: 10.100.102.101
+rabbitmq_use_ssl: False
 tempest_developer_mode: True
 tempest_git_install_branch: master
 tempest_venv_tag: "{{ tempest_git_install_branch }}"
@@ -48,11 +139,11 @@ tempest_main_group: keystone_all
 tempest_service_available_aodh: False
 tempest_service_available_ceilometer: False
 tempest_service_available_cinder: False
-tempest_service_available_glance: False
+tempest_service_available_glance: True
 tempest_service_available_heat: False
 tempest_service_available_horizon: False
-tempest_service_available_neutron: False
-tempest_service_available_nova: False
+tempest_service_available_neutron: True
+tempest_service_available_nova: True
 tempest_service_available_swift: False
 tempest_service_available_zaqar: False
 tempest_plugins:

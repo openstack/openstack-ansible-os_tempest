@@ -13,53 +13,53 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-- name: Playbook for deploying keystone
-  hosts: keystone_all
+- name: Playbook for deploying glance
+  hosts: glance_all
   user: root
   gather_facts: true
   pre_tasks:
     - name: Ensure rabbitmq vhost
       rabbitmq_vhost:
-        name: "{{ keystone_rabbitmq_vhost }}"
+        name: "{{ glance_rabbitmq_vhost }}"
         state: "present"
       delegate_to: "10.100.102.101"
-      when: inventory_hostname == groups['keystone_all'][0]
+      when: inventory_hostname == groups['glance_all'][0]
     - name: Ensure rabbitmq user
       rabbitmq_user:
-        user: "{{ keystone_rabbitmq_userid }}"
-        password: "{{ keystone_rabbitmq_password }}"
-        vhost: "{{ keystone_rabbitmq_vhost }}"
+        user: "{{ glance_rabbitmq_userid }}"
+        password: "{{ glance_rabbitmq_password }}"
+        vhost: "{{ glance_rabbitmq_vhost }}"
         configure_priv: ".*"
         read_priv: ".*"
         write_priv: ".*"
         state: "present"
       delegate_to: "10.100.102.101"
-      when: inventory_hostname == groups['keystone_all'][0]
+      when: inventory_hostname == groups['glance_all'][0]
     - name: Create DB for service
       mysql_db:
         login_user: "root"
         login_password: "secrete"
         login_host: "localhost"
-        name: "{{ keystone_galera_database }}"
+        name: "{{ glance_galera_database }}"
         state: "present"
       delegate_to: "10.100.102.101"
-      when: inventory_hostname == groups['keystone_all'][0]
+      when: inventory_hostname == groups['glance_all'][0]
     - name: Grant access to the DB for the service
       mysql_user:
         login_user: "root"
         login_password: "secrete"
         login_host: "localhost"
-        name: "{{ keystone_galera_database }}"
-        password: "{{ keystone_container_mysql_password }}"
+        name: "{{ glance_galera_database }}"
+        password: "{{ glance_container_mysql_password }}"
         host: "{{ item }}"
         state: "present"
-        priv: "{{ keystone_galera_database }}.*:ALL"
+        priv: "{{ glance_galera_database }}.*:ALL"
       with_items:
         - "localhost"
         - "%"
       delegate_to: "10.100.102.101"
-      when: inventory_hostname == groups['keystone_all'][0]
+      when: inventory_hostname == groups['glance_all'][0]
   roles:
-    - role: os_keystone
+    - role: "os_glance"
   vars_files:
     - test-vars.yml

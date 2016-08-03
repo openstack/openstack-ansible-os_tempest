@@ -15,11 +15,9 @@
 
 - name: Playbook for creating containers
   hosts: all_containers
-  connection: local
   gather_facts: false
   roles:
     - role: "lxc_container_create"
-      lxc_container_release: trusty
       lxc_container_backing_store: dir
       global_environment_variables:
         PATH: "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"

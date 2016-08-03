@@ -1,6 +1,5 @@
-
 ---
-# Copyright 2015, Rackspace US, Inc.
+# Copyright 2016, Rackspace US, Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -14,11 +13,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-- name: Playbook for deploying tempest
-  hosts: tempest
-  user: root
-  gather_facts: true
-  roles:
-    - role: "{{ rolename | basename }}"
-  vars_files:
-    - test-vars.yml
+neutron_provider_networks:
+  network_types: "vxlan,flat"
+  network_mappings: "flat:br-vlan"
+  network_vxlan_ranges: "1:1000"

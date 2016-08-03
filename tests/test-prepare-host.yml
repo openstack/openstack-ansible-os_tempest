@@ -13,9 +13,11 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-- name: Playbook for configuring LXC host
+- name: Playbook for configuring the LXC host
   hosts: localhost
   pre_tasks:
+    - name: Clear iptables rules
+      shell: ./iptables-clear.sh
     # Make sure OS does not have a stale package cache.
     - name: Update apt cache
       apt:
@@ -37,10 +39,38 @@
         lxc_container_cache_files:
           - { src: '/etc/pip.conf', dest: '/etc/pip.conf' }
       when: nodepool.stat.exists | bool
+  post_tasks:
+    # The elegant solution: change the bridge everywhere to replicate the standard behaviour
+    - name: Register list of bridges
+      command: /sbin/brctl show
+      register: bridge_list
+    - name: Create br-mgmt bridge
+      command: /sbin/brctl addbr br-mgmt
+      when:
+        - not bridge_list.stdout | search("br-mgmt")
+    - name: IP br-mgmt
+      command: /sbin/ifconfig br-mgmt 10.100.102.1 netmask 255.255.255.0
+    - name: Create br-vxlan bridge
+      command: /sbin/brctl addbr br-vxlan
+      when:
+        - not bridge_list.stdout | search("br-vxlan")
+    - name: IP br-vxlan
+      command: /sbin/ifconfig br-vxlan 10.100.101.1 netmask 255.255.255.0
+    - name: Create br-vlan bridge
+      command: /sbin/brctl addbr br-vlan
+      when:
+        - not bridge_list.stdout | search("br-vlan")
+    - name: IP br-vlan
+      command: /sbin/ifconfig br-vlan 10.1.13.1 netmask 255.255.255.0
+    - name: Add iptables rule to ensure ssh checksum is correct
+      command: /sbin/iptables -A POSTROUTING -t mangle -p tcp --dport 22 -j CHECKSUM --checksum-fill
+    - name: Add iptables rules for lxc natting
+      command: /usr/local/bin/lxc-system-manage iptables-create
   roles:
     - role: "lxc_hosts"
       lxc_net_address: 10.100.100.1
-      lxc_net_dhcp_range: 10.100.100.8,10.100.100.253
+      lxc_net_netmask: 255.255.255.0
+      lxc_net_dhcp_range: 10.100.100.2,10.100.100.99
       lxc_net_bridge: lxcbr0
       lxc_kernel_options:
         - { key: 'fs.inotify.max_user_instances', value: 1024 }
