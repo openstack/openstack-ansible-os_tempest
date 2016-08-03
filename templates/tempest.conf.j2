@@ -9,21 +9,11 @@ use_stderr = false
 
 [auth]
 tempest_roles = remote_image
-allow_tenant_isolation = True
+use_dynamic_credentials = True
 
 
 [baremetal]
 endpoint_type = internalURL
-
-
-[boto]
-aki_manifest = cirros-{{ cirros_version }}-x86_64-vmlinuz.manifest.xml
-ami_manifest = cirros-{{ cirros_version }}-x86_64-blank.img.manifest.xml
-ari_manifest = cirros-{{ cirros_version }}-x86_64-initrd.manifest.xml
-ec2_url = {{ tempest_boto_ec2_url }}
-s3_url = {{ tempest_boto_s3_url }}
-instance_type = tempest1
-s3_materials_path = /opt/images/s3-materials/cirros-{{ cirros_version }}
 
 
 [cli]
@@ -38,11 +28,6 @@ image_ref = {{ tempest_glance_image_id }}
 image_ref_alt = {{ tempest_glance_image_alt_id }}
 flavor_ref = 201
 flavor_ref_alt = 202
-image_ssh_user = {{ tempest_compute_image_ssh_user }}
-image_ssh_password = {{ tempest_compute_image_ssh_password }}
-image_alt_ssh_user = {{ tempest_compute_image_alt_ssh_user }}
-ssh_user = {{ tempest_compute_ssh_user }}
-auth_method = keypair
 fixed_network_name = private
 endpoint_type = internalURL
 floating_ip_range = 10.0.0.0/29
@@ -110,7 +95,7 @@ trust = false
 
 [image]
 endpoint_type = internalURL
-http_image = {{ cirros_tgz_url }}
+http_image = {{ tempest_img_url }}
 
 
 [image-feature-enabled]
@@ -163,12 +148,10 @@ lock_path = {{ tempest_venv_bin | dirname }}/locks
 
 
 [scenario]
-aki_img_file = cirros-{{ cirros_version }}-x86_64-vmlinuz
-ari_img_file = cirros-{{ cirros_version }}-x86_64-initrd
-ami_img_file = cirros-{{ cirros_version }}-x86_64-blank.img
 img_dir = {{ tempest_image_dir }}
-img_file = cirros-{{ cirros_version }}-x86_64-disk.img
-ssh_user = {{ tempest_compute_image_ssh_user }}
+img_file = {{ tempest_image_file }}
+img_container_format = bare
+img_disk_format = {{ tempest_img_disk_format }}
 
 
 [service_available]
@@ -197,7 +180,8 @@ endpoint_type = internalURL
 
 [validation]
 run_validation = {{ tempest_compute_run_ssh }}
-
+auth_method = keypair
+image_ssh_user = {{ tempest_compute_image_ssh_user }}
 
 [volume]
 endpoint_type = internalURL

@@ -62,28 +62,6 @@
     - tempest-config
     - tempest-image
 
-- name: Locate archives
-  shell: |
-    ls -1 {{ tempest_image_dir }} | grep '.gz'
-  register: tempest_archives
-  when: tempest_service_available_glance | bool
-  tags:
-    - tempest-config
-    - tempest-image
-    - tempest-image-unarchive
-
-- name: Image(s) unarchive
-  unarchive:
-    src: "{{ tempest_image_dir }}/{{ item }}"
-    dest: "{{ tempest_image_dir }}"
-    copy: "no"
-  with_items: "{{ tempest_archives.stdout | default([]) }}"
-  when: tempest_service_available_glance | bool
-  tags:
-    - tempest-config
-    - tempest-image
-    - tempest-image-unarchive
-
 - name: Copy tempest config
   config_template:
     src: "tempest.conf.j2"
