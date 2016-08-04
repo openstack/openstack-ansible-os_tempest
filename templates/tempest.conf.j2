@@ -12,7 +12,8 @@ use_stderr = false
 [auth]
 tempest_roles = remote_image
 use_dynamic_credentials = True
-
+default_credentials_domain_name = Default
+admin_domain_name = Default
 
 [baremetal]
 endpoint_type = internalURL
@@ -88,7 +89,6 @@ alt_domain_name = Default
 admin_username = {{ keystone_admin_user_name }}
 admin_tenant_name = {{ keystone_admin_tenant_name }}
 admin_password = {{ keystone_auth_admin_password }}
-admin_domain_name = Default
 
 
 [identity-feature-enabled]
