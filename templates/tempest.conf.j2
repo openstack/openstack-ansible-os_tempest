@@ -1,6 +1,8 @@
 # {{ ansible_managed }}
 
 [DEFAULT]
+# Disable stderr logging
+use_stderr = False
 debug = {{ debug }}
 verbose = {{ verbose }}
 fatal_deprecations = {{ tempest_fatal_deprecations }}
