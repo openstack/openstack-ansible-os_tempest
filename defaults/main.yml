@@ -157,6 +157,12 @@ tempest_img_disk_format: qcow2
 tempest_img_name: 'cirros'
 tempest_enable_instance_password: True
 
+# This variable is used by the repo_build process to determine
+# which host group to check for members of before building the
+# pip packages required by this role. The value is picked up
+# by the py_pkgs lookup.
+tempest_role_project_group: utility_all
+
 ## Tunable overrides
 tempest_tempest_conf_overrides: {}
 
