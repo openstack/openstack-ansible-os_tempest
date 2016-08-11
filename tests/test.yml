@@ -28,8 +28,20 @@
 # Install Keystone
 - include: test-install-keystone.yml
 
+# Install Glance
+- include: test-install-glance.yml
+
+# Install Neutron
+- include: test-install-neutron.yml
+
+# Install Nova
+- include: test-install-nova.yml
+
 # Install Tempest
 - include: test-install-tempest.yml
 
 # Test Tempest
 - include: test-tempest-functional.yml
+
+# Test Nova
+- include: test-nova-functional.yml

@@ -18,6 +18,8 @@
   user: root
   gather_facts: true
   roles:
+    - role: "rabbitmq_server"
+      rabbitmq_cookie_token: secrete
     - role: "galera_server"
       galera_root_password: secrete
       galera_root_user: root

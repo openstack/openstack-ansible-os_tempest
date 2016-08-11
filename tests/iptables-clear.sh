@@ -1,5 +1,5 @@
-
----
+#!/bin/bash
+#
 # Copyright 2015, Rackspace US, Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -13,12 +13,14 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
+#
 
-- name: Playbook for deploying tempest
-  hosts: tempest
-  user: root
-  gather_facts: true
-  roles:
-    - role: "{{ rolename | basename }}"
-  vars_files:
-    - test-vars.yml
+iptables -F
+iptables -X
+iptables -t nat -F
+iptables -t nat -X
+iptables -t mangle -F
+iptables -t mangle -X
+iptables -P INPUT ACCEPT
+iptables -P FORWARD ACCEPT
+iptables -P OUTPUT ACCEPT
