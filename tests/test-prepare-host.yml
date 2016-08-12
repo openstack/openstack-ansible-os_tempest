@@ -40,30 +40,48 @@
           - { src: '/etc/pip.conf', dest: '/etc/pip.conf' }
       when: nodepool.stat.exists | bool
   post_tasks:
-    # The elegant solution: change the bridge everywhere to replicate the standard behaviour
-    - name: Register list of bridges
-      command: /sbin/brctl show
-      register: bridge_list
-    - name: Create br-mgmt bridge
-      command: /sbin/brctl addbr br-mgmt
-      when:
-        - not bridge_list.stdout | search("br-mgmt")
-    - name: IP br-mgmt
-      command: /sbin/ifconfig br-mgmt 10.100.102.1 netmask 255.255.255.0
-    - name: Create br-vxlan bridge
-      command: /sbin/brctl addbr br-vxlan
-      when:
-        - not bridge_list.stdout | search("br-vxlan")
-    - name: IP br-vxlan
-      command: /sbin/ifconfig br-vxlan 10.100.101.1 netmask 255.255.255.0
-    - name: Create br-vlan bridge
-      command: /sbin/brctl addbr br-vlan
-      when:
-        - not bridge_list.stdout | search("br-vlan")
-    - name: IP br-vlan
-      command: /sbin/ifconfig br-vlan 10.1.13.1 netmask 255.255.255.0
-    - name: Add iptables rule to ensure ssh checksum is correct
-      command: /sbin/iptables -A POSTROUTING -t mangle -p tcp --dport 22 -j CHECKSUM --checksum-fill
+    - name: Ensure that /etc/network/interfaces.d/ exists
+      file:
+        path: /etc/network/interfaces.d/
+        state: directory
+      tags:
+        - networking-dir-create
+
+    - name: Copy network configuration
+      template:
+        src: test-tempest-interfaces.cfg.j2
+        dest: /etc/network/interfaces.d/tempest_interfaces.cfg
+      register: tempest_interfaces
+      tags:
+        - networking-interfaces-file
+
+    - name: Ensure our interfaces.d configuration files are loaded automatically
+      lineinfile:
+        dest: /etc/network/interfaces
+        line: "source /etc/network/interfaces.d/*.cfg"
+      tags:
+        - networking-interfaces-load
+
+    - name: Shut down the network interfaces
+      command: "ifdown {{ item }}"
+      when: tempest_interfaces | changed
+      with_items:
+        - br-mgmt
+        - br-vlan
+        - br-vxlan
+      tags:
+        - networking-interfaces-stop
+
+    - name: Start the network interfaces
+      command: "ifup {{ item }}"
+      when: tempest_interfaces | changed
+      with_items:
+        - br-mgmt
+        - br-vlan
+        - br-vxlan
+      tags:
+        - networking-interfaces-start
+
     - name: Add iptables rules for lxc natting
       command: /usr/local/bin/lxc-system-manage iptables-create
   roles:

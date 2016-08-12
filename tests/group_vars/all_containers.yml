@@ -30,7 +30,7 @@ container_networks:
     type: "veth"
   vlan_address:
     bridge: "br-vlan"
-    interface: "eth3"
+    interface: "eth12"
     netmask: null
     type: "veth"
 physical_host: localhost

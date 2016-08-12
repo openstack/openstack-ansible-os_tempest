@@ -15,5 +15,5 @@
 
 neutron_provider_networks:
   network_types: "vxlan,flat"
-  network_mappings: "flat:br-vlan"
+  network_mappings: "flat:eth12"
   network_vxlan_ranges: "1:1000"
