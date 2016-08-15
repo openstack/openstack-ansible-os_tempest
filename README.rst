@@ -1,14 +1,9 @@
-os_tempest role
-###############
-:tags: openstack, cloud, ansible, os_tempest
-:category: \*nix
+=================================
+OpenStack-Ansible os_tempest role
+=================================
 
-os_tempest Role
+Documentation for the project can be found at:
+  http://docs.openstack.org/developer/openstack-ansible-os_tempest
 
-.. code-block:: yaml
-
-    - name: os_tempest role
-      hosts: "hosts"
-      user: root
-      roles:
-        - { role: "os_tempest" }
+The project home is at:
+  http://launchpad.net/openstack-ansible

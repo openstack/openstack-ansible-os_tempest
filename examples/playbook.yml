@@ -1,0 +1,5 @@
+- name: os_tempest role
+  hosts: "hosts"
+  user: root
+  roles:
+    - { role: "os_tempest" }
