@@ -14,7 +14,7 @@
 # limitations under the License.
 
 # Defines that the role will be deployed on a host machine
-is_metal: true
+is_metal: True
 
 ## Verbosity Options
 debug: False
@@ -23,7 +23,7 @@ tempest_git_repo: https://git.openstack.org/openstack/tempest
 tempest_git_install_branch: master
 tempest_requirements_git_repo: https://git.openstack.org/openstack/requirements
 tempest_requirements_git_install_branch: master
-tempest_developer_mode: false
+tempest_developer_mode: False
 tempest_developer_constraints:
   - "git+{{ tempest_git_repo }}@{{ tempest_git_install_branch }}#egg=tempest"
 
@@ -36,7 +36,7 @@ tempest_venv_tag: untagged
 tempest_venv_bin: "/opt/tempest_{{ tempest_venv_tag }}/bin"
 
 # Set this to enable or disable installing in a venv
-tempest_venv_enabled: true
+tempest_venv_enabled: True
 
 ## Tempest Plugins
 # By default, no tempest plugins are installed.  Override ``tempest_plugins``
@@ -69,7 +69,7 @@ tempest_public_subnet_cidr: "10.1.13.0/24"
 tempest_public_net_provider_type: "flat"
 tempest_public_net_physical_type: "flat"
 tempest_public_net_seg_id: ""
-tempest_public_router_external: "true"
+tempest_public_router_external: "True"
 # Example allocation range:
 #tempest_public_subnet_allocation_pools: "10.1.13.150-10.1.13.200"
 tempest_public_subnet_allocation_pools: ""
@@ -99,10 +99,10 @@ tempest_service_available_sahara: False
 tempest_service_available_swift: True
 tempest_service_available_zaqar: False
 
-tempest_image_api_v1_enabled: true
+tempest_image_api_v1_enabled: True
 tempest_image_api_v2_enabled: True
 
-tempest_swift_enabled: true
+tempest_swift_enabled: True
 tempest_swift_container_sync: True
 tempest_swift_object_versioning: True
 tempest_swift_discoverable_apis:
