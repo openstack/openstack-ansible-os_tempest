@@ -57,6 +57,8 @@ tempest_fatal_deprecations: False
 
 # This needs to coincide with tempest_network_tenant_network_cidr and
 # tempest_network_tenant_network_mask_bits below
+tempest_private_net_name: "private"
+tempest_private_subnet_name: "private-subnet"
 tempest_private_subnet_cidr: "192.168.74.0/28"
 tempest_private_net_provider_type: "vxlan"
 tempest_private_net_seg_id: 1
@@ -65,6 +67,8 @@ tempest_private_net_seg_id: 1
 # Currently supports 2 types
 # Flat - default
 # Vlan - make sure you override seg id, cidr, provider and physical
+tempest_public_net_name: "public"
+tempest_public_subnet_name: "public-subnet"
 tempest_public_subnet_cidr: "10.1.13.0/24"
 tempest_public_net_provider_type: "flat"
 tempest_public_net_physical_type: "flat"
