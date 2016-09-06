@@ -2,10 +2,12 @@
 localhost ansible_connection=local ansible_become=True neutron_local_ip=10.100.101.1
 infra1 ansible_host=10.100.102.101 ansible_become=True ansible_user=root tunnel_address=10.100.101.101
 openstack1 ansible_host=10.100.102.102 ansible_become=True ansible_user=root tunnel_address=10.100.101.102 neutron_local_ip=10.100.101.102
+tempest1 ansible_host=10.100.102.103 ansible_become=True ansible_user=root
 
 [all_containers]
 infra1
 openstack1
+tempest1
 
 [rabbitmq_all]
 infra1
@@ -99,4 +101,7 @@ nova_console
 nova_scheduler
 
 [tempest]
-openstack1
+tempest1
+
+[utility_all]
+tempest1
