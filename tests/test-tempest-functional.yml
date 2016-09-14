@@ -14,7 +14,7 @@
 # limitations under the License.
 
 - name: Playbook for functional testing of tempest
-  hosts: keystone_all
+  hosts: utility_all[0]
   user: root
   gather_facts: false
   tasks:

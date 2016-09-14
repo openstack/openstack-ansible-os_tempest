@@ -19,6 +19,10 @@ is_metal: True
 ## Verbosity Options
 debug: False
 
+# Set the package install state for distribution packages
+# # Options are 'present' and 'latest'
+tempest_package_state: "latest"
+
 tempest_git_repo: https://git.openstack.org/openstack/tempest
 tempest_git_install_branch: master
 tempest_requirements_git_repo: https://git.openstack.org/openstack/requirements

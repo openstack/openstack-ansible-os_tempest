@@ -117,7 +117,7 @@ nova_service_user_domain_id: default
 nova_service_user_name: nova
 nova_bin: "/openstack/venvs/nova-{{ nova_venv_tag }}/bin"
 nova_venv_tag: "testing"
-openrc_os_auth_url: "http://127.0.0.1:5000/v3"
+openrc_os_auth_url: "http://10.100.102.102:5000/v3"
 openrc_os_domain_name: "Default"
 openrc_os_password: "{{ keystone_auth_admin_password }}"
 # This ensures that libvirt-python is built from source. A pre-built wheel
@@ -135,7 +135,7 @@ tempest_venv_tag: "{{ tempest_git_install_branch }}"
 # it again here so we can refer to it in test-tempest-functional.yml
 tempest_venv_bin: "/opt/tempest_{{ tempest_venv_tag }}/bin"
 tempest_log_dir: "/var/log/"
-tempest_main_group: keystone_all
+tempest_main_group: utility_all
 tempest_service_available_aodh: False
 tempest_service_available_ceilometer: False
 tempest_service_available_cinder: False

@@ -13,6 +13,14 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+- include: tempest_install_apt.yml
+  when:
+    - ansible_pkg_mgr == 'apt'
+
+- include: tempest_install_yum.yml
+  when:
+    - ansible_pkg_mgr == 'yum'
+
 - name: Create developer mode constraint file
   copy:
     dest: "/opt/developer-pip-constraints.txt"
