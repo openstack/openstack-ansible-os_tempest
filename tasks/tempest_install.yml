@@ -14,12 +14,12 @@
 # limitations under the License.
 
 - include: tempest_install_apt.yml
-  when:
-    - ansible_pkg_mgr == 'apt'
+  static: no
+  when: ansible_pkg_mgr == 'apt'
 
 - include: tempest_install_yum.yml
-  when:
-    - ansible_pkg_mgr == 'yum'
+  static: no
+  when: ansible_pkg_mgr == 'yum'
 
 - name: Create developer mode constraint file
   copy:
