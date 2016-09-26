@@ -13,12 +13,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-ansible_ssh_host: "{{ ansible_host }}"
-container_name: "{{ inventory_hostname }}"
-container_networks:
-  management_address:
-    address: "{{ ansible_host }}"
-    bridge: "br-mgmt"
-    interface: "eth1"
-    netmask: "255.255.255.0"
-    type: "veth"
+ansible_host: 10.1.1.103
+ansible_become: True
+ansible_user: root
+tunnel_address: 10.1.2.103

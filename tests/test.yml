@@ -14,31 +14,31 @@
 # limitations under the License.
 
 # Prepare the user ssh keys
-- include: test-prepare-keys.yml
+- include: common/test-prepare-keys.yml
 
 # Prepare the host
-- include: test-prepare-host.yml
+- include: common/test-prepare-host.yml
 
 # Prepare the containers
-- include: test-prepare-containers.yml
+- include: common/test-prepare-containers.yml
 
 # Install RabbitMQ/MariaDB
-- include: test-install-infra.yml
+- include: common/test-install-infra.yml
 
 # Install Keystone
-- include: test-install-keystone.yml
+- include: common/test-install-keystone.yml
 
 # Install Glance
-- include: test-install-glance.yml
+- include: common/test-install-glance.yml
 
 # Install Neutron
-- include: test-install-neutron.yml
+- include: common/test-install-neutron.yml
 
 # Install Nova
-- include: test-install-nova.yml
+- include: common/test-install-nova.yml
 
 # Install Tempest
-- include: test-install-tempest.yml
+- include: common/test-install-tempest.yml
 
 # Test Tempest
 - include: test-tempest-functional.yml
