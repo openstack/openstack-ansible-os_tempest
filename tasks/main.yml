@@ -28,12 +28,10 @@
 - include: tempest_install.yml
 
 - include: tempest_resources.yml
-  static: no
   when: inventory_hostname == groups[tempest_main_group][0]
 
 # Called a second time to set facts on the other utility containers.
 - include: tempest_resources.yml
-  static: no
   when: inventory_hostname != groups[tempest_main_group][0]
 
 - include: tempest_post_install.yml
