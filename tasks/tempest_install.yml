@@ -245,7 +245,7 @@
   pip:
     name: "/opt/{{ item.name }}_{{ item.branch|replace('/', '_') }}"
     state: latest
-    virtualenv: "{{ tempest_git_dest }}"
+    virtualenv: "{{ tempest_venv_bin | dirname }}"
     virtualenv_site_packages: "no"
     extra_args: "{{ pip_install_options_fact }}"
   with_items: "{{ tempest_plugins }}"
