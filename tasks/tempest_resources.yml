@@ -28,17 +28,11 @@
   retries: 5
   delay: 15
   when: tempest_service_available_glance | bool
-  tags:
-    - tempest-setup
-    - tempest-config
 
 - name: Store tempest image id
   set_fact:
     tempest_glance_image_id: "{{ glance_images[tempest_img_name].id }}"
   when: tempest_service_available_glance | bool
-  tags:
-    - tempest-setup
-    - tempest-config
 
 # This fact is used in tempest.conf.j2; we set an empty string if it doesn't get
 # set above to ensure the template will parse correctly.
@@ -46,9 +40,6 @@
   set_fact:
     tempest_glance_image_id: ''
   when: not tempest_service_available_glance | bool
-  tags:
-    - tempest-setup
-    - tempest-config
 
 - name: Ensure alt tempest image
   glance:
@@ -61,17 +52,11 @@
     image_is_public: True
     insecure: "{{ keystone_service_internaluri_insecure }}"
   when: tempest_service_available_glance | bool
-  tags:
-    - tempest-setup
-    - tempest-config
 
 - name: Store alt tempest image id
   set_fact:
     tempest_glance_image_alt_id: "{{ glance_images[tempest_img_name + '_alt'].id }}"
   when: tempest_service_available_glance | bool
-  tags:
-    - tempest-setup
-    - tempest-config
 
 # This fact is used in tempest.conf.j2; we set an empty string if it doesn't get
 # set above to ensure the template will parse correctly.
@@ -79,9 +64,6 @@
   set_fact:
     tempest_glance_image_alt_id: ''
   when: not tempest_service_available_glance | bool
-  tags:
-    - tempest-setup
-    - tempest-config
 
 - name: Ensure tempest tenants
   keystone:
@@ -100,8 +82,6 @@
   with_items:
     - demo
     - alt_demo
-  tags:
-    - tempest-setup
 
 - name: Ensure tempest users
   keystone:
@@ -122,8 +102,6 @@
   with_items:
     - demo
     - alt_demo
-  tags:
-    - tempest-setup
 
 - name: Ensure tempest users have heat_stack_owner role
   keystone:
@@ -144,8 +122,6 @@
   with_items:
     - demo
     - alt_demo
-  tags:
-    - tempest-setup
 
 - name: Ensure reseller_admin role
   keystone:
@@ -160,8 +136,6 @@
   until: add_service|success
   retries: 5
   delay: 10
-  tags:
-    - tempest-setup
 
 - name: Ensure remote_image role exists
   keystone:
@@ -176,8 +150,6 @@
   until: add_service|success
   retries: 5
   delay: 10
-  tags:
-    - tempest-setup
 
 - name: Get demo tenant id
   keystone:
@@ -192,16 +164,10 @@
   until: add_service|success
   retries: 5
   delay: 10
-  tags:
-    - tempest-setup
-    - tempest-config
 
 - name: Store demo tenant id
   set_fact:
     keystone_demo_tenant_id: "{{ keystone_facts.id }}"
-  tags:
-    - tempest-setup
-    - tempest-config
 
 - name: Ensure private network exists
   neutron:
@@ -213,17 +179,11 @@
     tenant_id: "{{ keystone_demo_tenant_id }}"
     insecure: "{{ keystone_service_internaluri_insecure }}"
   when: tempest_service_available_neutron | bool
-  tags:
-    - tempest-setup
-    - tempest-config
 
 - name: Store neutron private network id
   set_fact:
     tempest_neutron_private_network_id: "{{ neutron_networks.private.id }}"
   when: tempest_service_available_neutron | bool
-  tags:
-    - tempest-setup
-    - tempest-config
 
 - name: Ensure public network exists
   neutron:
@@ -236,19 +196,12 @@
     router_external: "{{ tempest_public_router_external }}"
     tenant_id: "{{ keystone_demo_tenant_id }}"
     insecure: "{{ keystone_service_internaluri_insecure }}"
-  when:
-    - tempest_service_available_neutron | bool
-  tags:
-    - tempest-setup
-    - tempest-config
+  when: tempest_service_available_neutron | bool
 
 - name: Store neutron public network id
   set_fact:
     tempest_neutron_public_network_id: "{{ neutron_networks.public.id }}"
   when: tempest_service_available_neutron | bool
-  tags:
-    - tempest-setup
-    - tempest-config
 
 # This fact is used in tempest.conf.j2; we set an empty string if it doesn't get
 # set above to ensure the template will parse correctly.
@@ -256,9 +209,6 @@
   set_fact:
     tempest_neutron_public_network_id: ''
   when: not tempest_service_available_neutron | bool
-  tags:
-    - tempest-setup
-    - tempest-config
 
 - name: Ensure private subnet exists
   neutron:
@@ -270,8 +220,6 @@
     tenant_id: "{{ keystone_demo_tenant_id }}"
     insecure: "{{ keystone_service_internaluri_insecure }}"
   when: tempest_service_available_neutron | bool
-  tags:
-    - tempest-setup
 
 - name: Ensure public subnet exists
   neutron:
@@ -283,8 +231,6 @@
     insecure: "{{ keystone_service_internaluri_insecure }}"
     allocation_pools: "{{ tempest_public_subnet_allocation_pools }}"
   when: tempest_service_available_neutron | bool
-  tags:
-    - tempest-setup
 
 - name: Create router
   neutron:
@@ -295,8 +241,6 @@
     tenant_id: "{{ keystone_demo_tenant_id }}"
     insecure: "{{ keystone_service_internaluri_insecure }}"
   when: tempest_service_available_neutron | bool
-  tags:
-    - tempest-setup
 
 - name: Add private subnet to router
   neutron:
@@ -306,8 +250,6 @@
     subnet_name: "{{ tempest_private_subnet_name }}"
     insecure: "{{ keystone_service_internaluri_insecure }}"
   when: tempest_service_available_neutron | bool
-  tags:
-    - tempest-setup
 
 - name: Check if tempest flavor 201 exists
   shell: |
@@ -317,8 +259,6 @@
   failed_when: False
   changed_when: tempest1.rc != 0
   when: tempest_service_available_nova | bool
-  tags:
-    - tempest-setup
 
 - name: Create tempest flavor 201
   shell: |
@@ -327,8 +267,6 @@
   when:
     - tempest_service_available_nova | bool
     - tempest1.rc != 0
-  tags:
-    - tempest-setup
 
 - name: Check if tempest flavor 202 exists
   shell: |
@@ -338,8 +276,6 @@
   failed_when: False
   changed_when: tempest2.rc != 0
   when: tempest_service_available_nova | bool
-  tags:
-    - tempest-setup
 
 - name: Create tempest flavor 202
   shell: |
@@ -348,5 +284,3 @@
   when:
     - tempest_service_available_nova | bool
     - tempest2.rc != 0
-  tags:
-    - tempest-setup

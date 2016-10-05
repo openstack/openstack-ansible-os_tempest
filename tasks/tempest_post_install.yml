@@ -26,14 +26,10 @@
   until: add_service|success
   retries: 5
   delay: 10
-  tags:
-    - tempest-config
 
 - name: Store admin tenant id
   set_fact:
     tempest_admin_tenant_id: "{{ keystone_facts.id }}"
-  tags:
-    - tempest-config
 
 - name: Create tempest dir
   file:
@@ -46,10 +42,6 @@
     - { path: "{{ tempest_venv_bin | dirname }}/locks", mode: "0777" }
     - { path: "{{ tempest_venv_bin | dirname }}/etc" }
     - { path: "{{ tempest_image_dir }}" }
-  tags:
-    - tempest-dirs
-    - tempest-config
-    - tempest-image
 
 - name: Image(s) download
   get_url:
@@ -58,9 +50,6 @@
     sha256sum: "{{ item.sha256 }}"
   with_items: "{{ tempest_images }}"
   when: tempest_service_available_glance | bool
-  tags:
-    - tempest-config
-    - tempest-image
 
 - name: Copy tempest config
   config_template:
@@ -71,8 +60,6 @@
     mode: "0644"
     config_overrides: "{{ tempest_tempest_conf_overrides }}"
     config_type: "ini"
-  tags:
-    - tempest-config
 
 - name: Generate tempest Config
   template:
@@ -81,5 +68,3 @@
     owner: "root"
     group: "root"
     mode: "0755"
-  tags:
-    - tempest-config
