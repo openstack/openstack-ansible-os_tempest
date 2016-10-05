@@ -13,9 +13,6 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# Defines that the role will be deployed on a host machine
-is_metal: True
-
 ## Verbosity Options
 debug: False
 
@@ -33,14 +30,11 @@ tempest_developer_constraints:
 
 # Name of the virtual env to deploy into
 tempest_venv_tag: untagged
-# NOTE(mattt): The eventual goal is to get the tempest installed into
-#              /openstack/venvs like all other venvs, but for now we point
-#              ``tempest_venv_bin`` where we currently install tempest.
-#tempest_venv_bin: "/openstack/venvs/tempest-{{ tempest_venv_tag }}/bin"
-tempest_venv_bin: "/opt/tempest_{{ tempest_venv_tag }}/bin"
+tempest_venv_bin: "/openstack/venvs/tempest-{{ tempest_venv_tag }}/bin"
+tempest_venv_download_url: http://127.0.0.1/venvs/untagged/ubuntu/tempest.tgz
 
-# Set this to enable or disable installing in a venv
-tempest_venv_enabled: True
+# The location where the test results will be placed
+tempest_log_dir: "/var/log/tempest"
 
 ## Tempest Plugins
 # By default, no tempest plugins are installed.  Override ``tempest_plugins``
@@ -51,7 +45,7 @@ tempest_venv_enabled: True
 #     branch: master
 tempest_plugins: []
 
-tempest_venv_download_url: http://127.0.0.1/venvs/untagged/ubuntu/tempest.tgz
+# Toggle fatal deprecations
 tempest_fatal_deprecations: False
 
 # Private network configuration
@@ -173,5 +167,3 @@ tempest_role_project_group: utility_all
 
 ## Tunable overrides
 tempest_tempest_conf_overrides: {}
-
-tempest_log_dir: "/var/log/tempest"

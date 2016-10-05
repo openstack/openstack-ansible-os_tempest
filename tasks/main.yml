@@ -26,15 +26,16 @@
     - always
 
 - include: tempest_install.yml
+  tags: tempest-install
 
 - include: tempest_resources.yml
   when: inventory_hostname == groups[tempest_main_group][0]
+  tags: tempest-config
 
 # Called a second time to set facts on the other utility containers.
 - include: tempest_resources.yml
   when: inventory_hostname != groups[tempest_main_group][0]
+  tags: tempest-config
 
 - include: tempest_post_install.yml
-
-- name: Flush handlers
-  meta: flush_handlers
+  tags: tempest-config
