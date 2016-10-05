@@ -58,7 +58,9 @@
 
 # TODO(odyssey4me):
 # Once the execution of tempest no longer uses run_tempest.sh
-# then this task may be removed.
+# then this task may be removed. This task only executes when
+# the variable 'tempest_run' is a boolean false, which will be
+# the case in roles which are using the legacy method.
 - name: Get tempest from git
   git:
     repo: "{{ tempest_git_repo }}"
@@ -68,6 +70,7 @@
     update: "yes"
     accept_hostkey: "yes"
     force: "yes"
+  when: not tempest_run | bool
   register: git_clone
   until: git_clone | success
   retries: 5

@@ -13,6 +13,10 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+# Ensure that tempest executes tests
+tempest_run: yes
+
+# A sample plugin to activate the code path
 tempest_plugins:
   - name: designate-tempest-plugin
     repo: https://git.openstack.org/openstack/designate-tempest-plugin

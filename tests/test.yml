@@ -37,11 +37,8 @@
 # Install Nova
 - include: common/test-install-nova.yml
 
-# Install Tempest
+# Install and execute Tempest
 - include: common/test-install-tempest.yml
 
-# Test Tempest
+# Check whether Tempest executed successfully
 - include: test-tempest-functional.yml
-
-# Test Nova
-- include: test-nova-functional.yml

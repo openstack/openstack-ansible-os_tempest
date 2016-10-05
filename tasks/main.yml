@@ -39,3 +39,6 @@
 
 - include: tempest_post_install.yml
   tags: tempest-config
+
+- include: tempest_run.yml
+  when: tempest_run | bool
