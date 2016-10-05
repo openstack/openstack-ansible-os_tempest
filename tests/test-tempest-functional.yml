@@ -18,14 +18,29 @@
   user: root
   gather_facts: false
   tasks:
+
     - name: Ensure tempest plugins have been installed
-      command: "{{ tempest_venv_bin }}/pip show {{ item.name }}"
-      with_items: "{{ tempest_plugins }}"
-    - name: Run tempest
       shell: |
-        . {{ tempest_venv_bin }}/activate
-        {{ tempest_venv_bin | dirname }}/run_tempest.sh --no-virtual-env ${RUN_TEMPEST_OPTS} tempest.api.identity.v3
-      environment:
-        RUN_TEMPEST_OPTS: "--serial"
+        if {{ tempest_venv_bin }}/pip show {{ item.name }} > /dev/null; then
+         echo "The plugin {{ item.name }} has been installed."
+        else
+          echo "The plugin {{ item.name }} has NOT been installed."
+          exit 1
+        fi
+      with_items: "{{ tempest_plugins }}"
+
+    - name: List the contents of the tempest_result_path folder
+      command: "ls -1 {{ tempest_venv_bin | dirname }}/workspace/"
+      register: _results_list
+
+    - name: Check whether the expected subunit result files are present
+      assert:
+        that: "item in _results_list.stdout_lines"
+        msg: "{{ item }} must be present in {{ tempest_venv_bin | dirname }}/workspace/"
+      with_items:
+        - "tempest_results.html"
+        - "tempest_results.subunit"
+        - "tempest_results.xml"
+
   vars_files:
     - common/test-vars.yml
