@@ -160,6 +160,19 @@
   retries: 5
   delay: 2
 
+- name: Install tempest plugin requirements
+  pip:
+    requirements: "/opt/{{ item.name|replace('-', '_') }}_{{ item.branch|replace('/', '_') }}/test-requirements.txt"
+    state: latest
+    virtualenv: "{{ tempest_venv_bin | dirname }}"
+    virtualenv_site_packages: "no"
+    extra_args: "{{ pip_install_options_fact }}"
+  with_items: "{{ tempest_plugins }}"
+  register: install_tempest_plugin_requirements
+  until: install_tempest_plugin_requirements | success
+  retries: 5
+  delay: 2
+
 - name: Install tempest plugins
   pip:
     name: "/opt/{{ item.name|replace('-', '_') }}_{{ item.branch|replace('/', '_') }}"
@@ -168,7 +181,7 @@
     virtualenv_site_packages: "no"
     extra_args: "{{ pip_install_options_fact }}"
   with_items: "{{ tempest_plugins }}"
-  register: install_packages
-  until: install_packages|success
+  register: install_tempest_plugins
+  until: install_tempest_plugins | success
   retries: 5
   delay: 2
