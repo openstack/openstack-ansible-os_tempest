@@ -160,14 +160,21 @@
   retries: 5
   delay: 2
 
+- name: Check for the existance of the test-requirements.txt file
+  stat:
+    path: "/opt/{{ item.name|replace('-', '_') }}_{{ item.branch|replace('/', '_') }}/test-requirements.txt"
+  with_items: "{{ tempest_plugins }}"
+  register: _test_requirements_stat
+
 - name: Install tempest plugin requirements
   pip:
-    requirements: "/opt/{{ item.name|replace('-', '_') }}_{{ item.branch|replace('/', '_') }}/test-requirements.txt"
+    requirements: "{{ item.stat.path }}"
     state: latest
     virtualenv: "{{ tempest_venv_bin | dirname }}"
     virtualenv_site_packages: "no"
     extra_args: "{{ pip_install_options_fact }}"
-  with_items: "{{ tempest_plugins }}"
+  with_items: "{{ _test_requirements_stat.results }}"
+  when: "{{ item.stat.exists }}"
   register: install_tempest_plugin_requirements
   until: install_tempest_plugin_requirements | success
   retries: 5
