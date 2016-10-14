@@ -83,7 +83,7 @@
     url: "{{ tempest_venv_download_url }}"
     dest: "/var/cache/{{ tempest_venv_download_url | basename }}"
     force: yes
-  ignore_errors: true
+  failed_when: false
   register: tempest_get_venv
   when:
     - not tempest_developer_mode | bool
