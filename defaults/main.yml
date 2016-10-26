@@ -93,6 +93,7 @@ tempest_service_available_cinder: True
 tempest_service_available_glance: True
 tempest_service_available_heat: True
 tempest_service_available_horizon: True
+tempest_service_available_ironic: False
 tempest_service_available_neutron: True
 tempest_service_available_nova: True
 tempest_service_available_sahara: False
