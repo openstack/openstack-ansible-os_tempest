@@ -16,7 +16,7 @@
 tempest_plugins:
   - name: designate-tempest-plugin
     repo: https://git.openstack.org/openstack/designate-tempest-plugin
-    branch: master
+    branch: 700198187d732590275caa9025208659ff6c9374
 
 neutron_provider_networks:
   network_types: "vxlan,flat"
