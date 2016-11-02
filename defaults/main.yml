@@ -26,8 +26,6 @@ tempest_run: False
 
 tempest_git_repo: https://git.openstack.org/openstack/tempest
 tempest_git_install_branch: master
-tempest_requirements_git_repo: https://git.openstack.org/openstack/requirements
-tempest_requirements_git_install_branch: master
 tempest_developer_mode: False
 tempest_developer_constraints:
   - "git+{{ tempest_git_repo }}@{{ tempest_git_install_branch }}#egg=tempest"

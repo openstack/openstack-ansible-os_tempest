@@ -30,30 +30,13 @@
       {% endfor %}
   when: tempest_developer_mode | bool
 
-- name: Clone requirements git repository
-  git:
-    repo: "{{ tempest_requirements_git_repo }}"
-    dest: "/opt/requirements"
-    clone: yes
-    update: yes
-    version: "{{ tempest_requirements_git_install_branch }}"
-  when: tempest_developer_mode | bool
-
-- name: Add constraints to pip_install_options fact for developer mode
-  set_fact:
-    pip_install_options_fact: "{{ pip_install_options|default('') }} --constraint /opt/developer-pip-constraints.txt --constraint /opt/requirements/upper-constraints.txt"
-  when: tempest_developer_mode | bool
-
-- name: Set pip_install_options_fact when not in developer mode
-  set_fact:
-    pip_install_options_fact: "{{ pip_install_options|default('') }}"
-  when: not tempest_developer_mode | bool
-
 - name: Install requires pip packages
   pip:
     name: "{{ tempest_requires_pip_packages | join(' ') }}"
     state: "{{ tempest_pip_package_state }}"
-    extra_args: "{{ pip_install_options_fact }}"
+    extra_args: >-
+      {{ (pip_install_upper_constraints is defined) | ternary('--constraint ' + pip_install_upper_constraints | default(''),'') }}
+      {{ pip_install_options | default('') }}
   register: install_packages
   until: install_packages|success
   retries: 5
@@ -137,7 +120,10 @@
     state: "{{ tempest_pip_package_state }}"
     virtualenv: "{{ tempest_venv_bin | dirname }}"
     virtualenv_site_packages: "no"
-    extra_args: "{{ pip_install_options_fact }}"
+    extra_args: >-
+      {{ tempest_developer_mode | ternary('--constraint /opt/developer-pip-constraints.txt', '') }}
+      {{ (pip_install_upper_constraints is defined) | ternary('--constraint ' + pip_install_upper_constraints | default(''),'') }}
+      {{ pip_install_options | default('') }}
   register: install_packages
   until: install_packages|success
   retries: 5
@@ -175,7 +161,10 @@
     state: "{{ tempest_pip_package_state }}"
     virtualenv: "{{ tempest_venv_bin | dirname }}"
     virtualenv_site_packages: "no"
-    extra_args: "{{ pip_install_options_fact }}"
+    extra_args: >-
+      {{ tempest_developer_mode | ternary('--constraint /opt/developer-pip-constraints.txt', '') }}
+      {{ (pip_install_upper_constraints is defined) | ternary('--constraint ' + pip_install_upper_constraints | default(''),'') }}
+      {{ pip_install_options | default('') }}
   with_items: "{{ _test_requirements_stat.results }}"
   when: "{{ item.stat.exists }}"
   register: install_tempest_plugin_requirements
@@ -189,7 +178,10 @@
     state: "{{ tempest_pip_package_state }}"
     virtualenv: "{{ tempest_venv_bin | dirname }}"
     virtualenv_site_packages: "no"
-    extra_args: "{{ pip_install_options_fact }}"
+    extra_args: >-
+      {{ tempest_developer_mode | ternary('--constraint /opt/developer-pip-constraints.txt', '') }}
+      {{ (pip_install_upper_constraints is defined) | ternary('--constraint ' + pip_install_upper_constraints | default(''),'') }}
+      {{ pip_install_options | default('') }}
   with_items: "{{ tempest_plugins }}"
   register: install_tempest_plugins
   until: install_tempest_plugins | success
