@@ -81,6 +81,10 @@
   args:
     chdir: "{{ tempest_venv_bin | dirname }}"
     executable: /bin/bash
+  changed_when: false
+  tags:
+    # don't trigger ANSIBLE0013
+    - skip_ansible_lint
 
 - name: Generate tempest test whitelist
   copy:

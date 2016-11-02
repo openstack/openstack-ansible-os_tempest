@@ -259,6 +259,9 @@
   failed_when: False
   changed_when: tempest1.rc != 0
   when: tempest_service_available_nova | bool
+  tags:
+    # don't trigger ANSIBLE0013
+    - skip_ansible_lint
 
 - name: Create tempest flavor 201
   shell: |
@@ -267,6 +270,10 @@
   when:
     - tempest_service_available_nova | bool
     - tempest1.rc != 0
+  tags:
+    # don't trigger ANSIBLE0013
+    - skip_ansible_lint
+
 
 - name: Check if tempest flavor 202 exists
   shell: |
@@ -276,6 +283,9 @@
   failed_when: False
   changed_when: tempest2.rc != 0
   when: tempest_service_available_nova | bool
+  tags:
+    # don't trigger ANSIBLE0013
+    - skip_ansible_lint
 
 - name: Create tempest flavor 202
   shell: |
@@ -284,3 +294,6 @@
   when:
     - tempest_service_available_nova | bool
     - tempest2.rc != 0
+  tags:
+    # don't trigger ANSIBLE0013
+    - skip_ansible_lint

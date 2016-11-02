@@ -16,9 +16,10 @@
 ## Verbosity Options
 debug: False
 
-# Set the package install state for distribution packages
+# Set the package install state for distribution and pip packages
 # # Options are 'present' and 'latest'
 tempest_package_state: "latest"
+tempest_pip_package_state: "latest"
 
 # Toggle whether tempest actually executes
 tempest_run: False

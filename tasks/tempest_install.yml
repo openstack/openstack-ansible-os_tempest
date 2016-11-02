@@ -52,7 +52,7 @@
 - name: Install requires pip packages
   pip:
     name: "{{ tempest_requires_pip_packages | join(' ') }}"
-    state: latest
+    state: "{{ tempest_pip_package_state }}"
     extra_args: "{{ pip_install_options_fact }}"
   register: install_packages
   until: install_packages|success
@@ -134,7 +134,7 @@
 - name: Install pip packages
   pip:
     name: "{{ tempest_pip_packages | join(' ') }}"
-    state: latest
+    state: "{{ tempest_pip_package_state }}"
     virtualenv: "{{ tempest_venv_bin | dirname }}"
     virtualenv_site_packages: "no"
     extra_args: "{{ pip_install_options_fact }}"
@@ -172,7 +172,7 @@
 - name: Install tempest plugin requirements
   pip:
     requirements: "{{ item.stat.path }}"
-    state: latest
+    state: "{{ tempest_pip_package_state }}"
     virtualenv: "{{ tempest_venv_bin | dirname }}"
     virtualenv_site_packages: "no"
     extra_args: "{{ pip_install_options_fact }}"
@@ -186,7 +186,7 @@
 - name: Install tempest plugins
   pip:
     name: "/opt/{{ item.name|replace('-', '_') }}_{{ item.branch|replace('/', '_') }}"
-    state: latest
+    state: "{{ tempest_pip_package_state }}"
     virtualenv: "{{ tempest_venv_bin | dirname }}"
     virtualenv_site_packages: "no"
     extra_args: "{{ pip_install_options_fact }}"

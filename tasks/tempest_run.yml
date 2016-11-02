@@ -20,6 +20,10 @@
   args:
     chdir: "{{ tempest_venv_bin | dirname }}/workspace"
     executable: /bin/bash
+  changed_when: false
+  tags:
+    # don't trigger ANSIBLE0013
+    - skip_ansible_lint
 
 - name: Generate raw subunit results
   shell: |
@@ -28,6 +32,10 @@
   args:
     chdir: "{{ tempest_venv_bin | dirname }}/workspace"
     executable: /bin/bash
+  changed_when: false
+  tags:
+    # don't trigger ANSIBLE0013
+    - skip_ansible_lint
 
 - name: Generate xml subunit results
   shell: |
@@ -36,6 +44,10 @@
   args:
     chdir: "{{ tempest_venv_bin | dirname }}/workspace"
     executable: /bin/bash
+  changed_when: false
+  tags:
+    # don't trigger ANSIBLE0013
+    - skip_ansible_lint
 
 - name: Generate html subunit results
   shell: |
@@ -44,3 +56,7 @@
   args:
     chdir: "{{ tempest_venv_bin | dirname }}/workspace"
     executable: /bin/bash
+  changed_when: false
+  tags:
+    # don't trigger ANSIBLE0013
+    - skip_ansible_lint
