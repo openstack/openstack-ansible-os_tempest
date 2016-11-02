@@ -145,6 +145,7 @@ tempest_requires_pip_packages:
   - python-keystoneclient
   - python-neutronclient
   - python-novaclient
+  - shade
   - virtualenv
   - virtualenv-tools
 
@@ -176,6 +177,18 @@ tempest_image_file: "cirros-{{ cirros_version }}-x86_64-disk.img"
 tempest_img_disk_format: qcow2
 tempest_img_name: 'cirros'
 tempest_enable_instance_password: True
+
+tempest_flavors:
+  - name: tempest1
+    id: 201
+    ram: 256
+    disk: 1
+    vcpus: 1
+  - name: tempest2
+    id: 202
+    ram: 512
+    disk: 1
+    vcpus: 1
 
 # This variable is used by the repo_build process to determine
 # which host group to check for members of before building the

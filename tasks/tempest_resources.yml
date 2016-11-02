@@ -251,49 +251,13 @@
     insecure: "{{ keystone_service_internaluri_insecure }}"
   when: tempest_service_available_neutron | bool
 
-- name: Check if tempest flavor 201 exists
-  shell: |
-    . /root/openrc
-    nova flavor-show tempest1
-  register: tempest1
-  failed_when: False
-  changed_when: tempest1.rc != 0
+- name: Create tempest flavors
+  os_nova_flavor:
+    cloud: default
+    name: "{{ item.name }}"
+    flavorid: "{{ item.id }}"
+    ram: "{{ item.ram }}"
+    disk: "{{ item.disk }}"
+    vcpus: "{{ item.vcpus }}"
+  with_items: "{{ tempest_flavors }}"
   when: tempest_service_available_nova | bool
-  tags:
-    # don't trigger ANSIBLE0013
-    - skip_ansible_lint
-
-- name: Create tempest flavor 201
-  shell: |
-    . /root/openrc
-    nova flavor-create tempest1 201 256 1 1
-  when:
-    - tempest_service_available_nova | bool
-    - tempest1.rc != 0
-  tags:
-    # don't trigger ANSIBLE0013
-    - skip_ansible_lint
-
-
-- name: Check if tempest flavor 202 exists
-  shell: |
-    . /root/openrc
-    nova flavor-show tempest2
-  register: tempest2
-  failed_when: False
-  changed_when: tempest2.rc != 0
-  when: tempest_service_available_nova | bool
-  tags:
-    # don't trigger ANSIBLE0013
-    - skip_ansible_lint
-
-- name: Create tempest flavor 202
-  shell: |
-    . /root/openrc
-    nova flavor-create tempest2 202 512 1 1
-  when:
-    - tempest_service_available_nova | bool
-    - tempest2.rc != 0
-  tags:
-    # don't trigger ANSIBLE0013
-    - skip_ansible_lint
