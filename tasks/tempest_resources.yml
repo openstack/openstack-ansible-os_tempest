@@ -254,6 +254,8 @@
 - name: Create tempest flavors
   os_nova_flavor:
     cloud: default
+    endpoint_type: internal
+    validate_certs: "{{ keystone_service_internaluri_insecure | ternary (false, true) }}"
     name: "{{ item.name }}"
     flavorid: "{{ item.id }}"
     ram: "{{ item.ram }}"
