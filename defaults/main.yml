@@ -21,9 +21,9 @@ debug: False
 verbose: True
 
 tempest_git_repo: https://git.openstack.org/openstack/tempest
-tempest_git_install_branch: master
+tempest_git_install_branch: c2c90574a78c7704f06e8fac279c4f1d11365993
 tempest_requirements_git_repo: https://git.openstack.org/openstack/requirements
-tempest_requirements_git_install_branch: master
+tempest_requirements_git_install_branch: stable/mitaka
 tempest_developer_mode: false
 tempest_developer_constraints:
   - "git+{{ tempest_git_repo }}@{{ tempest_git_install_branch }}#egg=tempest"
