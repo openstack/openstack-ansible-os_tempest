@@ -32,7 +32,7 @@
 
 - name: Install requires pip packages
   pip:
-    name: "{{ tempest_requires_pip_packages | join(' ') }}"
+    name: "{{ tempest_requires_pip_packages }}"
     state: "{{ tempest_pip_package_state }}"
     extra_args: >-
       {{ (pip_install_upper_constraints is defined) | ternary('--constraint ' + pip_install_upper_constraints | default(''),'') }}
@@ -93,7 +93,7 @@
 
 - name: Install pip packages
   pip:
-    name: "{{ tempest_pip_packages | join(' ') }}"
+    name: "{{ tempest_pip_packages }}"
     state: "{{ tempest_pip_package_state }}"
     virtualenv: "{{ tempest_venv_bin | dirname }}"
     virtualenv_site_packages: "no"
