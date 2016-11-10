@@ -13,16 +13,22 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+- name: Download tempest image
+  get_url:
+    url: "{{ tempest_img_url }}"
+    dest: "/var/tmp/{{ tempest_img_url | basename }}"
+  when: tempest_service_available_glance | bool
+
 - name: Ensure tempest image
-  glance:
-    command: 'image-create'
-    openrc_path: /root/openrc
-    image_name: "{{ tempest_img_name }}"
-    image_url: "{{ tempest_img_url }}"
-    image_container_format: bare
-    image_disk_format: "{{ tempest_img_disk_format }}"
-    image_is_public: True
-    insecure: "{{ keystone_service_internaluri_insecure }}"
+  os_image:
+    cloud: default
+    endpoint_type: internal
+    validate_certs: "{{ keystone_service_internaluri_insecure | ternary(false, true) }}"
+    name: "{{ tempest_img_name }}"
+    filename: "/var/tmp/{{ tempest_img_url | basename }}"
+    container_format: bare
+    disk_format: "{{ tempest_img_disk_format }}"
+    is_public: True
   register: tempest_image_create
   until: tempest_image_create | success
   retries: 5
@@ -31,7 +37,7 @@
 
 - name: Store tempest image id
   set_fact:
-    tempest_glance_image_id: "{{ glance_images[tempest_img_name].id }}"
+    tempest_glance_image_id: "{{ tempest_image_create.id }}"
   when: tempest_service_available_glance | bool
 
 # This fact is used in tempest.conf.j2; we set an empty string if it doesn't get
@@ -42,20 +48,21 @@
   when: not tempest_service_available_glance | bool
 
 - name: Ensure alt tempest image
-  glance:
-    command: 'image-create'
-    openrc_path: /root/openrc
-    image_name: "{{ tempest_img_name }}_alt"
-    image_url: "{{ tempest_img_url }}"
-    image_container_format: bare
-    image_disk_format: "{{ tempest_img_disk_format }}"
-    image_is_public: True
-    insecure: "{{ keystone_service_internaluri_insecure }}"
+  os_image:
+    cloud: default
+    endpoint_type: internal
+    validate_certs: "{{ keystone_service_internaluri_insecure | ternary(false, true) }}"
+    name: "{{ tempest_img_name }}_alt"
+    filename: "/var/tmp/{{ tempest_img_url | basename }}"
+    container_format: bare
+    disk_format: "{{ tempest_img_disk_format }}"
+    is_public: True
+  register: tempest_image_alt_create
   when: tempest_service_available_glance | bool
 
 - name: Store alt tempest image id
   set_fact:
-    tempest_glance_image_alt_id: "{{ glance_images[tempest_img_name + '_alt'].id }}"
+    tempest_glance_image_alt_id: "{{ tempest_image_alt_create.id }}"
   when: tempest_service_available_glance | bool
 
 # This fact is used in tempest.conf.j2; we set an empty string if it doesn't get
