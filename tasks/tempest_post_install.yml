@@ -31,7 +31,11 @@
   set_fact:
     tempest_admin_tenant_id: "{{ keystone_facts.id }}"
 
-- name: Create tempest dir
+# TODO(odyssey4me):
+# Remove the creation of the etc and lock directories
+# when all consumers of this role are no longer using
+# the old execution method.
+- name: Create tempest directories
   file:
     path: "{{ item.path }}"
     state: directory
@@ -39,9 +43,12 @@
     group: "root"
     mode: "{{ item.mode|default('0755') }}"
   with_items:
-    - { path: "{{ tempest_venv_bin | dirname }}/locks", mode: "0777" }
-    - { path: "{{ tempest_venv_bin | dirname }}/etc" }
-    - { path: "{{ tempest_image_dir }}" }
+    - path: "{{ tempest_venv_bin | dirname }}/locks"
+      mode: "0777"
+    - path: "{{ tempest_log_dir }}"
+    - path: "{{ ansible_env.HOME }}/.tempest/etc"
+    - path: "{{ tempest_venv_bin | dirname }}/etc"
+    - path: "{{ tempest_image_dir }}"
 
 - name: Image(s) download
   get_url:
@@ -51,15 +58,39 @@
   with_items: "{{ tempest_images }}"
   when: tempest_service_available_glance | bool
 
+# TODO(odyssey4me):
+# Remove the placement to /opt/tempest/etc/ when all
+# consumers of the role are no longer using the old method.
 - name: Copy tempest config
   config_template:
     src: "tempest.conf.j2"
-    dest: "{{ tempest_venv_bin | dirname }}/etc/tempest.conf"
+    dest: "{{ item }}"
     owner: "root"
     group: "root"
     mode: "0644"
     config_overrides: "{{ tempest_tempest_conf_overrides }}"
     config_type: "ini"
+  with_items:
+    - "{{ tempest_venv_bin | dirname }}/etc/tempest.conf"
+    - "{{ ansible_env.HOME }}/.tempest/etc/tempest.conf"
+
+- name: Initialise tempest workspace
+  shell: |
+    . {{ tempest_venv_bin }}/activate
+    tempest init workspace
+  args:
+    chdir: "{{ tempest_venv_bin | dirname }}"
+    executable: /bin/bash
+
+- name: Generate tempest test whitelist
+  copy:
+    content: |
+      {% for item in tempest_test_whitelist | unique | sort %}
+      {%   if item != '' %}
+      {{ item }}
+      {%   endif %}
+      {% endfor %}
+    dest: "{{ tempest_test_whitelist_file_path }}"
 
 - name: Generate tempest Config
   template:

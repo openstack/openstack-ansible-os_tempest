@@ -20,6 +20,9 @@ debug: False
 # # Options are 'present' and 'latest'
 tempest_package_state: "latest"
 
+# Toggle whether tempest actually executes
+tempest_run: False
+
 tempest_git_repo: https://git.openstack.org/openstack/tempest
 tempest_git_install_branch: master
 tempest_developer_mode: False
@@ -31,7 +34,7 @@ tempest_venv_tag: untagged
 tempest_venv_bin: "/openstack/venvs/tempest-{{ tempest_venv_tag }}/bin"
 tempest_venv_download_url: http://127.0.0.1/venvs/untagged/ubuntu/tempest.tgz
 
-# The location where the test results will be placed
+# The location where the tempest logs will be placed
 tempest_log_dir: "/var/log/tempest"
 
 ## Tempest Plugins
@@ -42,6 +45,20 @@ tempest_log_dir: "/var/log/tempest"
 #     repo: https://git.openstack.org/openstack/designate-tempest-plugin
 #     branch: master
 tempest_plugins: []
+
+# The location where the test whitelist will be placed
+tempest_test_whitelist_file_path: "{{ tempest_venv_bin | dirname }}/workspace/etc/tempest_whitelist.txt"
+
+# Tests to execute:
+# This sets up a list of tests to execute based on what's deployed in the environment.
+# The list gets added to the whitelist which tempest executes.
+tempest_test_whitelist:
+  - "{{ (tempest_service_available_ceilometer | bool) | ternary('tempest.api.telemetry', '') }}"
+  - "{{ (tempest_service_available_heat | bool) | ternary('tempest.api.orchestration.stacks.test_non_empty_stack', '') }}"
+  - "{{ (tempest_service_available_nova | bool) | ternary('tempest.scenario.test_minimum_basic', '') }}"
+  - "{{ (tempest_service_available_nova | bool) | ternary('tempest.scenario.test_server_basic_ops', '') }}"
+  - "{{ (tempest_service_available_swift | bool) | ternary('tempest.scenario.test_object_storage_basic_ops', '') }}"
+  - "{{ (tempest_volume_backup_enabled | bool) | ternary('tempest.api.volume.admin.test_volumes_backup', '') }}"
 
 # Toggle fatal deprecations
 tempest_fatal_deprecations: False

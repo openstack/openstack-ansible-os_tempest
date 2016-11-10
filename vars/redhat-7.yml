@@ -15,3 +15,4 @@
 
 tempest_distro_packages:
   - git
+  - rsync
