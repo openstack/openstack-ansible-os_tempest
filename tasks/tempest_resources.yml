@@ -193,12 +193,17 @@
     insecure: "{{ keystone_service_internaluri_insecure }}"
   when: tempest_service_available_neutron | bool
 
-# This fact is used in tempest.conf.j2; we set an empty string if it doesn't get
-# set above to ensure the template will parse correctly.
 - name: Store neutron public network id
   set_fact:
-    tempest_neutron_public_network_id: "{{ tempest_service_available_neutron | ternary(neutron_networks.public.id, '') }}"
+    tempest_neutron_public_network_id: "{{ neutron_networks.public.id }}"
   when: tempest_service_available_neutron | bool
+
+# This fact is used in tempest.conf.j2; we set an empty string if it doesn't get
+# set above to ensure the template will parse correctly.
+- name: Store empty tempest_neutron_public_network_id fact
+  set_fact:
+    tempest_neutron_public_network_id: ''
+  when: not tempest_service_available_neutron | bool
 
 - name: Ensure private subnet exists
   os_subnet:
