@@ -76,12 +76,19 @@
 
 - name: Initialise tempest workspace
   shell: |
-    . {{ tempest_venv_bin }}/activate
-    tempest init workspace
+    if [ ! -d {{ tempest_venv_bin | dirname }}/workspace ]
+    then
+      . {{ tempest_venv_bin }}/activate
+      tempest init {{ tempest_venv_bin | dirname }}/workspace
+      exit 3
+    fi
   args:
-    chdir: "{{ tempest_venv_bin | dirname }}"
     executable: /bin/bash
-  changed_when: false
+  register: tempest_init_workspace
+  changed_when: tempest_init_workspace.rc == 3
+  failed_when:
+    - tempest_init_workspace.rc != 0
+    - tempest_init_workspace.rc != 3
   tags:
     # don't trigger ANSIBLE0013
     - skip_ansible_lint
