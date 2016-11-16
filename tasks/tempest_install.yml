@@ -109,7 +109,7 @@
 
 - name: Update virtualenv path
   command: >
-    virtualenv-tools --update-path=auto {{ tempest_venv_bin | dirname }}
+    virtualenv-tools --update-path=auto --reinitialize {{ tempest_venv_bin | dirname }}
   when:
     - not tempest_developer_mode | bool
     - tempest_get_venv | changed or tempest_venv_dir | changed
