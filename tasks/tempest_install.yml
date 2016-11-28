@@ -107,6 +107,15 @@
   delay: 2
   when: tempest_developer_mode | bool
 
+- name: CentOS remove python from path first
+  file:
+    path:  "{{ tempest_venv_bin | dirname }}/bin/python2.7"
+    state: "absent"
+  when:
+    - ansible_pkg_mgr == 'yum'
+    - not tempest_developer_mode | bool
+    - tempest_get_venv | changed or tempest_venv_dir | changed
+
 - name: Update virtualenv path
   command: >
     virtualenv-tools --update-path=auto --reinitialize {{ tempest_venv_bin | dirname }}
