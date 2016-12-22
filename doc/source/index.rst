@@ -15,6 +15,9 @@ Basic role example
     - role: "os_tempest"
       ROLE_VARS...
 
+To clone or view the source code for this repository, visit the role repository
+for `os_tempest <https://github.com/openstack/openstack-ansible-os_tempest>`_.
+
 Default variables
 ~~~~~~~~~~~~~~~~~
 
