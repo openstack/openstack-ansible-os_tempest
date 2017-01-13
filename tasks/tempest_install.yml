@@ -80,6 +80,7 @@
   file:
     path: "{{ tempest_venv_bin | dirname }}"
     state: directory
+    mode: "0755"
   register: tempest_venv_dir
 
 - name: Unarchive pre-built venv
