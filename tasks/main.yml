@@ -26,19 +26,26 @@
     - always
 
 - include: tempest_install.yml
-  tags: tempest-install
+  tags:
+    - tempest-install
 
 - include: tempest_resources.yml
   when: inventory_hostname == groups[tempest_main_group][0]
-  tags: tempest-config
+  tags:
+    - tempest-config
 
 # Called a second time to set facts on the other utility containers.
 - include: tempest_resources.yml
   when: inventory_hostname != groups[tempest_main_group][0]
-  tags: tempest-config
+  tags:
+    - tempest-config
 
 - include: tempest_post_install.yml
-  tags: tempest-config
+  tags:
+    - tempest-config
 
 - include: tempest_run.yml
   when: tempest_run | bool
+  tags:
+    - tempest-config
+    - tempest-run
