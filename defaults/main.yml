@@ -33,6 +33,9 @@ tempest_developer_constraints:
 # Name of the virtual env to deploy into
 tempest_venv_tag: untagged
 tempest_venv_bin: "/openstack/venvs/tempest-{{ tempest_venv_tag }}/bin"
+# venv_download, even when true, will use the fallback method of building the
+# venv from scratch if the venv download fails.
+tempest_venv_download: "{{ not tempest_developer_mode | bool }}"
 tempest_venv_download_url: http://127.0.0.1/venvs/untagged/ubuntu/tempest.tgz
 
 # The location where the tempest logs will be placed
