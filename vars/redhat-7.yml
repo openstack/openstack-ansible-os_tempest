@@ -15,4 +15,5 @@
 
 tempest_distro_packages:
   - git
+  - postgresql-devel
   - rsync

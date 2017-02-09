@@ -15,4 +15,5 @@
 
 tempest_distro_packages:
   - git-core
+  - libpq-dev
   - rsync
