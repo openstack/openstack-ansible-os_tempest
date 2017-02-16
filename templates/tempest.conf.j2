@@ -162,9 +162,7 @@ floating_ip_range = 10.0.0.0/29
 [volume]
 endpoint_type = internalURL
 # NOTE: These backends are only tested when multi_backend is enabled
-backend1 = {{ tempest_volume_backend1_name }}
-backend2  = {{ tempest_volume_backend2_name }}
-backend_names = [ backend1, backend2 ] 
+backend_names = {{ tempest_volume_backend_names | join(',') }}
 
 
 [volume-feature-enabled]
