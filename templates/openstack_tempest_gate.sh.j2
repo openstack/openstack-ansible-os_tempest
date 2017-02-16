@@ -67,6 +67,11 @@ function gen_test_list_cinder_backup {
   egrep 'tempest\.api\.volume\.admin\.test_volumes_backup'
 }
 
+# Run the cinder multi-backend tests
+function gen_test_list_cinder_multi_backend {
+  egrep 'tempest\.api\.volume\.admin\.test_multi_backend'
+}
+
 # Run ceilometer api tests
 function gen_test_list_ceilometer_api {
   egrep 'tempest\.api\.telemetry'
