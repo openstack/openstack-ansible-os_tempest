@@ -13,13 +13,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-- include: tempest_install_apt.yml
-  static: no
-  when: ansible_pkg_mgr == 'apt'
-
-- include: tempest_install_yum.yml
-  static: no
-  when: ansible_pkg_mgr == 'yum'
+- include: "tempest_install_{{ ansible_pkg_mgr }}.yml"
 
 - name: Create developer mode constraint file
   copy:
@@ -55,26 +49,6 @@
     path: "{{ tempest_venv_bin | dirname }}"
     state: absent
   when: tempest_get_venv | changed
-
-# TODO(odyssey4me):
-# Once the execution of tempest no longer uses run_tempest.sh
-# then this task may be removed. This task only executes when
-# the variable 'tempest_run' is a boolean false, which will be
-# the case in roles which are using the legacy method.
-- name: Get tempest from git
-  git:
-    repo: "{{ tempest_git_repo }}"
-    dest: "{{ tempest_venv_bin | dirname }}"
-    version: "{{ tempest_git_install_branch }}"
-    clone: "yes"
-    update: "yes"
-    accept_hostkey: "yes"
-    force: "yes"
-  when: not tempest_run | bool
-  register: git_clone
-  until: git_clone | success
-  retries: 5
-  delay: 2
 
 - name: Create tempest venv dir
   file:
