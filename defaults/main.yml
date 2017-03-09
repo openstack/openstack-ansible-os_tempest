@@ -22,7 +22,7 @@ tempest_package_state: "latest"
 tempest_pip_package_state: "latest"
 
 # Toggle whether tempest actually executes
-tempest_run: yes
+tempest_run: no
 
 tempest_git_repo: https://git.openstack.org/openstack/tempest
 tempest_git_install_branch: master
