@@ -25,7 +25,7 @@ tempest_pip_package_state: "latest"
 tempest_run: yes
 
 tempest_git_repo: https://git.openstack.org/openstack/tempest
-tempest_git_install_branch: f496885acbaae04ab7b13dae2f83a55edbc69d6f # HEAD of "master" as of 02.02.2017
+tempest_git_install_branch: 4411b2992c4f093ddc893e2e8149b2277d35c137 # HEAD of "master" as of 22.03.2017
 tempest_developer_mode: False
 tempest_developer_constraints:
   - "git+{{ tempest_git_repo }}@{{ tempest_git_install_branch }}#egg=tempest"
