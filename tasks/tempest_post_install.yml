@@ -24,8 +24,8 @@
     insecure: "{{ keystone_service_adminuri_insecure }}"
   register: add_service
   until: add_service|success
-  retries: 5
-  delay: 10
+  retries: 6
+  delay: 5
 
 - name: Store admin tenant id
   set_fact:
@@ -50,6 +50,10 @@
     sha256sum: "{{ item.sha256 }}"
   with_items: "{{ tempest_images }}"
   when: tempest_service_available_glance | bool
+  register: fetch_url
+  until: fetch_url | success
+  retries: 6
+  delay: 5
 
 - name: Copy tempest config
   config_template:
