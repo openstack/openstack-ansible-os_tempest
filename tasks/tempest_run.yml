@@ -40,6 +40,12 @@
       # don't trigger ANSIBLE0013
       - skip_ansible_lint
 
+  - name: Copy raw subunit to log folder
+    copy:
+      src: "{{ tempest_venv_bin | dirname }}/workspace/tempest_results.subunit"
+      dest: "{{ tempest_log_dir }}/testrepository.subunit"
+      remote_src: True
+
   - name: Generate xml subunit results
     shell: |
       . {{ tempest_venv_bin }}/activate
@@ -63,6 +69,15 @@
     tags:
       # don't trigger ANSIBLE0013
       - skip_ansible_lint
+
+  - name: Copy other results to log folder
+    copy:
+      src: "{{ tempest_venv_bin | dirname }}/workspace/{{ item }}"
+      dest: "{{ tempest_log_dir }}/"
+      remote_src: True
+    with_items:
+      - "tempest_results.xml"
+      - "tempest_results.html"
 
 - name: Fail if tempest tests did not succeed
   assert:
