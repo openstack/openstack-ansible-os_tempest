@@ -30,17 +30,17 @@
       with_items: "{{ tempest_plugins }}"
 
     - name: List the contents of the tempest_result_path folder
-      command: "ls -1 {{ tempest_venv_bin | dirname }}/workspace/"
+      command: "ls -1 {{ tempest_log_dir }}/"
       register: _results_list
 
     - name: Check whether the expected subunit result files are present
       assert:
         that: "item in _results_list.stdout_lines"
-        msg: "{{ item }} must be present in {{ tempest_venv_bin | dirname }}/workspace/"
+        msg: "{{ item }} must be present in {{ tempest_log_dir }}"
       with_items:
-        - "tempest_results.html"
-        - "tempest_results.subunit"
+        - "testr_results.html"
         - "tempest_results.xml"
+        - "testrepository.subunit"
 
   vars_files:
     - common/test-vars.yml

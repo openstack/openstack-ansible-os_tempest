@@ -31,7 +31,7 @@
   - name: Generate raw subunit results
     shell: |
       . {{ tempest_venv_bin }}/activate
-      testr last --subunit > tempest_results.subunit
+      testr last --subunit > {{ tempest_log_dir }}/testrepository.subunit
     args:
       chdir: "{{ tempest_venv_bin | dirname }}/workspace"
       executable: /bin/bash
@@ -44,7 +44,7 @@
   - name: Generate xml subunit results
     shell: |
       . {{ tempest_venv_bin }}/activate
-      subunit2junitxml tempest_results.subunit > tempest_results.xml
+      subunit2junitxml {{ tempest_log_dir }}/testrepository.subunit > {{ tempest_log_dir }}/tempest_results.xml
     args:
       chdir: "{{ tempest_venv_bin | dirname }}/workspace"
       executable: /bin/bash
@@ -57,7 +57,7 @@
   - name: Generate html subunit results
     shell: |
       . {{ tempest_venv_bin }}/activate
-      subunit2html tempest_results.subunit tempest_results.html
+      subunit2html {{ tempest_log_dir }}/testrepository.subunit {{ tempest_log_dir }}/testr_results.html
     args:
       chdir: "{{ tempest_venv_bin | dirname }}/workspace"
       executable: /bin/bash
