@@ -26,3 +26,6 @@ neutron_provider_networks:
   network_types: "vxlan,flat"
   network_mappings: "flat:eth12"
   network_vxlan_ranges: "1:1000"
+
+# Required until https://review.openstack.org/#/c/455710/ merges
+nova_git_install_branch: de0a8440c86e180f39e2eed421e1a413844e4dac
