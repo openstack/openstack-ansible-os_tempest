@@ -42,11 +42,18 @@
   retries: 5
   delay: 2
 
+- name: Retrieve checksum for venv download
+  uri:
+    url: "{{ tempest_venv_download_url | replace('tgz', 'checksum') }}"
+    return_content: yes
+  register: tempest_venv_checksum
+  when: not tempest_developer_mode | bool
+
 - name: Attempt venv download
   get_url:
     url: "{{ tempest_venv_download_url }}"
     dest: "/var/cache/{{ tempest_venv_download_url | basename }}"
-    checksum: "sha1:{{ lookup('url', tempest_venv_download_url | replace('tgz', 'checksum')) }}"
+    checksum: "sha1:{{ tempest_venv_checksum.content | trim }}"
   register: tempest_get_venv
   when: not tempest_developer_mode | bool
 
