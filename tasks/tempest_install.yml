@@ -151,3 +151,10 @@
   until: install_tempest_plugins | success
   retries: 5
   delay: 2
+
+- name: Record the venv tag deployed
+  ini_file:
+    dest: "/etc/ansible/facts.d/openstack_ansible.fact"
+    section: tempest
+    option: venv_tag
+    value: "{{ tempest_venv_tag }}"
