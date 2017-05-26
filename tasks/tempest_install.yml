@@ -29,6 +29,7 @@
     name: "{{ tempest_requires_pip_packages }}"
     state: "{{ tempest_pip_package_state }}"
     extra_args: >-
+      {{ tempest_developer_mode | ternary(pip_install_developer_constraints | default('--constraint /opt/developer-pip-constraints.txt'), '') }}
       {{ (pip_install_upper_constraints is defined) | ternary('--constraint ' + pip_install_upper_constraints | default(''),'') }}
       {{ pip_install_options | default('') }}
   register: install_packages
@@ -79,7 +80,7 @@
     virtualenv: "{{ tempest_venv_bin | dirname }}"
     virtualenv_site_packages: "no"
     extra_args: >-
-      {{ tempest_developer_mode | ternary('--constraint /opt/developer-pip-constraints.txt', '') }}
+      {{ tempest_developer_mode | ternary(pip_install_developer_constraints | default('--constraint /opt/developer-pip-constraints.txt'), '') }}
       {{ (pip_install_upper_constraints is defined) | ternary('--constraint ' + pip_install_upper_constraints | default(''),'') }}
       {{ pip_install_options | default('') }}
   register: install_packages
@@ -126,7 +127,7 @@
     virtualenv: "{{ tempest_venv_bin | dirname }}"
     virtualenv_site_packages: "no"
     extra_args: >-
-      {{ tempest_developer_mode | ternary('--constraint /opt/developer-pip-constraints.txt', '') }}
+      {{ tempest_developer_mode | ternary(pip_install_developer_constraints | default('--constraint /opt/developer-pip-constraints.txt'), '') }}
       {{ (pip_install_upper_constraints is defined) | ternary('--constraint ' + pip_install_upper_constraints | default(''),'') }}
       {{ pip_install_options | default('') }}
   with_items: "{{ _test_requirements_stat.results }}"
@@ -143,7 +144,7 @@
     virtualenv: "{{ tempest_venv_bin | dirname }}"
     virtualenv_site_packages: "no"
     extra_args: >-
-      {{ tempest_developer_mode | ternary('--constraint /opt/developer-pip-constraints.txt', '') }}
+      {{ tempest_developer_mode | ternary(pip_install_developer_constraints | default('--constraint /opt/developer-pip-constraints.txt'), '') }}
       {{ (pip_install_upper_constraints is defined) | ternary('--constraint ' + pip_install_upper_constraints | default(''),'') }}
       {{ pip_install_options | default('') }}
   with_items: "{{ tempest_plugins }}"
