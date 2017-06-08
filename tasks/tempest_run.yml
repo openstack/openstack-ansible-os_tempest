@@ -13,50 +13,58 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-- name: Execute tempest tests
-  shell: |
-    . {{ tempest_venv_bin }}/activate
-    tempest run --serial --whitelist-file {{ tempest_test_whitelist_file_path }}
-  args:
-    chdir: "{{ tempest_venv_bin | dirname }}/workspace"
-    executable: /bin/bash
-  changed_when: false
-  tags:
-    # don't trigger ANSIBLE0013
-    - skip_ansible_lint
+- block:
+  - name: Execute tempest tests
+    shell: |
+      . {{ tempest_venv_bin }}/activate
+      tempest run --serial --whitelist-file {{ tempest_test_whitelist_file_path }}
+    args:
+      chdir: "{{ tempest_venv_bin | dirname }}/workspace"
+      executable: /bin/bash
+    changed_when: false
+    register: tempest_tests_run
+    tags:
+      # don't trigger ANSIBLE0013
+      - skip_ansible_lint
 
-- name: Generate raw subunit results
-  shell: |
-    . {{ tempest_venv_bin }}/activate
-    testr last --subunit > tempest_results.subunit
-  args:
-    chdir: "{{ tempest_venv_bin | dirname }}/workspace"
-    executable: /bin/bash
-  changed_when: false
-  tags:
-    # don't trigger ANSIBLE0013
-    - skip_ansible_lint
+  always:
+  - name: Generate raw subunit results
+    shell: |
+      . {{ tempest_venv_bin }}/activate
+      testr last --subunit > tempest_results.subunit
+    args:
+      chdir: "{{ tempest_venv_bin | dirname }}/workspace"
+      executable: /bin/bash
+    changed_when: false
+    tags:
+      # don't trigger ANSIBLE0013
+      - skip_ansible_lint
 
-- name: Generate xml subunit results
-  shell: |
-    . {{ tempest_venv_bin }}/activate
-    subunit2junitxml tempest_results.subunit > tempest_results.xml
-  args:
-    chdir: "{{ tempest_venv_bin | dirname }}/workspace"
-    executable: /bin/bash
-  changed_when: false
-  tags:
-    # don't trigger ANSIBLE0013
-    - skip_ansible_lint
+  - name: Generate xml subunit results
+    shell: |
+      . {{ tempest_venv_bin }}/activate
+      subunit2junitxml tempest_results.subunit > tempest_results.xml
+    args:
+      chdir: "{{ tempest_venv_bin | dirname }}/workspace"
+      executable: /bin/bash
+    changed_when: false
+    tags:
+      # don't trigger ANSIBLE0013
+      - skip_ansible_lint
 
-- name: Generate html subunit results
-  shell: |
-    . {{ tempest_venv_bin }}/activate
-    subunit2html tempest_results.subunit tempest_results.html
-  args:
-    chdir: "{{ tempest_venv_bin | dirname }}/workspace"
-    executable: /bin/bash
-  changed_when: false
-  tags:
-    # don't trigger ANSIBLE0013
-    - skip_ansible_lint
+  - name: Generate html subunit results
+    shell: |
+      . {{ tempest_venv_bin }}/activate
+      subunit2html tempest_results.subunit tempest_results.html
+    args:
+      chdir: "{{ tempest_venv_bin | dirname }}/workspace"
+      executable: /bin/bash
+    changed_when: false
+    tags:
+      # don't trigger ANSIBLE0013
+      - skip_ansible_lint
+
+- name: Fail if tempest tests did not succeed
+  assert:
+    that:
+      - "tempest_tests_run.rc == 0"
