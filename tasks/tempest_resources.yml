@@ -165,45 +165,40 @@
     keystone_demo_tenant_id: "{{ keystone_facts.id }}"
 
 - name: Ensure private network exists
-  neutron:
-    command: create_network
-    openrc_path: /root/openrc
-    net_name: "{{ tempest_private_net_name }}"
+  os_network:
+    cloud: default
+    endpoint_type: internal
+    validate_certs: "{{ keystone_service_internaluri_insecure | ternary(false, true) }}"
+    name: "{{ tempest_private_net_name }}"
     provider_network_type: "{{ tempest_private_net_provider_type }}"
     provider_segmentation_id: "{{ tempest_private_net_seg_id | default(omit) }}"
-    tenant_id: "{{ keystone_demo_tenant_id }}"
-    insecure: "{{ keystone_service_internaluri_insecure }}"
+    project: "{{ keystone_demo_tenant_id }}"
+  register: private_network
   when: tempest_service_available_neutron | bool
 
 - name: Store neutron private network id
   set_fact:
-    tempest_neutron_private_network_id: "{{ neutron_networks.private.id }}"
+    tempest_neutron_private_network_id: "{{ private_network.id }}"
   when: tempest_service_available_neutron | bool
 
 - name: Ensure public network exists
-  neutron:
-    command: create_network
-    openrc_path: /root/openrc
-    net_name: "{{ tempest_public_net_name }}"
+  os_network:
+    cloud: default
+    endpoint_type: internal
+    validate_certs: "{{ keystone_service_internaluri_insecure | ternary(false, true) }}"
+    name: "{{ tempest_public_net_name }}"
     provider_network_type: "{{ tempest_public_net_provider_type }}"
     provider_physical_network: "{{ tempest_public_net_physical_type | default(omit) }}"
     provider_segmentation_id: "{{ tempest_public_net_seg_id | default(omit) }}"
-    router_external: "{{ tempest_public_router_external }}"
-    tenant_id: "{{ keystone_demo_tenant_id }}"
-    insecure: "{{ keystone_service_internaluri_insecure }}"
+    external: "{{ tempest_public_router_external }}"
+    project: "{{ keystone_demo_tenant_id }}"
+  register: public_network
   when: tempest_service_available_neutron | bool
 
 - name: Store neutron public network id
   set_fact:
-    tempest_neutron_public_network_id: "{{ neutron_networks.public.id }}"
+    tempest_neutron_public_network_id: "{{ tempest_service_available_neutron | ternary(public_network.id, '') }}"
   when: tempest_service_available_neutron | bool
-
-# This fact is used in tempest.conf.j2; we set an empty string if it doesn't get
-# set above to ensure the template will parse correctly.
-- name: Store empty tempest_neutron_public_network_id fact
-  set_fact:
-    tempest_neutron_public_network_id: ''
-  when: not tempest_service_available_neutron | bool
 
 - name: Ensure private subnet exists
   os_subnet:
