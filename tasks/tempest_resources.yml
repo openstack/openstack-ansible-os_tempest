@@ -198,7 +198,6 @@
 - name: Store neutron public network id
   set_fact:
     tempest_neutron_public_network_id: "{{ tempest_service_available_neutron | ternary(public_network.id, '') }}"
-  when: tempest_service_available_neutron | bool
 
 - name: Ensure private subnet exists
   os_subnet:
