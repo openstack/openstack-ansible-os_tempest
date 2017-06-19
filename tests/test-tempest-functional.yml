@@ -38,7 +38,7 @@
         that: "item in _results_list.stdout_lines"
         msg: "{{ item }} must be present in {{ tempest_log_dir }}"
       with_items:
-        - "tempest_results.html"
+        - "testr_results.html"
         - "tempest_results.xml"
         - "testrepository.subunit"
 
