@@ -13,7 +13,16 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-- include: "tempest_install_{{ ansible_pkg_mgr }}.yml"
+- name: Install distro packages
+  package:
+    name: "{{ tempest_distro_packages }}"
+    state: "{{ tempest_package_state }}"
+    update_cache: "{{ (ansible_pkg_mgr in ['apt', 'zypper']) | ternary('yes', omit) }}"
+    cache_valid_time: "{{ (ansible_pkg_mgr == 'apt') | ternary(cache_timeout, omit) }}"
+  register: install_packages
+  until: install_packages|success
+  retries: 5
+  delay: 2
 
 - name: Create developer mode constraint file
   copy:
