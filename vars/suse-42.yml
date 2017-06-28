@@ -1,5 +1,6 @@
 ---
-# Copyright 2014, Rackspace US, Inc.
+# Copyright 2016, Rackspace US, Inc.
+# Copyright 2017, SUSE LINUX GmbH.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -13,31 +14,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-galaxy_info:
-  author: rcbops
-  description: Installation and setup of tempest
-  company: Rackspace
-  license: Apache2
-  min_ansible_version: 2.2
-  platforms:
-    - name: Ubuntu
-      versions:
-        - xenial
-    - name: EL
-      versions:
-        - 7
-    - name: opensuse
-      versions:
-        - 42.1
-        - 42.2
-        - 42.3
-  categories:
-    - cloud
-    - python
-    - tempest
-    - development
-    - openstack
-dependencies:
-  - pip_install
-  - apt_package_pinning
-  - openstack_openrc
+tempest_distro_packages:
+  - git-core
+  - postgresql-devel
+  - rsync
+  - which
