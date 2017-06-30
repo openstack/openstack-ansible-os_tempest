@@ -173,12 +173,12 @@
     provider_network_type: "{{ tempest_private_net_provider_type }}"
     provider_segmentation_id: "{{ tempest_private_net_seg_id | default(omit) }}"
     project: "{{ keystone_demo_tenant_id }}"
-  register: private_network
+  register: tempest_private_network
   when: tempest_service_available_neutron | bool
 
 - name: Store neutron private network id
   set_fact:
-    tempest_neutron_private_network_id: "{{ private_network.id }}"
+    tempest_neutron_private_network_id: "{{ tempest_private_network.id }}"
   when: tempest_service_available_neutron | bool
 
 - name: Ensure public network exists
@@ -192,12 +192,12 @@
     provider_segmentation_id: "{{ tempest_public_net_seg_id | default(omit) }}"
     external: "{{ tempest_public_router_external }}"
     project: "{{ keystone_demo_tenant_id }}"
-  register: public_network
+  register: tempest_public_network
   when: tempest_service_available_neutron | bool
 
 - name: Store neutron public network id
   set_fact:
-    tempest_neutron_public_network_id: "{{ tempest_service_available_neutron | ternary(public_network.id, '') }}"
+    tempest_neutron_public_network_id: "{{ tempest_service_available_neutron | ternary(tempest_public_network.id, '') }}"
 
 - name: Ensure private subnet exists
   os_subnet:
