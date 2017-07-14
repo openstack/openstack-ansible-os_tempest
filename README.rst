@@ -12,7 +12,7 @@ OpenStack-Ansible os_tempest role
 =================================
 
 Documentation for the project can be found at:
-  http://docs.openstack.org/developer/openstack-ansible-os_tempest
+  https://docs.openstack.org/openstack-ansible-os_tempest/latest
 
 The project home is at:
   http://launchpad.net/openstack-ansible
