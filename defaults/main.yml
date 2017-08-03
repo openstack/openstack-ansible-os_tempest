@@ -48,6 +48,8 @@ tempest_log_dir: "/var/log/tempest"
 #   - name: designate-tempest-plugin
 #     repo: https://git.openstack.org/openstack/designate-tempest-plugin
 #     branch: master
+#   - name: ironic-tempest-plugin
+#     package: ironic
 tempest_plugins: []
 
 # The location where the test whitelist will be placed
