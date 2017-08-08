@@ -168,6 +168,8 @@ tempest_pip_packages:
   - python-saharaclient
   - python-subunit
   - python-swiftclient
+  - ddt
+  - testscenarios
 
 # Please update SHA in tempest_images below when changing the cirros version.
 cirros_version: 0.3.5
