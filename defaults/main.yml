@@ -95,7 +95,7 @@ tempest_public_net_physical_type: "flat"
 tempest_public_net_seg_id: ""
 tempest_public_router_external: "True"
 # Example allocation range:
-#tempest_public_subnet_allocation_pools: "10.1.13.150-10.1.13.200"
+# tempest_public_subnet_allocation_pools: "10.1.13.150-10.1.13.200"
 tempest_public_subnet_allocation_pools: ""
 
 tempest_compute_ssh_user: cirros
