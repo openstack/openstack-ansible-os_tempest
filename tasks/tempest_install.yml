@@ -108,6 +108,7 @@
     version: "{{ item.branch }}"
     force: yes
   with_items: "{{ tempest_plugins }}"
+  when: item.repo is defined
   register: git_clone
   until: git_clone|success
   retries: 5
@@ -117,6 +118,7 @@
   stat:
     path: "/opt/{{ item.name|replace('-', '_') }}_{{ item.branch|replace('/', '_') }}/test-requirements.txt"
   with_items: "{{ tempest_plugins }}"
+  when: item.repo is defined
   register: _test_requirements_stat
 
 - name: Install tempest plugin requirements
@@ -130,13 +132,15 @@
       {{ (pip_install_upper_constraints is defined) | ternary('--constraint ' + pip_install_upper_constraints | default(''),'') }}
       {{ pip_install_options | default('') }}
   with_items: "{{ _test_requirements_stat.results }}"
-  when: "item.stat.exists"
+  when:
+    - item.repo is defined
+    - "item.stat.exists"
   register: install_tempest_plugin_requirements
   until: install_tempest_plugin_requirements | success
   retries: 5
   delay: 2
 
-- name: Install tempest plugins
+- name: Install tempest plugins from cloned repo
   pip:
     name: "/opt/{{ item.name|replace('-', '_') }}_{{ item.branch|replace('/', '_') }}"
     state: "{{ tempest_pip_package_state }}"
@@ -147,8 +151,26 @@
       {{ (pip_install_upper_constraints is defined) | ternary('--constraint ' + pip_install_upper_constraints | default(''),'') }}
       {{ pip_install_options | default('') }}
   with_items: "{{ tempest_plugins }}"
+  when: item.repo is defined
   register: install_tempest_plugins
   until: install_tempest_plugins | success
+  retries: 5
+  delay: 2
+
+- name: Install tempest plugins from packages
+  pip:
+    name: "{{ item.package }}"
+    state: "{{ tempest_pip_package_state }}"
+    virtualenv: "{{ tempest_venv_bin | dirname }}"
+    virtualenv_site_packages: "no"
+    extra_args: >-
+      {{ tempest_developer_mode | ternary(pip_install_developer_constraints | default('--constraint /opt/developer-pip-constraints.txt'), '') }}
+      {{ (pip_install_upper_constraints is defined) | ternary('--constraint ' + pip_install_upper_constraints | default(''),'') }}
+      {{ pip_install_options | default('') }}
+  with_items: "{{ tempest_plugins }}"
+  when: item.package is defined
+  register: install_tempest_plugins_packages
+  until: install_tempest_plugins_packages | success
   retries: 5
   delay: 2
 
