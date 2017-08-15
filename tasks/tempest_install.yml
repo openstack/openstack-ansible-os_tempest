@@ -98,12 +98,12 @@
   delay: 2
   when: tempest_get_venv | failed or tempest_get_venv | skipped
 
-- name: CentOS remove python from path first
+- name: Remove python from path first (CentOS, openSUSE)
   file:
     path:  "{{ tempest_venv_bin | dirname }}/bin/python2.7"
     state: "absent"
   when:
-    - ansible_pkg_mgr in ['yum', 'dnf']
+    - ansible_pkg_mgr in ['yum', 'dnf', 'zypper']
     - tempest_get_venv | changed
 
 - name: Update virtualenv path
