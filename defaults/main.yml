@@ -153,8 +153,9 @@ tempest_requires_pip_packages:
   - virtualenv-tools
 
 tempest_pip_packages:
-  - tempest
+  - ddt
   - junitxml
+  - lxml
   - nose
   - python-ceilometerclient
   - python-cinderclient
@@ -168,7 +169,7 @@ tempest_pip_packages:
   - python-saharaclient
   - python-subunit
   - python-swiftclient
-  - ddt
+  - tempest
   - testscenarios
 
 # Please update SHA in tempest_images below when changing the cirros version.
