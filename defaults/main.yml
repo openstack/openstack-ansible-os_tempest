@@ -153,6 +153,7 @@ tempest_requires_pip_packages:
   - virtualenv-tools
 
 tempest_pip_packages:
+  - ddt
   - junitxml
   - lxml
   - nose
