@@ -90,6 +90,16 @@ function gen_test_list_designate_scenario {
   egrep 'designate_tempest_plugin\.tests\.scenario'
 }
 
+# Run ironic scenario tests
+function gen_test_list_ironic_scenario {
+  egrep 'ironic_tempest_plugin\.tests\.scenario'
+}
+
+# Run ironic API tests
+function gen_test_list_ironic_api {
+  egrep 'ironic_tempest_plugin\.tests\.api'
+}
+
 # Run all tests
 function gen_test_list_all {
   cat
