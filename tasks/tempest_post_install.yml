@@ -31,6 +31,11 @@
   set_fact:
     tempest_admin_tenant_id: "{{ keystone_facts.id }}"
 
+- name: Stat for tempest log dir
+  stat:
+    path:  "{{ tempest_log_dir }}"
+  register: tempest_log_dir_exists
+
 - name: Create tempest directories
   file:
     path: "{{ item.path }}"
@@ -40,8 +45,10 @@
     mode: "{{ item.mode|default('0755') }}"
   with_items:
     - path: "{{ tempest_log_dir }}"
+      when: "not tempest_log_dir_exists.stat.exists"
     - path: "{{ ansible_env.HOME }}/.tempest/etc"
     - path: "{{ tempest_image_dir }}"
+  when: "{{ item.when | default(True) }}"
 
 - name: Image(s) download
   get_url:
