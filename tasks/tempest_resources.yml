@@ -13,22 +13,52 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-- name: Download tempest image
-  get_url:
-    url: "{{ tempest_img_url }}"
-    dest: "/var/tmp/{{ tempest_img_url | basename }}"
-  when: tempest_service_available_glance | bool
+- name: Create deployment-host tempest_image_dir
+  file:
+    path: "{{ tempest_image_dir }}"
+    state: directory
+  delegate_to: localhost
+  when:
+    - tempest_service_available_glance | bool
+    - tempest_image_downloader == "deployment-host"
 
-- name: Ensure tempest image
+- name: Image(s) download
+  get_url:
+    url: "{{ item.url }}"
+    dest: "{{ tempest_image_dir }}/"
+    checksum: "{{ item.checksum | default(omit) }}"
+  with_items: "{{ tempest_images }}"
+  when: tempest_service_available_glance | bool
+  register: fetch_url
+  until: fetch_url | success
+  retries: 6
+  delay: 5
+  delegate_to: "{{ (tempest_image_downloader == 'deployment-host') | ternary('localhost', omit) }}"
+
+- name: Copy download images from deployment-host to target-host
+  copy:
+    src: "{{ tempest_image_dir }}/{{ item.url | basename }}"
+    dest: "{{ tempest_image_dir }}/"
+  with_items: "{{ tempest_images }}"
+  when:
+    - tempest_service_available_glance | bool
+    - tempest_image_downloader == "deployment-host"
+  register: fetch_url
+  until: fetch_url | success
+  retries: 6
+  delay: 5
+
+- name: Upload tempest images to glance
   os_image:
     cloud: default
     endpoint_type: internal
     validate_certs: "{{ keystone_service_internaluri_insecure | ternary(false, true) }}"
-    name: "{{ tempest_img_name }}"
-    filename: "/var/tmp/{{ tempest_img_url | basename }}"
+    name: "{{ item.name | default(item.url | basename) }}"
+    filename: "{{ tempest_image_dir }}/{{ item.url | basename }}"
     container_format: bare
-    disk_format: "{{ tempest_img_disk_format }}"
+    disk_format: "{{ item.format }}"
     is_public: True
+  with_items: "{{ tempest_images }}"
   register: tempest_image_create
   until: tempest_image_create | success
   retries: 5
@@ -39,26 +69,7 @@
 # set above to ensure the template will parse correctly.
 - name: Store tempest image id
   set_fact:
-    tempest_glance_image_id: "{{ tempest_service_available_glance | ternary(tempest_image_create.id, '') }}"
-
-- name: Ensure alt tempest image
-  os_image:
-    cloud: default
-    endpoint_type: internal
-    validate_certs: "{{ keystone_service_internaluri_insecure | ternary(false, true) }}"
-    name: "{{ tempest_img_name }}_alt"
-    filename: "/var/tmp/{{ tempest_img_url | basename }}"
-    container_format: bare
-    disk_format: "{{ tempest_img_disk_format }}"
-    is_public: True
-  register: tempest_image_alt_create
-  when: tempest_service_available_glance | bool
-
-# This fact is used in tempest.conf.j2; we set an empty string if it doesn't get
-# set above to ensure the template will parse correctly.
-- name: Store alt tempest image id
-  set_fact:
-    tempest_glance_image_alt_id: "{{ tempest_service_available_glance | ternary(tempest_image_alt_create.id, '') }}"
+    tempest_glance_image_id: "{{ tempest_service_available_glance | ternary(tempest_image_create['results'][0]['id'], '') }}"
 
 - name: Ensure tempest tenants
   keystone:

@@ -50,18 +50,6 @@
     - path: "{{ tempest_image_dir }}"
   when: "{{ item.when | default(True) }}"
 
-- name: Image(s) download
-  get_url:
-    url: "{{ item.url }}"
-    dest: "{{ tempest_image_dir }}"
-    sha256sum: "{{ item.sha256 }}"
-  with_items: "{{ tempest_images }}"
-  when: tempest_service_available_glance | bool
-  register: fetch_url
-  until: fetch_url | success
-  retries: 6
-  delay: 5
-
 - name: Copy tempest config
   config_template:
     src: "tempest.conf.j2"

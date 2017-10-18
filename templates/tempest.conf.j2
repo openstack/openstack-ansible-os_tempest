@@ -24,7 +24,7 @@ endpoint_type = internalURL
 
 [compute]
 image_ref = {{ tempest_glance_image_id }}
-image_ref_alt = {{ tempest_glance_image_alt_id }}
+image_ref_alt = {{ tempest_glance_image_id }}
 flavor_ref = 201
 flavor_ref_alt = 202
 fixed_network_name = private
@@ -71,7 +71,7 @@ trust = false
 
 [image]
 endpoint_type = internalURL
-http_image = {{ tempest_img_url }}
+http_image = {{ tempest_images[0]['url'] }}
 
 
 [image-feature-enabled]
@@ -124,9 +124,9 @@ lock_path = {{ tempest_venv_bin | dirname }}/locks
 
 [scenario]
 img_dir = {{ tempest_image_dir }}
-img_file = {{ tempest_image_file }}
+img_file = {{ tempest_images[0]['url'] | basename }}
 img_container_format = bare
-img_disk_format = {{ tempest_img_disk_format }}
+img_disk_format = {{ tempest_images[0]['format'] }}
 
 
 [service_available]
