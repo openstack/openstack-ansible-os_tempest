@@ -220,6 +220,7 @@
     cidr: "{{ tempest_public_subnet_cidr }}"
     allocation_pool_start: "{{ tempest_public_subnet_allocation_pools.split('-')[0] | default(omit) }}"
     allocation_pool_end: "{{ tempest_public_subnet_allocation_pools.split('-')[1] | default(omit) }}"
+    gateway_ip: "{{ tempest_public_subnet_gateway_ip | default(omit) }}"
   when: tempest_service_available_neutron | bool
 
 - name: Create router
