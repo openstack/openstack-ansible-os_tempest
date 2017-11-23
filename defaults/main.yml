@@ -127,7 +127,7 @@ tempest_service_available_sahara: False
 tempest_service_available_swift: True
 tempest_service_available_zaqar: False
 
-tempest_image_api_v1_enabled: True
+tempest_image_api_v1_enabled: False
 tempest_image_api_v2_enabled: True
 
 tempest_swift_enabled: True
