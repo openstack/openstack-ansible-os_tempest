@@ -28,14 +28,17 @@
           exit 1
         fi
       with_items: "{{ tempest_plugins }}"
+      tags:
+        - skip_ansible_lint
 
     - name: List the contents of the tempest_result_path folder
-      command: "ls -1 {{ tempest_log_dir }}/"
+      find:
+        paths: "{{ tempest_log_dir }}"
       register: _results_list
 
     - name: Check whether the expected subunit result files are present
       assert:
-        that: "item in _results_list.stdout_lines"
+        that: "item in _results_list.files | map(attribute='path') | map('basename') | list"
         msg: "{{ item }} must be present in {{ tempest_log_dir }}"
       with_items:
         - "testr_results.html"
