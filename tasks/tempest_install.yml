@@ -133,7 +133,7 @@
       {{ pip_install_options | default('') }}
   with_items: "{{ _test_requirements_stat.results }}"
   when:
-    - item.repo is defined
+    - "item.item.repo is defined"
     - "item.stat.exists"
   register: install_tempest_plugin_requirements
   until: install_tempest_plugin_requirements | success
