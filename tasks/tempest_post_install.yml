@@ -48,7 +48,7 @@
       when: "not tempest_log_dir_exists.stat.exists"
     - path: "{{ ansible_env.HOME }}/.tempest/etc"
     - path: "{{ tempest_image_dir }}"
-  when: "{{ item.when | default(True) }}"
+  when: item.when | default(True)
 
 - name: Copy tempest config
   config_template:
