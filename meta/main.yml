@@ -38,6 +38,5 @@ galaxy_info:
     - development
     - openstack
 dependencies:
-  - pip_install
   - apt_package_pinning
   - openstack_openrc
