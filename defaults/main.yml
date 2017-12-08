@@ -23,6 +23,8 @@ tempest_pip_package_state: "latest"
 
 # Toggle whether tempest actually executes
 tempest_run: no
+# Define 0 (serial) or more to use a non default concurrency
+#tempest_run_concurrency:
 
 tempest_git_repo: https://git.openstack.org/openstack/tempest
 tempest_git_install_branch: master
