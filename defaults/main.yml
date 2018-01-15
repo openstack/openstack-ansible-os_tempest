@@ -156,7 +156,6 @@ tempest_requires_pip_packages:
   - python-novaclient
   - shade
   - virtualenv
-  - virtualenv-tools
 
 tempest_pip_packages:
   - ddt
