@@ -34,7 +34,7 @@
 - name: Stat for tempest log dir
   stat:
     path:  "{{ tempest_log_dir }}"
-  register: tempest_log_dir_exists
+  register: _tempest_log_dir_check
 
 - name: Create tempest directories
   file:
@@ -44,11 +44,9 @@
     group: "root"
     mode: "{{ item.mode|default('0755') }}"
   with_items:
-    - path: "{{ tempest_log_dir }}"
-      when: "not tempest_log_dir_exists.stat.exists"
+    - path: "{{ (_tempest_log_dir_check.stat.exists and _tempest_log_dir_check.stat.islnk) | ternary(_tempest_log_dir_check.stat.lnk_source, tempest_log_dir) }}"
     - path: "{{ ansible_env.HOME }}/.tempest/etc"
     - path: "{{ tempest_image_dir }}"
-  when: item.when | default(True)
 
 - name: Copy tempest config
   config_template:
