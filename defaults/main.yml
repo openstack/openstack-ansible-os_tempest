@@ -27,7 +27,7 @@ tempest_run: no
 #tempest_run_concurrency:
 
 tempest_git_repo: https://git.openstack.org/openstack/tempest
-tempest_git_install_branch: master
+tempest_git_install_branch: "eca9f5aeb5eec80a4897cef299f5b65b874eafaa"
 tempest_developer_mode: False
 tempest_developer_constraints:
   - "git+{{ tempest_git_repo }}@{{ tempest_git_install_branch }}#egg=tempest"
@@ -49,7 +49,7 @@ tempest_log_dir: "/var/log/tempest"
 # tempest_plugins:
 #   - name: designate-tempest-plugin
 #     repo: https://git.openstack.org/openstack/designate-tempest-plugin
-#     branch: master
+#     branch: stable/queens
 #   - name: ironic-tempest-plugin
 #     package: ironic
 tempest_plugins: []
