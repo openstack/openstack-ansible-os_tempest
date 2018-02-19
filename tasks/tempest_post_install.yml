@@ -31,11 +31,6 @@
   set_fact:
     tempest_admin_tenant_id: "{{ keystone_facts.id }}"
 
-- name: Stat for tempest log dir
-  stat:
-    path:  "{{ tempest_log_dir }}"
-  register: _tempest_log_dir_check
-
 - name: Create tempest directories
   file:
     path: "{{ item.path }}"
@@ -44,7 +39,7 @@
     group: "root"
     mode: "{{ item.mode|default('0755') }}"
   with_items:
-    - path: "{{ (_tempest_log_dir_check.stat.exists and _tempest_log_dir_check.stat.islnk) | ternary(_tempest_log_dir_check.stat.lnk_source, tempest_log_dir) }}"
+    - path: "{{ tempest_log_dir | realpath }}"
     - path: "{{ ansible_env.HOME }}/.tempest/etc"
     - path: "{{ tempest_image_dir }}"
 
