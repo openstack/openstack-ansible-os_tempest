@@ -187,6 +187,10 @@ tempest_images:
     checksum: "sha256:e137062a4dfbb4c225971b67781bc52183d14517170e16a3841d16f962ae7470"
     format: "qcow2"
     name: "cirros"
+  - url: "http://download.cirros-cloud.net/0.3.5/cirros-0.3.5-x86_64-disk.img"
+    checksum: "sha256:e137062a4dfbb4c225971b67781bc52183d14517170e16a3841d16f962ae7470"
+    format: "qcow2"
+    name: "cirros"
 
 # The location where images are downloaded to
 tempest_image_dir: "/opt/cache/files"
