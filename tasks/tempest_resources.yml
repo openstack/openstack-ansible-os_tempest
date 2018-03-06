@@ -65,11 +65,12 @@
   delay: 15
   when: tempest_service_available_glance | bool
 
-# This fact is used in tempest.conf.j2; we set an empty string if it doesn't get
+# These facts are used in tempest.conf.j2; we set an empty string if it is not
 # set above to ensure the template will parse correctly.
-- name: Store tempest image id
+- name: Store first tempest image id
   set_fact:
-    tempest_glance_image_id: "{{ tempest_service_available_glance | ternary(tempest_image_create['results'][0]['id'], '') }}"
+    tempest_glance_image_id_1: "{{ tempest_service_available_glance | ternary(tempest_image_create['results'][0]['id'], '') }}"
+    tempest_glance_image_id_2: "{{ tempest_service_available_glance | ternary(tempest_image_create['results'][1]['id'], '') }}"
 
 - name: Ensure tempest tenants
   keystone:
