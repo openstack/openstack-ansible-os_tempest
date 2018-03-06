@@ -48,51 +48,29 @@
   retries: 6
   delay: 5
 
-- name: Upload first tempest image to glance
+- name: Upload tempest images to glance
   os_image:
     cloud: default
     endpoint_type: internal
     validate_certs: "{{ keystone_service_internaluri_insecure | ternary(false, true) }}"
-    name: "{{ item.name | default(item.url | basename) }} 1"
+    name: "{{ item.name | default(item.url | basename) }}"
     filename: "{{ tempest_image_dir }}/{{ item.url | basename }}"
     container_format: bare
     disk_format: "{{ item.format }}"
     is_public: True
   with_items: "{{ tempest_images }}"
-  register: tempest_image_create_1
-  until: tempest_image_create_1 | success
+  register: tempest_image_create
+  until: tempest_image_create | success
   retries: 5
   delay: 15
   when: tempest_service_available_glance | bool
 
-# This fact is used in tempest.conf.j2; we set an empty string if it doesn't get
+# These facts are used in tempest.conf.j2; we set an empty string if it is not
 # set above to ensure the template will parse correctly.
 - name: Store first tempest image id
   set_fact:
-    tempest_glance_image_id_1: "{{ tempest_service_available_glance | ternary(tempest_image_create_1['results'][0]['id'], '') }}"
-
-- name: Upload second tempest image to glance
-  os_image:
-    cloud: default
-    endpoint_type: internal
-    validate_certs: "{{ keystone_service_internaluri_insecure | ternary(false, true) }}"
-    name: "{{ item.name | default(item.url | basename) }} 2"
-    filename: "{{ tempest_image_dir }}/{{ item.url | basename }}"
-    container_format: bare
-    disk_format: "{{ item.format }}"
-    is_public: True
-  with_items: "{{ tempest_images }}"
-  register: tempest_image_create_2
-  until: tempest_image_create_2 | success
-  retries: 5
-  delay: 15
-  when: tempest_service_available_glance | bool
-
-# This fact is used in tempest.conf.j2; we set an empty string if it doesn't get
-# set above to ensure the template will parse correctly.
-- name: Store second tempest image id
-  set_fact:
-    tempest_glance_image_id_2: "{{ tempest_service_available_glance | ternary(tempest_image_create_2['results'][0]['id'], '') }}"
+    tempest_glance_image_id_1: "{{ tempest_service_available_glance | ternary(tempest_image_create['results'][0]['id'], '') }}"
+    tempest_glance_image_id_2: "{{ tempest_service_available_glance | ternary(tempest_image_create['results'][1]['id'], '') }}"
 
 - name: Ensure tempest tenants
   keystone:
