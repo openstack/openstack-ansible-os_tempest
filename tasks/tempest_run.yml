@@ -29,9 +29,14 @@
 
   always:
   - name: Generate raw subunit results
+    # Despite not using testrepository, we leave the output filename as
+    # testrepository.subunit as the OpenStack Health dashboard relies on
+    # subunit files with this particular name.
+    # NOTE(mattt): At present we're not placing this file in a valid location
+    # to be used by the OpenStack Health dashboard.
     shell: |
       . {{ tempest_venv_bin }}/activate
-      testr last --subunit > {{ tempest_log_dir }}/testrepository.subunit
+      stestr last --subunit > {{ tempest_log_dir }}/testrepository.subunit
     args:
       chdir: "{{ tempest_venv_bin | dirname }}/workspace"
       executable: /bin/bash
@@ -57,7 +62,7 @@
   - name: Generate html subunit results
     shell: |
       . {{ tempest_venv_bin }}/activate
-      subunit2html {{ tempest_log_dir }}/testrepository.subunit {{ tempest_log_dir }}/testr_results.html
+      subunit2html {{ tempest_log_dir }}/testrepository.subunit {{ tempest_log_dir }}/stestr_results.html
     args:
       chdir: "{{ tempest_venv_bin | dirname }}/workspace"
       executable: /bin/bash
