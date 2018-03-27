@@ -160,6 +160,7 @@ floating_ip_range = 10.0.0.0/29
 
 [volume]
 endpoint_type = internalURL
+catalog_type = volumev3
 # NOTE: These backends are only tested when multi_backend is enabled
 backend_names = {{ tempest_volume_backend_names | join(',') }}
 
