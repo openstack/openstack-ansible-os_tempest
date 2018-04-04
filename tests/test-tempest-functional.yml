@@ -31,19 +31,20 @@
       tags:
         - skip_ansible_lint
 
-    - name: List the contents of the tempest_result_path folder
-      find:
-        paths: "{{ tempest_log_dir }}"
+    - name: Stat the tempest subunit result files
+      stat:
+        path: "{{ tempest_log_dir }}/{{ item }}"
+      with_items:
+        - "stestr_results.html"
+        - "tempest_results.xml"
+        - "testrepository.subunit"
       register: _results_list
 
     - name: Check whether the expected subunit result files are present
       assert:
-        that: "item in _results_list.files | map(attribute='path') | map('basename') | list"
-        msg: "{{ item }} must be present in {{ tempest_log_dir }}"
-      with_items:
-        - "testr_results.html"
-        - "tempest_results.xml"
-        - "testrepository.subunit"
+        that: item.stat.exists and item.stat.size != 0
+        msg: "{{ item.item }} must be present in {{ tempest_log_dir }} and not empty"
+      with_items: "{{ _results_list.results }}"
 
   vars_files:
     - common/test-vars.yml
