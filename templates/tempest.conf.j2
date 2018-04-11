@@ -93,7 +93,7 @@ project_network_cidr = {{ tempest_network_tenant_network_cidr }}
 project_network_mask_bits = {{ tempest_network_tenant_network_mask_bits }}
 project_networks_reachable = false
 public_network_id = {{ tempest_neutron_public_network_id }}
-floating_network_name = public
+floating_network_name = {{ tempest_public_net_name }}
 
 
 [network-feature-enabled]

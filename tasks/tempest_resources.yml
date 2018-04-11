@@ -247,7 +247,7 @@
     endpoint_type: internal
     validate_certs: "{{ keystone_service_internaluri_insecure | ternary(false, true) }}"
     name: router
-    network: public
+    network: "{{ tempest_public_net_name }}"
     interfaces:
       - "{{ tempest_private_subnet_name }}"
     project: "{{ keystone_demo_tenant_id }}"
