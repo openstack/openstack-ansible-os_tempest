@@ -40,7 +40,7 @@
   until: fetch_url | success
   retries: 6
   delay: 5
-  delegate_to: "{{ (tempest_image_downloader == 'deployment-host') | ternary('localhost', omit) }}"
+  delegate_to: "{{ (tempest_image_downloader == 'deployment-host') | ternary('localhost', inventory_hostname) }}"
 
 - name: Copy download images from deployment-host to target-host
   copy:
