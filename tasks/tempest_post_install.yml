@@ -26,6 +26,7 @@
   until: add_service|success
   retries: 6
   delay: 5
+  no_log: True
 
 - name: Store admin tenant id
   set_fact:

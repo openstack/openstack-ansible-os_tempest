@@ -96,6 +96,7 @@
   with_items:
     - demo
     - alt_demo
+  no_log: True
 
 - name: Ensure tempest users
   keystone:
@@ -116,6 +117,7 @@
   with_items:
     - demo
     - alt_demo
+  no_log: True
 
 - name: Ensure tempest users have heat_stack_owner role
   keystone:
@@ -136,6 +138,7 @@
   with_items:
     - demo
     - alt_demo
+  no_log: True
 
 - name: Ensure reseller_admin role
   keystone:
@@ -178,6 +181,7 @@
   until: add_service|success
   retries: 5
   delay: 10
+  no_log: True
 
 - name: Store demo tenant id
   set_fact:
