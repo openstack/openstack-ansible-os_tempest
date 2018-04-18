@@ -96,6 +96,7 @@
   with_items:
     - demo
     - alt_demo
+  no_log: True
 
 - name: Ensure tempest users
   keystone:
@@ -116,6 +117,7 @@
   with_items:
     - demo
     - alt_demo
+  no_log: True
 
 - name: Ensure tempest roles
   os_keystone_role:
@@ -148,6 +150,7 @@
   with_items:
     - demo
     - alt_demo
+  no_log: True
 
 - name: Get demo tenant id
   keystone:
@@ -162,6 +165,7 @@
   until: add_service|success
   retries: 5
   delay: 10
+  no_log: True
 
 - name: Store demo tenant id
   set_fact:
