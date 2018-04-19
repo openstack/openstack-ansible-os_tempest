@@ -16,5 +16,12 @@
 tempest_distro_packages:
   - git
   - postgresql-devel
+  - python-glanceclient
+  - python-keystoneclient
+  - python-neutronclient
+  - python-novaclient
+  - python2-shade
   - rsync
   - which
+
+tempest_requires_pip_packages: []
