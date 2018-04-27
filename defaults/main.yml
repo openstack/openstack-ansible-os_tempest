@@ -179,6 +179,7 @@ tempest_pip_packages:
   - python-swiftclient
   - tempest
   - testscenarios
+  - os-testr
 
 # The list of images for tempest to download.
 # url: where to download from (required)
