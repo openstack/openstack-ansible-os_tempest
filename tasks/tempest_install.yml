@@ -156,10 +156,12 @@
       {{ tempest_developer_mode | ternary(pip_install_developer_constraints | default('--constraint /opt/developer-pip-constraints.txt'), '') }}
       {{ (pip_install_upper_constraints is defined) | ternary('--constraint ' + pip_install_upper_constraints | default(''),'') }}
       {{ pip_install_options | default('') }}
+      --isolated
   with_items: "{{ _test_requirements_stat.results }}"
   when:
     - "item.item.repo is defined"
     - "item.stat.exists"
+    - "(item.item.install_test_requirements | default(True)) | bool"
   register: install_tempest_plugin_requirements
   until: install_tempest_plugin_requirements | success
   retries: 5
@@ -175,6 +177,7 @@
       {{ tempest_developer_mode | ternary(pip_install_developer_constraints | default('--constraint /opt/developer-pip-constraints.txt'), '') }}
       {{ (pip_install_upper_constraints is defined) | ternary('--constraint ' + pip_install_upper_constraints | default(''),'') }}
       {{ pip_install_options | default('') }}
+      --isolated
   with_items: "{{ tempest_plugins }}"
   when: item.repo is defined
   register: install_tempest_plugins
@@ -192,6 +195,7 @@
       {{ tempest_developer_mode | ternary(pip_install_developer_constraints | default('--constraint /opt/developer-pip-constraints.txt'), '') }}
       {{ (pip_install_upper_constraints is defined) | ternary('--constraint ' + pip_install_upper_constraints | default(''),'') }}
       {{ pip_install_options | default('') }}
+      --isolated
   with_items: "{{ tempest_plugins }}"
   when: item.package is defined
   register: install_tempest_plugins_packages

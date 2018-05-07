@@ -47,15 +47,17 @@ tempest_venv_download_url: http://127.0.0.1/venvs/untagged/ubuntu/tempest.tgz
 tempest_log_dir: "/var/log/tempest"
 
 ## Tempest Plugins
-# By default, no tempest plugins are installed.  Override ``tempest_plugins``
-# as follows:
-# tempest_plugins:
-#   - name: designate-tempest-plugin
-#     repo: https://git.openstack.org/openstack/designate-tempest-plugin
-#     branch: master
+# By default, the following tempest plugins are installed.
+# Override ``tempest_plugins`` variable with your own plugins, depending
+# on your installation.
+# The structure of each item of the list is the following:
+#   - name: designate-tempest-plugin                                     #name of the plugin
+#     repo: https://git.openstack.org/openstack/designate-tempest-plugin #for installing the plugin from sources
+#     branch: master                                                     #for installing the plugin from sources
+#     install_test_requirements: True                                    #for installing the plugin with its test_requirements (default: True)
 #   - name: ironic-tempest-plugin
-#     package: ironic
-tempest_plugins: []
+#     package: ironic                                                    #for installing the plugin from packages
+tempest_plugins: "{{ _tempest_plugins['keystone'] + _tempest_plugins['cinder'] + _tempest_plugins['heat'] + _tempest_plugins['neutron'] }}"
 
 # The location where the test whitelist will be placed
 tempest_test_whitelist_file_path: "{{ tempest_venv_bin | dirname }}/workspace/etc/tempest_whitelist.txt"
