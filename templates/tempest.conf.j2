@@ -28,6 +28,7 @@ flavor_ref = 201
 flavor_ref_alt = 202
 fixed_network_name = private
 endpoint_type = internalURL
+build_timeout = 600
 
 
 [compute-feature-enabled]
@@ -71,6 +72,7 @@ trust = false
 [image]
 endpoint_type = internalURL
 http_image = {{ tempest_images[0]['url'] }}
+build_timeout = 600
 
 
 [image-feature-enabled]
@@ -93,6 +95,7 @@ project_network_mask_bits = {{ tempest_network_tenant_network_mask_bits }}
 project_networks_reachable = false
 public_network_id = {{ tempest_neutron_public_network_id }}
 floating_network_name = {{ tempest_public_net_name }}
+build_timeout = 600
 
 
 [network-feature-enabled]
@@ -128,6 +131,10 @@ img_container_format = bare
 img_disk_format = {{ tempest_images[0]['format'] }}
 
 
+[service-clients]
+http_timeout = 120
+
+
 [service_available]
 cinder = {{ tempest_service_available_cinder }}
 neutron = {{ tempest_service_available_neutron }}
@@ -156,6 +163,9 @@ run_validation = {{ tempest_compute_run_ssh }}
 auth_method = keypair
 image_ssh_user = {{ tempest_compute_image_ssh_user }}
 floating_ip_range = 10.0.0.0/29
+ping_timeout = 240
+connect_timeout = 120
+ssh_timeout = 600
 
 
 [volume]
@@ -163,8 +173,9 @@ endpoint_type = internalURL
 catalog_type = volumev3
 # NOTE: These backends are only tested when multi_backend is enabled
 backend_names = {{ tempest_volume_backend_names | join(',') }}
-
+build_timeout = 600
 
 [volume-feature-enabled]
 backup = {{ tempest_volume_backup_enabled }}
 multi_backend = {{ tempest_volume_multi_backend_enabled }}
+
