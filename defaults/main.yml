@@ -155,6 +155,7 @@ tempest_volume_multi_backend_enabled: False
 tempest_main_group: tempest_all
 
 tempest_pip_packages:
+  - cmd2<0.9.0 # >=0.9.0 is python3 only
   - ddt
   - junitxml
   - lxml
