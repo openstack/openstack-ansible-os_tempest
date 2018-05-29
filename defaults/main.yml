@@ -156,6 +156,7 @@ tempest_requires_pip_packages:
   - virtualenv-tools
 
 tempest_pip_packages:
+  - cmd2<0.9.0 # >=0.9.0 is python3 only
   - ddt
   - junitxml
   - lxml
