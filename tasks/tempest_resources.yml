@@ -153,6 +153,7 @@
   until: add_service|success
   retries: 5
   delay: 10
+  no_log: True
 
 - name: Ensure remote_image role exists
   keystone:
@@ -167,6 +168,7 @@
   until: add_service|success
   retries: 5
   delay: 10
+  no_log: True
 
 - name: Get demo tenant id
   keystone:
