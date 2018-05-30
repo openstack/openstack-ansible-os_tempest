@@ -20,7 +20,7 @@ tempest_run: yes
 tempest_plugins:
   - name: sahara-tests
     repo: https://git.openstack.org/openstack/sahara-tests
-    branch: master
+    branch: "0.5.0"
 
 neutron_provider_networks:
   network_types: "vxlan,flat"
