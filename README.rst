@@ -11,6 +11,8 @@ Team and repository tags
 OpenStack-Ansible os_tempest role
 =================================
 
+Ansible role to install OpenStack Tempest.
+
 Documentation for the project can be found at:
   https://docs.openstack.org/openstack-ansible-os_tempest/latest
 
