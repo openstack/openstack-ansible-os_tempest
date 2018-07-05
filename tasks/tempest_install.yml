@@ -40,6 +40,7 @@
     extra_args: >-
       {{ tempest_developer_mode | ternary(pip_install_developer_constraints | default('--constraint /opt/developer-pip-constraints.txt'), '') }}
       {{ pip_install_options | default('') }}
+  when: tempest_requires_pip_packages | length > 0
   register: install_packages
   until: install_packages|success
   retries: 5
