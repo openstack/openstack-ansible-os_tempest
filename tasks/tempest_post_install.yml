@@ -23,7 +23,7 @@
     login_project_name: "{{ keystone_admin_tenant_name }}"
     insecure: "{{ keystone_service_adminuri_insecure }}"
   register: add_service
-  until: add_service|success
+  until: add_service is success
   retries: 6
   delay: 5
   no_log: True
