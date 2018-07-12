@@ -163,7 +163,7 @@
     - "item.stat.exists"
     - "(item.item.install_test_requirements | default(True)) | bool"
   register: install_tempest_plugin_requirements
-  until: install_tempest_plugin_requirements  is success
+  until: install_tempest_plugin_requirements is success
   retries: 5
   delay: 2
 
@@ -181,7 +181,7 @@
   with_items: "{{ tempest_plugins }}"
   when: item.repo is defined
   register: install_tempest_plugins
-  until: install_tempest_plugins  is success
+  until: install_tempest_plugins is success
   retries: 5
   delay: 2
 
@@ -199,7 +199,7 @@
   with_items: "{{ tempest_plugins }}"
   when: item.package is defined
   register: install_tempest_plugins_packages
-  until: install_tempest_plugins_packages  is success
+  until: install_tempest_plugins_packages is success
   retries: 5
   delay: 2
 

@@ -37,7 +37,7 @@
   with_items: "{{ tempest_images }}"
   when: tempest_service_available_glance | bool
   register: fetch_url
-  until: fetch_url  is success
+  until: fetch_url is success
   retries: 6
   delay: 5
   delegate_to: "{{ (tempest_image_downloader == 'deployment-host') | ternary('localhost', inventory_hostname) }}"
@@ -51,7 +51,7 @@
     - tempest_service_available_glance | bool
     - tempest_image_downloader == "deployment-host"
   register: fetch_url
-  until: fetch_url  is success
+  until: fetch_url is success
   retries: 6
   delay: 5
 
@@ -67,7 +67,7 @@
     is_public: True
   with_items: "{{ tempest_images }}"
   register: tempest_image_create
-  until: tempest_image_create  is success
+  until: tempest_image_create is success
   retries: 5
   delay: 15
   when: tempest_service_available_glance | bool
