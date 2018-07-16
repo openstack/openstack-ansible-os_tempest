@@ -1,3 +1,4 @@
+---
 - name: os_tempest role
   hosts: "hosts"
   user: root
