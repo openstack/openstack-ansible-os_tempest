@@ -3,6 +3,7 @@ localhost
 infra1
 openstack1
 tempest1
+compute1
 
 [all_containers]
 infra1
@@ -44,7 +45,7 @@ openstack1
 
 [neutron_linuxbridge_agent]
 openstack1
-localhost
+compute1
 
 [neutron_openvswitch_agent]
 
@@ -87,7 +88,7 @@ openstack1
 openstack1
 
 [nova_compute]
-localhost
+compute1
 
 [nova_conductor]
 openstack1
