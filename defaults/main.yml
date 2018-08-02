@@ -59,8 +59,9 @@ tempest_log_dir: "/var/log/tempest"
 #     package: ironic                                                    #for installing the plugin from packages
 tempest_plugins: "{{ _tempest_plugins['keystone'] + _tempest_plugins['cinder'] + _tempest_plugins['heat'] + _tempest_plugins['neutron'] }}"
 
-# The location where the test whitelist will be placed
+# The location where the test whitelist/blacklist will be placed
 tempest_test_whitelist_file_path: "{{ tempest_venv_bin | dirname }}/workspace/etc/tempest_whitelist.txt"
+tempest_test_blacklist_file_path: "{{ tempest_venv_bin | dirname }}/workspace/etc/tempest_blacklist.txt"
 
 # Tests to execute:
 # This sets up a list of tests to execute based on what's deployed in the environment.
@@ -77,6 +78,10 @@ tempest_test_whitelist:
 # TODO(evrardjp): Bring this back when upstream is fixed
 # (revert of https://github.com/openstack/cinder/commit/737c50b4ea54e2e63d6e3fe8a73d22b393df4205)
 #  - "{{ (tempest_volume_backup_enabled | bool) | ternary('tempest.api.volume.admin.test_volumes_backup', '') }}"
+
+# Tests to NOT execute:
+# This sets up a list of tests to skip, which can even include those included in the whitelist.
+tempest_test_blacklist: []
 
 # Toggle fatal deprecations
 tempest_fatal_deprecations: False
