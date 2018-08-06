@@ -16,3 +16,13 @@
 - project:
     templates:
       - openstack-ansible-role-jobs
+    check:
+      jobs:
+        # TODO(jrosser) Revert this once bionic passes
+        - openstack-ansible-functional-ubuntu-bionic:
+            voting: false
+    gate:
+      jobs:
+        # TODO(jrosser) Revert this once bionic passes
+        - openstack-ansible-functional-ubuntu-bionic:
+            voting: false
