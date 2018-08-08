@@ -13,25 +13,6 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-- name: Get admin tenant id
-  keystone:
-    command: get_tenant
-    tenant_name: admin
-    endpoint: "{{ keystone_service_adminurl }}"
-    login_user: "{{ keystone_admin_user_name }}"
-    login_password: "{{ keystone_auth_admin_password }}"
-    login_project_name: "{{ keystone_admin_tenant_name }}"
-    insecure: "{{ keystone_service_adminuri_insecure }}"
-  register: add_service
-  until: add_service is success
-  retries: 6
-  delay: 5
-  no_log: True
-
-- name: Store admin tenant id
-  set_fact:
-    tempest_admin_tenant_id: "{{ keystone_facts.id }}"
-
 - name: Create tempest directories
   file:
     path: "{{ item.path }}"

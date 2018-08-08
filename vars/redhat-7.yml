@@ -23,5 +23,3 @@ tempest_distro_packages:
   - python2-shade
   - rsync
   - which
-
-tempest_requires_pip_packages: []

@@ -21,6 +21,11 @@ debug: False
 tempest_package_state: "latest"
 tempest_pip_package_state: "latest"
 
+# Set the host which will execute the shade modules
+# for the service setup. The host must already have
+# clouds.yaml properly configured.
+tempest_service_setup_host: "{{ openstack_service_setup_host | default('localhost') }}"
+
 # Toggle whether tempest actually executes
 tempest_run: no
 # Define 0 (serial) or more to use a non default concurrency
@@ -202,10 +207,7 @@ tempest_images:
 
 # The location where images are downloaded to
 tempest_image_dir: "/opt/cache/files"
-
-# Where the download is executed from.
-# Options are ['deployment-host', 'target-host']
-tempest_image_downloader: "deployment-host"
+tempest_image_dir_owner: "{{ lookup('env', 'USER') }}"
 
 tempest_enable_instance_password: True
 
@@ -221,6 +223,17 @@ tempest_flavors:
     disk: 1
     vcpus: 1
 
+# The projects for tempest to use
+tempest_projects:
+  - "demo"
+  - "alt_demo"
+
+# The users for tempest to use
+tempest_users:
+  - name: "demo"
+  - name: "alt_demo"
+
+# The keystone roles for tempest to use
 tempest_roles: []
 
 # This variable is used by the repo_build process to determine
