@@ -24,8 +24,3 @@ tempest_distro_packages:
   - python-neutronclient
   - python-novaclient
   - rsync
-
-tempest_requires_pip_packages:
-  - shade # ubuntu xenial provides a rather old shade library. We need >= 1.9.0 for Rocky
-  - virtualenv
-  - setuptools # Ubuntu's setuptools package does not contain pkg-resources and that's causing troubles

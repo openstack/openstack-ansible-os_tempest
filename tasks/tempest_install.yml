@@ -33,19 +33,6 @@
       {% endfor %}
   when: tempest_developer_mode | bool
 
-- name: Install requires pip packages
-  pip:
-    name: "{{ tempest_requires_pip_packages }}"
-    state: "{{ tempest_pip_package_state }}"
-    extra_args: >-
-      {{ tempest_developer_mode | ternary(pip_install_developer_constraints | default('--constraint /opt/developer-pip-constraints.txt'), '') }}
-      {{ pip_install_options | default('') }}
-  when: tempest_requires_pip_packages | length > 0
-  register: install_packages
-  until: install_packages is success
-  retries: 5
-  delay: 2
-
 - name: Retrieve checksum for venv download
   uri:
     url: "{{ tempest_venv_download_url | replace('tgz', 'checksum') }}"
@@ -65,7 +52,7 @@
   file:
     path: "{{ tempest_venv_bin | dirname }}"
     state: absent
-  when: tempest_get_venv  is changed
+  when: tempest_get_venv is changed
 
 - name: Create tempest venv dir
   file:
@@ -73,14 +60,20 @@
     state: directory
     mode: "0755"
   register: tempest_venv_dir
-  when: tempest_get_venv  is changed
+  when: tempest_get_venv is changed
 
 - name: Unarchive pre-built venv
   unarchive:
     src: "/var/cache/{{ tempest_venv_download_url | basename }}"
     dest: "{{ tempest_venv_bin | dirname }}"
     copy: "no"
-  when: tempest_get_venv  is changed
+  when: tempest_get_venv is changed
+
+- name: Create the virtualenv (if it does not exist)
+  command: "virtualenv --never-download --no-site-packages {{ tempest_venv_bin | dirname }}"
+  args:
+    creates: "{{ tempest_venv_bin }}/activate"
+  when: tempest_get_venv | failed or tempest_get_venv | skipped
 
 - name: Install pip packages
   pip:
@@ -104,7 +97,7 @@
     state: "absent"
   when:
     - ansible_pkg_mgr in ['yum', 'dnf', 'zypper']
-    - tempest_get_venv  is changed
+    - tempest_get_venv is changed
 
 # NOTE(odyssey4me):
 # We reinitialize the venv to ensure that the right
@@ -122,7 +115,7 @@
         --no-pip \
         --no-setuptools \
         --no-wheel
-  when: tempest_get_venv  is changed
+  when: tempest_get_venv is changed
   tags:
     - skip_ansible_lint
 
