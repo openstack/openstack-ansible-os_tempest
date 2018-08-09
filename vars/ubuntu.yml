@@ -18,9 +18,3 @@ cache_timeout: 600
 
 tempest_distro_packages:
   - git-core
-  - libpq-dev
-  - python-glanceclient
-  - python-keystoneclient
-  - python-neutronclient
-  - python-novaclient
-  - rsync
