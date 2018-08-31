@@ -24,6 +24,3 @@ The project source code repository is located at:
 
 The project home is at:
   https://launchpad.net/openstack-ansible
-
-The project source code is at:
-  https://git.openstack.org/cgit/openstack/openstack-ansible-os_tempest/
