@@ -35,7 +35,7 @@ tempest_run: no
 # build the wheel from this repo/branch. Instead, we want tempest to get built
 # from the stable release defined in global requirements.
 #tempest_git_repo: https://git.openstack.org/openstack/tempest
-tempest_git_install_branch: master
+tempest_git_install_branch: '19.0.0'
 tempest_developer_mode: False
 tempest_developer_constraints:
   - "git+{{ tempest_git_repo }}@{{ tempest_git_install_branch }}#egg=tempest"
