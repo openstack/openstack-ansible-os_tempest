@@ -25,20 +25,20 @@
   tags:
     - always
 
-- include: tempest_install.yml
+- include_tasks: tempest_install.yml
   tags:
     - tempest-install
 
-- include: tempest_resources.yml
+- include_tasks: tempest_resources.yml
   run_once: yes
   tags:
     - tempest-config
 
-- include: tempest_post_install.yml
+- include_tasks: tempest_post_install.yml
   tags:
     - tempest-config
 
-- include: tempest_run.yml
+- include_tasks: tempest_run.yml
   when: tempest_run | bool
   tags:
     - tempest-config
