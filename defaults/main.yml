@@ -255,3 +255,7 @@ tempest_role_project_group: utility_all
 
 ## Tunable overrides
 tempest_tempest_conf_overrides: {}
+
+# Stackviz tarball url
+stackviz_tarball: "https://tarballs.openstack.org/package-stackviz-element/stackviz-latest.tar.gz"
+stackviz_venv_bin: "/openstack/venvs/stackviz/bin"

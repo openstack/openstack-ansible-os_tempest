@@ -43,3 +43,10 @@
   tags:
     - tempest-config
     - tempest-run
+
+- include_tasks: stackviz.yml
+  when: tempest_run | bool
+  tags:
+    - tempest-config
+    - tempest-run
+    - stackviz
