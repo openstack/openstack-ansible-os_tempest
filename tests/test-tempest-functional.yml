@@ -28,6 +28,8 @@
           exit 1
         fi
       with_items: "{{ tempest_plugins }}"
+      when:
+       - tempest_install_method | default('source') == 'source'
       tags:
         - skip_ansible_lint
 

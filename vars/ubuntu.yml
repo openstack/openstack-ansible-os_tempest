@@ -18,3 +18,7 @@ cache_timeout: 600
 
 tempest_distro_packages:
   - git-core
+
+tempest_service_distro_packages:
+  - openstack-tempest
+  - python-subunit

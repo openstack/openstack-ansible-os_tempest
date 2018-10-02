@@ -16,6 +16,12 @@
 ## Verbosity Options
 debug: False
 
+# Install openstack tempest
+# set the tempest_install_method to source or distro
+# on choosing source it will install from git or venv
+# on choosing distro it will install based on distribution
+tempest_install_method: "source"
+
 # Set the package install state for distribution and pip packages
 # # Options are 'present' and 'latest'
 tempest_package_state: "latest"
@@ -75,9 +81,12 @@ tempest_log_dir: "/var/log/tempest"
 #     package: ironic                                                    #for installing the plugin from packages
 tempest_plugins: "{{ _tempest_plugins['keystone'] + _tempest_plugins['cinder'] + _tempest_plugins['heat'] + _tempest_plugins['neutron'] }}"
 
+# tempest_workspace where tempest can be runned
+tempest_workspace: "{{ ansible_env.HOME }}/workspace"
+
 # The location where the test whitelist/blacklist will be placed
-tempest_test_whitelist_file_path: "{{ tempest_venv_bin | dirname }}/workspace/etc/tempest_whitelist.txt"
-tempest_test_blacklist_file_path: "{{ tempest_venv_bin | dirname }}/workspace/etc/tempest_blacklist.txt"
+tempest_test_whitelist_file_path: "{{ tempest_workspace }}/etc/tempest_whitelist.txt"
+tempest_test_blacklist_file_path: "{{ tempest_workspace }}/etc/tempest_blacklist.txt"
 
 # Tests to execute:
 # This sets up a list of tests to execute based on what's deployed in the environment.

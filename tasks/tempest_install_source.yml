@@ -1,0 +1,125 @@
+---
+# Copyright 2014, Rackspace US, Inc.
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+# TODO(odyssey4me):
+# This can be simplified once all the roles are using
+# python_venv_build. We can then switch to using a
+# set of constraints in pip.conf inside the venv,
+# perhaps prepared by giving a giving a list of
+# constraints to the role.
+- name: Create developer mode constraint file
+  copy:
+    dest: "/opt/developer-pip-constraints.txt"
+    content: |
+      {% for item in tempest_developer_constraints %}
+      {{ item }}
+      {% endfor %}
+  when: tempest_developer_mode | bool
+
+- name: Ensure remote wheel building is disabled in developer mode
+  set_fact:
+    venv_build_host: "{{ ansible_hostname }}"
+  when:
+    - tempest_developer_mode | bool
+
+- name: Install the python venv
+  include_role:
+    name: "python_venv_build"
+    private: yes
+  vars:
+    venv_install_destination_path: "{{ tempest_venv_bin | dirname }}"
+    venv_pip_install_args: "{{ tempest_pip_install_args }}"
+    venv_pip_packages: "{{ tempest_pip_packages }}"
+    venv_facts_when_changed:
+      - section: "tempest"
+        option: "venv_tag"
+        value: "{{ tempest_venv_tag }}"
+
+- name: Get tempest plugins from git
+  git:
+    repo: "{{ item.repo }}"
+    dest: "/opt/{{ item.name|replace('-', '_') }}_{{ item.branch|replace('/', '_') }}"
+    version: "{{ item.branch }}"
+    force: yes
+  with_items: "{{ tempest_plugins }}"
+  when: item.repo is defined
+  register: git_clone
+  until: git_clone is success
+  retries: 5
+  delay: 2
+
+- name: Check for the existance of the test-requirements.txt file
+  stat:
+    path: "/opt/{{ item.name|replace('-', '_') }}_{{ item.branch|replace('/', '_') }}/test-requirements.txt"
+  with_items: "{{ tempest_plugins }}"
+  when: item.repo is defined
+  register: _test_requirements_stat
+
+- name: Install tempest plugin requirements
+  pip:
+    requirements: "{{ item.stat.path }}"
+    state: "{{ tempest_pip_package_state }}"
+    virtualenv: "{{ tempest_venv_bin | dirname }}"
+    virtualenv_site_packages: "no"
+    extra_args: >-
+      {{ tempest_developer_mode | ternary(pip_install_developer_constraints | default('--constraint /opt/developer-pip-constraints.txt'), '') }}
+      {{ (pip_install_upper_constraints is defined) | ternary('--constraint ' + pip_install_upper_constraints | default(''),'') }}
+      {{ pip_install_options | default('') }}
+      --isolated
+  with_items: "{{ _test_requirements_stat.results }}"
+  when:
+    - "item.item.repo is defined"
+    - "item.stat.exists"
+    - "(item.item.install_test_requirements | default(True)) | bool"
+  register: install_tempest_plugin_requirements
+  until: install_tempest_plugin_requirements is success
+  retries: 5
+  delay: 2
+
+- name: Install tempest plugins from cloned repo
+  pip:
+    name: "/opt/{{ item.name|replace('-', '_') }}_{{ item.branch|replace('/', '_') }}"
+    state: "{{ tempest_pip_package_state }}"
+    virtualenv: "{{ tempest_venv_bin | dirname }}"
+    virtualenv_site_packages: "no"
+    extra_args: >-
+      {{ tempest_developer_mode | ternary(pip_install_developer_constraints | default('--constraint /opt/developer-pip-constraints.txt'), '') }}
+      {{ (pip_install_upper_constraints is defined) | ternary('--constraint ' + pip_install_upper_constraints | default(''),'') }}
+      {{ pip_install_options | default('') }}
+      --isolated
+  with_items: "{{ tempest_plugins }}"
+  when: item.repo is defined
+  register: install_tempest_plugins
+  until: install_tempest_plugins is success
+  retries: 5
+  delay: 2
+
+- name: Install tempest plugins from packages
+  pip:
+    name: "{{ item.package }}"
+    state: "{{ tempest_pip_package_state }}"
+    virtualenv: "{{ tempest_venv_bin | dirname }}"
+    virtualenv_site_packages: "no"
+    extra_args: >-
+      {{ tempest_developer_mode | ternary(pip_install_developer_constraints | default('--constraint /opt/developer-pip-constraints.txt'), '') }}
+      {{ (pip_install_upper_constraints is defined) | ternary('--constraint ' + pip_install_upper_constraints | default(''),'') }}
+      {{ pip_install_options | default('') }}
+      --isolated
+  with_items: "{{ tempest_plugins }}"
+  when: item.package is defined
+  register: install_tempest_plugins_packages
+  until: install_tempest_plugins_packages is success
+  retries: 5
+  delay: 2

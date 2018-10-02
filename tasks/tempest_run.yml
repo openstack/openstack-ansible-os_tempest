@@ -16,10 +16,14 @@
 - block:
   - name: Execute tempest tests
     shell: |
+      set -e
+      if [ -d {{ tempest_venv_bin }} ]
+      then
       . {{ tempest_venv_bin }}/activate
+      fi
       tempest run {% if tempest_run_concurrency is defined %}{% if tempest_run_concurrency | int > 0 %}--concurrency {{ tempest_run_concurrency | int }}{% else %}--serial{% endif %}{% endif %} --whitelist-file {{ tempest_test_whitelist_file_path }}{% if tempest_test_blacklist | length > 0 %} --blacklist-file {{ tempest_test_blacklist_file_path }}{% endif %}
     args:
-      chdir: "{{ tempest_venv_bin | dirname }}/workspace"
+      chdir: "{{ tempest_workspace }}"
       executable: /bin/bash
     changed_when: false
     register: tempest_tests_run
@@ -35,10 +39,14 @@
     # NOTE(mattt): At present we're not placing this file in a valid location
     # to be used by the OpenStack Health dashboard.
     shell: |
+      set -e
+      if [ -d {{ tempest_venv_bin }} ]
+      then
       . {{ tempest_venv_bin }}/activate
+      fi
       stestr last --subunit > {{ tempest_log_dir }}/testrepository.subunit
     args:
-      chdir: "{{ tempest_venv_bin | dirname }}/workspace"
+      chdir: "{{ tempest_workspace }}"
       executable: /bin/bash
     changed_when: false
     failed_when: false
@@ -48,10 +56,14 @@
 
   - name: Generate xml subunit results
     shell: |
+      set -e
+      if [ -d {{ tempest_venv_bin }} ]
+      then
       . {{ tempest_venv_bin }}/activate
+      fi
       subunit2junitxml {{ tempest_log_dir }}/testrepository.subunit > {{ tempest_log_dir }}/tempest_results.xml
     args:
-      chdir: "{{ tempest_venv_bin | dirname }}/workspace"
+      chdir: "{{ tempest_workspace }}"
       executable: /bin/bash
     changed_when: false
     failed_when: false
@@ -61,10 +73,14 @@
 
   - name: Generate html subunit results
     shell: |
+      set -e
+      if [ -d {{ tempest_venv_bin }} ]
+      then
       . {{ tempest_venv_bin }}/activate
+      fi
       subunit2html {{ tempest_log_dir }}/testrepository.subunit {{ tempest_log_dir }}/stestr_results.html
     args:
-      chdir: "{{ tempest_venv_bin | dirname }}/workspace"
+      chdir: "{{ tempest_workspace }}"
       executable: /bin/bash
     changed_when: false
     failed_when: false

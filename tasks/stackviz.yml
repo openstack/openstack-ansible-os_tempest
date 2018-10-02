@@ -36,7 +36,7 @@
     . {{ stackviz_venv_bin }}/activate
     stackviz-export -f {{ tempest_log_dir }}/testrepository.subunit --env {{ tempest_log_dir }}/stackviz/data
   args:
-    chdir: "{{ tempest_venv_bin | dirname }}/workspace"
+    chdir: "{{ tempest_workspace }}"
     executable: /bin/bash
   tags:
     # don't trigger ANSIBLE0013

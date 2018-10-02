@@ -1,5 +1,6 @@
 ---
 # Copyright 2014, Rackspace US, Inc.
+# Copyright 2018, Red Hat, Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -22,13 +23,14 @@
     mode: "{{ item.mode|default('0755') }}"
   with_items:
     - path: "{{ tempest_log_dir | realpath }}"
-    - path: "{{ ansible_env.HOME }}/.tempest/etc"
     - path: "{{ tempest_image_dir }}"
+    - path: "{{ tempest_workspace }}"
+    - path: "/etc/tempest"
 
 - name: Copy tempest config
   config_template:
     src: "tempest.conf.j2"
-    dest: "{{ ansible_env.HOME }}/.tempest/etc/tempest.conf"
+    dest: "/etc/tempest/tempest.conf"
     owner: "root"
     group: "root"
     mode: "0644"
@@ -37,10 +39,12 @@
 
 - name: Initialise tempest workspace
   shell: |
-    if [ ! -d {{ tempest_venv_bin | dirname }}/workspace ]
-    then
-      . {{ tempest_venv_bin }}/activate
-      tempest init {{ tempest_venv_bin | dirname }}/workspace
+    set -e
+    if [ ! -d {{ tempest_workspace }}/etc ]; then
+        if [ -d {{ tempest_venv_bin }} ]; then
+            . {{ tempest_venv_bin }}/activate
+        fi
+      tempest init {{ tempest_workspace }}
       exit 3
     fi
   args:
@@ -75,4 +79,3 @@
     dest: "{{ tempest_test_blacklist_file_path }}"
   when:
     - tempest_test_blacklist | length > 0
-

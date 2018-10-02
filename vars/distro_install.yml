@@ -1,4 +1,5 @@
-# Copyright 2017, Rackspace US, Inc.
+---
+# Copyright 2018, Red Hat, Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -12,10 +13,9 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-- project:
-    templates:
-      - openstack-ansible-role-jobs
-      - check-requirements
-      - publish-openstack-docs-pti
-      - release-notes-jobs-python3
-      - openstack-ansible-role-distro_install-jobs
+#
+# Compile a list of the distro packages to install based on
+# whether the host is in the host group and the service is
+# enabled.
+#
+tempest_package_list: "{{ tempest_distro_packages + tempest_service_distro_packages }}"

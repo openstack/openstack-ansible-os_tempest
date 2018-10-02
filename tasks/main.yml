@@ -25,6 +25,11 @@
   tags:
     - always
 
+- name: Gather variables for installation method
+  include_vars: "{{ tempest_install_method }}_install.yml"
+  tags:
+    - always
+
 - include_tasks: tempest_install.yml
   tags:
     - tempest-install

@@ -16,3 +16,9 @@
 
 tempest_distro_packages:
   - git-core
+
+tempest_service_distro_packages:
+  - openstack-tempest
+  - "{{ (ansible_distribution_version is version ('42', '>=')) | ternary('python-python-subunit', 'python2-python-subunit') }}"
+  - "{{ (ansible_distribution_version is version ('42', '>=')) | ternary('python-os-testr', 'python2-os-testr') }}"
+  - python-junitxml
