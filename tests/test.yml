@@ -14,31 +14,31 @@
 # limitations under the License.
 
 # Prepare the user ssh keys
-- include: common/test-prepare-keys.yml
+- import_playbook: common/test-prepare-keys.yml
 
 # Prepare the host
-- include: common/test-prepare-host.yml
+- import_playbook: common/test-prepare-host.yml
 
 # Prepare the containers
-- include: common/test-prepare-containers.yml
+- import_playbook: common/test-prepare-containers.yml
 
 # Install RabbitMQ/MariaDB
-- include: common/test-install-infra.yml
+- import_playbook: common/test-install-infra.yml
 
 # Install Keystone
-- include: common/test-install-keystone.yml
+- import_playbook: common/test-install-keystone.yml
 
 # Install Glance
-- include: common/test-install-glance.yml
+- import_playbook: common/test-install-glance.yml
 
 # Install Neutron
-- include: common/test-install-neutron.yml
+- import_playbook: common/test-install-neutron.yml
 
 # Install Nova
-- include: common/test-install-nova.yml
+- import_playbook: common/test-install-nova.yml
 
 # Install and execute Tempest
-- include: common/test-install-tempest.yml
+- import_playbook: common/test-install-tempest.yml
 
 # Check whether Tempest executed successfully
-- include: test-tempest-functional.yml
+- import_playbook: test-tempest-functional.yml
