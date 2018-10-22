@@ -36,5 +36,4 @@ galaxy_info:
     - tempest
     - development
     - openstack
-dependencies:
-  - apt_package_pinning
+dependencies: []
