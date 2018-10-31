@@ -20,5 +20,5 @@ tempest_distro_packages:
   - git-core
 
 tempest_service_distro_packages:
-  - openstack-tempest
+  - tempest
   - python-subunit
