@@ -17,7 +17,7 @@
   - name: Execute tempest tests
     shell: |
       set -e
-      if [ -d {{ tempest_venv_bin }} ]
+      if [ -d {{ tempest_venv_bin }} ];
       then
       . {{ tempest_venv_bin }}/activate
       fi
@@ -40,7 +40,7 @@
     # to be used by the OpenStack Health dashboard.
     shell: |
       set -e
-      if [ -d {{ tempest_venv_bin }} ]
+      if [ -d {{ tempest_venv_bin }} ];
       then
       . {{ tempest_venv_bin }}/activate
       fi
@@ -57,7 +57,7 @@
   - name: Generate xml subunit results
     shell: |
       set -e
-      if [ -d {{ tempest_venv_bin }} ]
+      if [ -d {{ tempest_venv_bin }} ];
       then
       . {{ tempest_venv_bin }}/activate
       fi
@@ -74,7 +74,7 @@
   - name: Generate html subunit results
     shell: |
       set -e
-      if [ -d {{ tempest_venv_bin }} ]
+      if [ -d {{ tempest_venv_bin }} ];
       then
       . {{ tempest_venv_bin }}/activate
       fi
