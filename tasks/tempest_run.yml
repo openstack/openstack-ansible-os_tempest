@@ -44,7 +44,7 @@
       then
       . {{ tempest_venv_bin }}/activate
       fi
-      stestr last --subunit > {{ tempest_log_dir }}/testrepository.subunit
+      {{ stestr_executable }} last --subunit > {{ tempest_log_dir }}/testrepository.subunit
     args:
       chdir: "{{ tempest_workspace }}"
       executable: /bin/bash
