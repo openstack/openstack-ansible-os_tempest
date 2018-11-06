@@ -18,9 +18,6 @@ tempest_distro_packages:
   - git
 
 tempest_service_distro_packages:
-  - openstack-tempest
-  - python-tempestconf
+  - openstack-tempest-all
   - python-subunit
-  - python-keystone-tests-tempest
-  - python-sahara-tests-tempest
   - subunit-filters

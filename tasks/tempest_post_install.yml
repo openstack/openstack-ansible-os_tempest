@@ -58,6 +58,17 @@
     # don't trigger ANSIBLE0013
     - skip_ansible_lint
 
+- name: List installed tempest plugins
+  shell: |
+    set -e
+    if [ -d {{ tempest_venv_bin }} ]; then
+       . {{ tempest_venv_bin }}/activate
+    fi
+    tempest list-plugins
+  args:
+    executable: /bin/bash
+  when: "debug | bool"
+
 - name: Generate tempest test whitelist
   copy:
     content: |
