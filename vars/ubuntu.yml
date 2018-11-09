@@ -25,3 +25,9 @@ tempest_service_distro_packages:
   - tempest
   - python-junitxml
   - python-subunit
+
+# Note(odyssey4me):
+# Ubuntu does not publish tempest plugin packages. They do
+# all their testing using the source-based installation of
+# tempest.
+tempest_plugin_distro_packages: []

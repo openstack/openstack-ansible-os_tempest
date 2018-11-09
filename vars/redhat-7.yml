@@ -18,6 +18,17 @@ tempest_distro_packages:
   - git
 
 tempest_service_distro_packages:
-  - openstack-tempest-all
+  - openstack-tempest
   - python-subunit
   - subunit-filters
+
+tempest_plugin_distro_packages:
+  - "{{ (tempest_service_available_cinder | bool) | ternary('python-cinder-tests-tempest', '') }}"
+  - "{{ (tempest_service_available_heat | bool) | ternary('python-heat-tests-tempest', '') }}"
+  - "{{ tempest_service_available_horizon | bool | ternary('python-horizon-tests-tempest', '') }}"
+  - "{{ (tempest_service_available_ironic | bool) | ternary('python-ironic-tests-tempest', '') }}"
+  - python-keystone-tests-tempest
+  - "{{ (tempest_service_available_neutron | bool) | ternary('python-neutron-tests-tempest', '') }}"
+  - "{{ (tempest_service_available_sahara | bool) | ternary('python-sahara-tests-tempest', '') }}"
+  - "{{ (tempest_service_available_zaqar | bool) | ternary('python-zaqar-tests-tempest', '') }}"
+
