@@ -36,6 +36,7 @@
     mode: "0644"
     config_overrides: "{{ tempest_tempest_conf_overrides }}"
     config_type: "ini"
+  when: not tempest_use_tempestconf | bool
 
 - name: Initialise tempest workspace
   shell: |
@@ -57,6 +58,12 @@
   tags:
     # don't trigger ANSIBLE0013
     - skip_ansible_lint
+
+- include_tasks: tempestconf.yml
+  when: tempest_use_tempestconf | bool
+  tags:
+    - tempest-config
+    - tempestconf
 
 - name: List installed tempest plugins
   shell: |

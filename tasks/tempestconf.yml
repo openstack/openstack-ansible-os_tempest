@@ -1,0 +1,49 @@
+---
+# Copyright 2018, Red Hat Inc.
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+- name: Install python-tempestconf on venv
+  include_role:
+    name: "python_venv_build"
+  vars:
+    venv_install_destination_path: "{{ tempest_tempestconf_venv_bin | dirname }}"
+    venv_pip_install_args: "--isolated"
+    venv_pip_packages: "{{ tempest_tempestconf_pip_packages }}"
+
+- name: Executing python-tempestconf
+  shell: |
+    . {{ tempest_tempestconf_venv_bin }}/activate
+    export OS_AUTH_URL="{{ keystone_service_internaluri }}"
+    export OS_IDENTITY_API_VERSION="3"
+    export OS_USERNAME="{{ keystone_admin_user_name }}"
+    export OS_PROJECT_NAME="{{ keystone_admin_tenant_name }}"
+    discover-tempest-config --out etc/tempest.conf \
+      --network-id "{{ tempest_neutron_public_network_id }}" \
+      --debug \
+      --create \
+      auth.use_dynamic_credentials true
+  environment:
+    OS_PASSWORD: "{{ keystone_auth_admin_password }}"
+  args:
+    chdir: "{{ tempest_workspace }}"
+    executable: /bin/bash
+  tags:
+    # don't trigger ANSIBLE0013
+    - skip_ansible_lint
+
+- name: Copy tempest.conf to /etc/tempest
+  copy:
+    src: "{{ tempest_workspace }}/etc/tempest.conf"
+    dest: "/etc/tempest/tempest.conf"
+    remote_src: yes
