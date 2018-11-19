@@ -58,6 +58,10 @@ _tempest_plugins:
     - name: magnum-tempest-plugin
       repo: https://git.openstack.org/openstack/magnum-tempest-plugin
       branch: master
+  manila:
+    - name: manila-tempest-plugin
+      repo: https://git.openstack.org/openstack/manila-tempest-plugin
+      branch: master
   networking-bgpvpn:
     - name: networking-bgpvpn
       repo: https://git.openstack.org/openstack/networking-bgpvpn
