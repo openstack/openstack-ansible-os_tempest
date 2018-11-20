@@ -1,4 +1,4 @@
-# Copyright 2017, Rackspace US, Inc.
+# Copyright 2018, Red Hat, Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -12,16 +12,9 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-- project:
-    templates:
-      - openstack-ansible-role-jobs
-      - check-requirements
-      - publish-openstack-docs-pti
-      - release-notes-jobs-python3
-      - openstack-ansible-role-distro_install-jobs
-    check:
-      jobs:
-        - openstack-ansible-functional-tempestconf-centos-7
-    gate:
-      jobs:
-        - openstack-ansible-functional-tempestconf-centos-7
+- job:
+    name: openstack-ansible-functional-tempestconf-centos-7
+    parent: openstack-ansible-functional
+    nodeset: centos-7
+    vars:
+      tox_env: tempestconf
