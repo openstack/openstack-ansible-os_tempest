@@ -76,6 +76,20 @@
     executable: /bin/bash
   when: "debug | bool"
 
+- name: List tempest tests
+  shell: |
+    set -e
+    if [ -d {{ tempest_venv_bin }} ];
+    then
+      . {{ tempest_venv_bin }}/activate
+    fi
+    tempest run -l
+  args:
+    chdir: "{{ tempest_workspace }}"
+    executable: /bin/bash
+  when: "debug | bool"
+  changed_when: false
+
 - name: Generate tempest test whitelist
   copy:
     content: |
