@@ -20,6 +20,7 @@ _stestr_executable: "{{ (tempest_install_method == 'distro') | ternary('testr', 
 
 tempest_distro_packages:
   - git-core
+  - libxslt1.1           # required by the python module unittest2
 
 tempest_service_distro_packages:
   - tempest
