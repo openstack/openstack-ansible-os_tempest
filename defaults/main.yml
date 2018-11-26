@@ -241,20 +241,17 @@ tempest_pip_packages:
   - testscenarios
   - os-testr
 
-# The list of images for tempest to download.
-# url: where to download from (required)
-# checksum: the checksum of the downloaded file to validate against, format: <algorithm>:<checksum> (optional)
-# format: format to use when uploading to glance (required)
-# name: name to use when uploading to glance - default is to use the downloaded file's name (optional)
-tempest_images:
-  - url: "http://download.cirros-cloud.net/0.3.6/cirros-0.3.6-x86_64-disk.img"
-    checksum: "sha256:72d301384d45cf396c82fd767ff4bf948c94335bbbee46b94946e85c422fa1bd"
-    format: "qcow2"
-    name: "cirros"
-  - url: "http://download.cirros-cloud.net/0.3.6/cirros-0.3.6-x86_64-disk.img"
-    checksum: "sha256:72d301384d45cf396c82fd767ff4bf948c94335bbbee46b94946e85c422fa1bd"
-    format: "qcow2"
-    name: "cirros"
+# The list of images for tempest to download for the current architecture, as defined
+# in this role vars/main.yml file
+# To override this list, use a list of the form
+# tempest_images:
+#   - url: ...         where to download from (required)
+#     checksum: ...    checksum to validate downloaded file, format: <algorithm>:<checksum> (optional)
+#     format: ...      format to use when uploading to glance (required)
+#     name: ...        name to use when uploading to glance (optional)
+#     properties:      a dict of custom properties to attach to the image in glance (optional)
+#       <property>: <value>
+tempest_images: "{{ tempest_images_map[ansible_architecture] }}"
 
 # The location where images are downloaded to
 tempest_image_dir: "{{ lookup('env', 'HOME') }}/tempest-images"
