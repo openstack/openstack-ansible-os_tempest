@@ -276,6 +276,8 @@ tempest_use_tempestconf: false
 tempest_tempestconf_venv_bin: "/openstack/venvs/tempestconf/bin"
 tempest_tempestconf_pip_packages:
   - python-tempestconf
+tempest_tempestconf_extra_cli_call_overrides:
+  auth.use_dynamic_credentials: true
 
 # Stackviz tarball url
 stackviz_tarball: "https://tarballs.openstack.org/package-stackviz-element/stackviz-latest.tar.gz"
