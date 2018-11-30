@@ -65,6 +65,7 @@
         container_format: bare
         disk_format: "{{ item.format }}"
         is_public: True
+        properties: "{{ item.properties | default(omit) }}"
       with_items: "{{ tempest_images }}"
       register: tempest_image_create
       until: tempest_image_create is success
