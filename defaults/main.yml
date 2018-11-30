@@ -33,6 +33,7 @@ tempest_pip_package_state: "latest"
 # for the service setup. The host must already have
 # clouds.yaml properly configured.
 tempest_service_setup_host: "{{ openstack_service_setup_host | default('localhost') }}"
+tempest_service_setup_host_python_interpreter: "{{ openstack_service_setup_host_python_interpreter | default((tempest_service_setup_host == 'localhost') | ternary(ansible_playbook_python, ansible_python['executable'])) }}"
 
 # Toggle whether tempest actually executes
 tempest_run: no
