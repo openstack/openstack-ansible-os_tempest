@@ -16,6 +16,7 @@
 
 tempest_distro_packages:
   - git
+  - libxslt              # required by the python module unittest2
 
 tempest_service_distro_packages:
   - openstack-tempest
