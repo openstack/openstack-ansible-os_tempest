@@ -21,35 +21,12 @@
       then
       . {{ tempest_venv_bin }}/activate
       fi
-      tempest run {% if tempest_run_concurrency is defined %}{% if tempest_run_concurrency | int > 0 %}--concurrency {{ tempest_run_concurrency | int }}{% else %}--serial{% endif %}{% endif %} --whitelist-file {{ tempest_test_whitelist_file_path }}{% if tempest_test_blacklist | length > 0 %} --blacklist-file {{ tempest_test_blacklist_file_path }}{% endif %}
+      tempest run {% if tempest_run_concurrency is defined %}{% if tempest_run_concurrency | int > 0 %}--concurrency {{ tempest_run_concurrency | int }}{% else %}--serial{% endif %}{% endif %} --whitelist-file {{ tempest_test_whitelist_file_path }}{% if tempest_test_blacklist | length > 0 %} --blacklist-file {{ tempest_test_blacklist_file_path }}{% endif %} --subunit > {{ tempest_log_dir }}/testrepository.subunit
     args:
       chdir: "{{ tempest_workspace }}"
       executable: /bin/bash
     changed_when: false
     register: tempest_tests_run
-    tags:
-      # don't trigger ANSIBLE0013
-      - skip_ansible_lint
-
-  always:
-  - name: Generate raw subunit results
-    # Despite not using testrepository, we leave the output filename as
-    # testrepository.subunit as the OpenStack Health dashboard relies on
-    # subunit files with this particular name.
-    # NOTE(mattt): At present we're not placing this file in a valid location
-    # to be used by the OpenStack Health dashboard.
-    shell: |
-      set -e
-      if [ -d {{ tempest_venv_bin }} ];
-      then
-      . {{ tempest_venv_bin }}/activate
-      fi
-      {{ stestr_executable }} last --subunit > {{ tempest_log_dir }}/testrepository.subunit
-    args:
-      chdir: "{{ tempest_workspace }}"
-      executable: /bin/bash
-    changed_when: false
-    failed_when: false
     tags:
       # don't trigger ANSIBLE0013
       - skip_ansible_lint

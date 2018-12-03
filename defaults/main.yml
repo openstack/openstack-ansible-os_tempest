@@ -16,8 +16,6 @@
 ## Verbosity Options
 debug: False
 
-stestr_executable: "{{ _stestr_executable | default('stestr') }}"
-
 # Install openstack tempest
 # set the tempest_install_method to source or distro
 # on choosing source it will install from git or venv
