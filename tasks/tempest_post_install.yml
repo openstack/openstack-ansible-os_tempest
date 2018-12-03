@@ -99,13 +99,17 @@
       {%   endif %}
       {% endfor %}
     dest: "{{ tempest_test_whitelist_file_path }}"
+  when:
+    - tempest_test_whitelist | length > 0
 
+# Tests to NOT execute:
+# This sets up a list of tests to skip, which can even include those included in the whitelist.
 - name: Generate tempest test blacklist
   copy:
     content: |
-      {% for item in tempest_test_blacklist | unique | sort %}
-      {%   if item != '' %}
-      {{ item }}
+      {% for item in tempest_test_blacklist %}
+      {% if item.test != '' %}
+      {{ item.test }}
       {%   endif %}
       {% endfor %}
     dest: "{{ tempest_test_blacklist_file_path }}"
