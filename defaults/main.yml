@@ -287,8 +287,13 @@ tempest_tempestconf_developer_constraints:
   - "git+{{ tempest_tempestconf_git_repo }}@{{ tempest_tempestconf_git_install_branch }}#egg=python_tempestconf"
 tempest_tempestconf_pip_packages:
   - python-tempestconf
-tempest_tempestconf_extra_cli_call_overrides:
-  auth.use_dynamic_credentials: true
+tempest_tempestconf_profile:
+  debug: true
+  create: true
+  out: "{{ tempest_workspace }}/etc/tempest.conf"
+  network-id: "{{ tempest_neutron_public_network_id }}"
+  overrides:
+     auth.use_dynamic_credentials: true
 
 # Stackviz tarball url
 stackviz_tarball: "https://tarballs.openstack.org/package-stackviz-element/stackviz-latest.tar.gz"
