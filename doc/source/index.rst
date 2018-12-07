@@ -7,31 +7,15 @@ This is the Ansible role to deploy OpenStack Tempest.
 :tags: openstack, cloud, ansible, os_tempest
 :category: \*nix
 
-Basic role example
-~~~~~~~~~~~~~~~~~~
+Content:
+--------
 
-.. code-block:: yaml
+.. toctree::
+   :maxdepth: 3
 
-    - role: "os_tempest"
-      ROLE_VARS...
+   overview
+   user/index
+   contributor/index
 
-To clone or view the source code for this repository, visit the role repository
-for `os_tempest <https://github.com/openstack/openstack-ansible-os_tempest>`_.
 
-Default variables
-~~~~~~~~~~~~~~~~~
-
-.. literalinclude:: ../../defaults/main.yml
-   :language: yaml
-   :start-after: under the License.
-
-Dependencies
-~~~~~~~~~~~~
-
-This role needs pip >= 7.1 installed on the target host.
-
-Example playbook
-~~~~~~~~~~~~~~~~
-
-.. literalinclude:: ../../examples/playbook.yml
-   :language: yaml
+* :ref:`search`
