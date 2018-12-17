@@ -31,3 +31,4 @@ tempest_plugin_distro_packages:
   - "{{ (tempest_service_available_ironic | bool) | ternary('python-ironic-tempest-plugin', '') }}"
   - python-keystone-tempest-plugin
   - "{{ (tempest_service_available_neutron | bool) | ternary('python-neutron-tempest-plugin', '') }}"
+  - "{{ (tempest_use_tempestconf | bool) | ternary('python-tempestconf', '') }}"

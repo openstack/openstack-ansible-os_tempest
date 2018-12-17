@@ -20,10 +20,14 @@
     venv_install_destination_path: "{{ tempest_tempestconf_venv_bin | dirname }}"
     venv_pip_install_args: "--isolated"
     venv_pip_packages: "{{ tempest_tempestconf_pip_packages }}"
+  when: tempest_install_method == 'source'
 
 - name: Executing python-tempestconf
   shell: |
+    set -e
+    if [ -d {{ tempest_tempestconf_venv_bin }} ]; then
     . {{ tempest_tempestconf_venv_bin }}/activate
+    fi
     export OS_AUTH_URL="{{ keystone_service_internaluri }}"
     export OS_IDENTITY_API_VERSION="3"
     export OS_USERNAME="{{ keystone_admin_user_name }}"
