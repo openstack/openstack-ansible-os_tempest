@@ -82,9 +82,6 @@ _tempest_plugins:
     - name: octavia-tempest-plugin
       repo: https://git.openstack.org/openstack/octavia-tempest-plugin
       branch: master
-    - name: octavia
-      repo: https://git.openstack.org/openstack/octavia
-      branch: master
   telemetry:
     - name: telemetry-tempest-plugin
       repo: https://git.openstack.org/openstack/telemetry-tempest-plugin
