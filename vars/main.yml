@@ -23,69 +23,69 @@
 _tempest_plugins:
   barbican:
     - name: barbican-tempest-plugin
-      repo: git://git.openstack.org/openstack/barbican-tempest-plugin
+      repo: https://git.openstack.org/openstack/barbican-tempest-plugin
       branch: master
   cinder:
     - name: cinder-tempest-plugin
-      repo: git://git.openstack.org/openstack/cinder-tempest-plugin
+      repo: https://git.openstack.org/openstack/cinder-tempest-plugin
       branch: master
   cloudkitty:
     - name: cloudkitty-tempest-plugin
-      repo: git://git.openstack.org/openstack/cloudkitty-tempest-plugin
+      repo: https://git.openstack.org/openstack/cloudkitty-tempest-plugin
       branch: master
   congress:
     - name: congress-tempest-plugin
-      repo: git://git.openstack.org/openstack/congress-tempest-plugin
+      repo: https://git.openstack.org/openstack/congress-tempest-plugin
       branch: master
       install_test_requirements: false
   designate:
     - name: designate-tempest-plugin
-      repo: git://git.openstack.org/openstack/designate-tempest-plugin
+      repo: https://git.openstack.org/openstack/designate-tempest-plugin
       branch: master
   heat:
     - name: heat-tempest-plugin
-      repo: git://git.openstack.org/openstack/heat-tempest-plugin
+      repo: https://git.openstack.org/openstack/heat-tempest-plugin
       branch: master
   ironic:
     - name: ironic-tempest-plugin
-      repo: git://git.openstack.org/openstack/ironic-tempest-plugin
+      repo: https://git.openstack.org/openstack/ironic-tempest-plugin
       branch: master
   keystone:
     - name: keystone-tempest-plugin
-      repo: git://git.openstack.org/openstack/keystone-tempest-plugin
+      repo: https://git.openstack.org/openstack/keystone-tempest-plugin
       branch: master
   magnum:
     - name: magnum-tempest-plugin
-      repo: git://git.openstack.org/openstack/magnum-tempest-plugin
+      repo: https://git.openstack.org/openstack/magnum-tempest-plugin
       branch: master
   networking-bgpvpn:
     - name: networking-bgpvpn
-      repo: git://git.openstack.org/openstack/networking-bgpvpn
+      repo: https://git.openstack.org/openstack/networking-bgpvpn
       branch: master
   neutron-fwaas:
     - name: neutron-fwaas
-      repo: git://git.openstack.org/openstack/neutron-fwaas
+      repo: https://git.openstack.org/openstack/neutron-fwaas
       branch: master
   neutron-vpnaas:
     - name: neutron-vpnaas
-      repo: git://git.openstack.org/openstack/neutron-vpnaas
+      repo: https://git.openstack.org/openstack/neutron-vpnaas
       branch: master
   neutron:
     - name: neutron-tempest-plugin
-      repo: git://git.openstack.org/openstack/neutron-tempest-plugin
+      repo: https://git.openstack.org/openstack/neutron-tempest-plugin
       branch: master
   nova-lxd:
     - name: nova-lxd
-      repo: git://git.openstack.org/openstack/nova-lxd
+      repo: https://git.openstack.org/openstack/nova-lxd
       branch: master
   octavia:
     - name: octavia-tempest-plugin
-      repo: git://git.openstack.org/openstack/octavia-tempest-plugin
+      repo: https://git.openstack.org/openstack/octavia-tempest-plugin
       branch: master
     - name: octavia
-      repo: git://git.openstack.org/openstack/octavia
+      repo: https://git.openstack.org/openstack/octavia
       branch: master
   telemetry:
     - name: telemetry-tempest-plugin
-      repo: git://git.openstack.org/openstack/telemetry-tempest-plugin
+      repo: https://git.openstack.org/openstack/telemetry-tempest-plugin
       branch: master
