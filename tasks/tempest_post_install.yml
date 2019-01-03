@@ -45,7 +45,15 @@
         if [ -d {{ tempest_venv_bin }} ]; then
             . {{ tempest_venv_bin }}/activate
         fi
-      tempest init {{ tempest_workspace }}
+        # (guilhermesp) We are adding this conditional here to avoid
+        # breakage when we are upgrade from rocky to stein as the workspace
+        # path has been change between these two releases
+        if tempest workspace list | grep workspace; then
+            if ! tempest workspace list | grep -w {{ tempest_workspace }}; then
+                tempest workspace move --name workspace --path {{ tempest_workspace }}
+            fi
+        fi
+        tempest init {{ tempest_workspace }}
       exit 3
     fi
   args:
