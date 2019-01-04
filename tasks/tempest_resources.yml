@@ -56,7 +56,7 @@
 
     - name: Upload tempest images to glance
       os_image:
-        cloud: default
+        cloud: "{{ tempest_cloud_name }}"
         interface: internal
         validate_certs: "{{ not (keystone_service_internaluri_insecure | bool) }}"
         name: "{{ item.name | default(item.url | basename) }}"
@@ -82,7 +82,7 @@
 
     - name: Add tempest projects
       os_project:
-        cloud: default
+        cloud: "{{ tempest_cloud_name }}"
         state: present
         name: "{{ item }}"
         description: "{{ item }} project"
@@ -97,7 +97,7 @@
 
     - name: Add tempest users
       os_user:
-        cloud: default
+        cloud: "{{ tempest_cloud_name }}"
         state: present
         name: "{{ item.name }}"
         password: "{{ item.password | default(item.name) }}"
@@ -114,7 +114,7 @@
 
     - name: Add tempest roles
       os_keystone_role:
-        cloud: default
+        cloud: "{{ tempest_cloud_name }}"
         interface: internal
         validate_certs: "{{ not (keystone_service_internaluri_insecure | bool) }}"
         name: "{{ item }}"
@@ -126,7 +126,7 @@
 
     - name: Add tempest users to heat_stack_owner role
       os_user_role:
-        cloud: default
+        cloud: "{{ tempest_cloud_name }}"
         state: present
         user: "{{ item.name }}"
         role: "heat_stack_owner"
@@ -147,7 +147,7 @@
 
     - name: Ensure private network exists
       os_network:
-        cloud: default
+        cloud: "{{ tempest_cloud_name }}"
         endpoint_type: internal
         validate_certs: "{{ keystone_service_internaluri_insecure | ternary(false, true) }}"
         name: "{{ tempest_private_net_name }}"
@@ -169,7 +169,7 @@
 
     - name: Ensure public network exists
       os_network:
-        cloud: default
+        cloud: "{{ tempest_cloud_name }}"
         endpoint_type: internal
         validate_certs: "{{ keystone_service_internaluri_insecure | ternary(false, true) }}"
         name: "{{ tempest_public_net_name }}"
@@ -191,7 +191,7 @@
 
     - name: Ensure private subnet exists
       os_subnet:
-        cloud: default
+        cloud: "{{ tempest_cloud_name }}"
         endpoint_type: internal
         validate_certs: "{{ keystone_service_internaluri_insecure | ternary(false, true) }}"
         network_name: "{{ tempest_private_net_name }}"
@@ -207,7 +207,7 @@
 
     - name: Ensure public subnet exists
       os_subnet:
-        cloud: default
+        cloud: "{{ tempest_cloud_name }}"
         endpoint_type: internal
         validate_certs: "{{ keystone_service_internaluri_insecure | ternary(false, true) }}"
         network_name: "{{ tempest_public_net_name }}"
@@ -225,7 +225,7 @@
 
     - name: Create router
       os_router:
-        cloud: default
+        cloud: "{{ tempest_cloud_name }}"
         endpoint_type: internal
         validate_certs: "{{ keystone_service_internaluri_insecure | ternary(false, true) }}"
         name: router
@@ -242,7 +242,7 @@
 
     - name: Create tempest flavors
       os_nova_flavor:
-        cloud: default
+        cloud: "{{ tempest_cloud_name }}"
         endpoint_type: internal
         validate_certs: "{{ keystone_service_internaluri_insecure | ternary(false, true) }}"
         name: "{{ item.name }}"
@@ -260,7 +260,7 @@
 
     - name: Get the admin user project id
       os_project_facts:
-        cloud: default
+        cloud: "{{ tempest_cloud_name }}"
         name: admin
         interface: internal
         validate_certs: "{{ not (keystone_service_internaluri_insecure | bool) }}"
