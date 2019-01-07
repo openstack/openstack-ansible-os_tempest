@@ -16,6 +16,9 @@
 # Ensure that tempest executes tests
 tempest_run: yes
 
+# tempestconf specific settings
+tempest_tempestconf_git_repo: https://git.openstack.org/openstack/python-tempestconf
+
 # A sample plugin to activate the code path
 tempest_plugins:
   - name: sahara-tests
