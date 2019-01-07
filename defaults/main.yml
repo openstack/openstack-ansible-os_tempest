@@ -160,15 +160,22 @@ tempest_network_tenant_network_mask_bits: 28
 tempest_dashboard_url: "https://{{ external_lb_vip_address }}/"
 
 tempest_service_available_aodh: False
+tempest_service_available_barbican: False
 tempest_service_available_ceilometer: False
 tempest_service_available_cinder: True
+tempest_service_available_congress: False
+tempest_service_available_designate: False
 tempest_service_available_glance: True
 tempest_service_available_heat: True
 tempest_service_available_horizon: True
 tempest_service_available_ironic: False
+tempest_service_available_magnum: False
 tempest_service_available_manila: False
 tempest_service_available_neutron: True
+tempest_service_available_neutron_fwaas: False
+tempest_service_available_neutron_vpnaas: False
 tempest_service_available_nova: True
+tempest_service_available_octavia: False
 tempest_service_available_sahara: False
 tempest_service_available_swift: True
 tempest_service_available_zaqar: False
