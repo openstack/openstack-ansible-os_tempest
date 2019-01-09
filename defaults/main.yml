@@ -106,12 +106,17 @@ tempest_test_whitelist:
   - "{{ (tempest_service_available_nova | bool) | ternary('tempest.scenario.test_server_basic_ops', '') }}"
   - "{{ (tempest_service_available_swift | bool) | ternary('tempest.scenario.test_object_storage_basic_ops', '') }}"
   - "{{ (tempest_volume_multi_backend_enabled | bool) | ternary('tempest.api.volume.admin.test_multi_backend', '') }}"
-# TODO(evrardjp): Bring this back when upstream is fixed
-# (revert of https://github.com/openstack/cinder/commit/737c50b4ea54e2e63d6e3fe8a73d22b393df4205)
-#  - "{{ (tempest_volume_backup_enabled | bool) | ternary('tempest.api.volume.admin.test_volumes_backup', '') }}"
+  # TODO(evrardjp): Bring this back when upstream is fixed
+  # (revert of https://github.com/openstack/cinder/commit/737c50b4ea54e2e63d6e3fe8a73d22b393df4205)
+  #  - "{{ (tempest_volume_backup_enabled | bool) | ternary('tempest.api.volume.admin.test_volumes_backup', '') }}"
 
-# Tests to NOT execute:
-# This sets up a list of tests to skip, which can even include those included in the whitelist.
+# Tests being skipped by os_tempest
+# Example:
+# tempest_test_blacklist:
+#   - test: tempest.scenario.test.minimum_basic
+#     reason: This test is failing
+#     lp: 'https://bugs.launchpad.net/openstack-ansible/+bug/123456'
+#     bz: 'https://bugzilla.redhat.com/show_bug.cgi?id=123456'
 tempest_test_blacklist: []
 
 # Toggle fatal deprecations
