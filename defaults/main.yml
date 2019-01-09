@@ -208,7 +208,6 @@ tempest_images:
 
 # The location where images are downloaded to
 tempest_image_dir: "/opt/cache/files"
-tempest_image_dir_owner: "{{ lookup('env', 'USER') }}"
 
 tempest_enable_instance_password: True
 

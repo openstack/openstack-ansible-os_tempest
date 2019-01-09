@@ -34,10 +34,6 @@
       file:
         path: "{{ tempest_image_dir }}"
         state: directory
-        mode: "0750"
-        owner: "{{ tempest_image_dir_owner }}"
-        recurse: yes
-      become: yes
       when:
         - tempest_service_available_glance | bool
 
