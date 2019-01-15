@@ -288,6 +288,9 @@ tempest_tempest_conf_overrides: {}
 ## The name of cloud from clouds.yaml
 tempest_cloud_name: "default"
 
+## The name of domain from clouds.yaml
+tempest_domain_name: "default"
+
 # python-tempestconf variables
 # The tempest_use_tempestconf by default is set to false, set to true if you
 # want to generate the tempest.conf file with this tool, instead of
