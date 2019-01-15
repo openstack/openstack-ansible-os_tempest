@@ -82,7 +82,7 @@
         state: present
         name: "{{ item }}"
         description: "{{ item }} project"
-        domain_id: "default"
+        domain: "{{ tempest_domain_name }}"
         interface: internal
         verify: "{{ not (keystone_service_internaluri_insecure | bool) }}"
       register: add_project
@@ -97,7 +97,7 @@
         state: present
         name: "{{ item.name }}"
         password: "{{ item.password | default(item.name) }}"
-        domain: default
+        domain: "{{ tempest_domain_name }}"
         default_project: "{{ item.project | default(item.name) }}"
         interface: internal
         verify: "{{ not (keystone_service_internaluri_insecure | bool) }}"
