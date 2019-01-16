@@ -170,7 +170,7 @@
         validate_certs: "{{ keystone_service_internaluri_insecure | ternary(false, true) }}"
         name: "{{ tempest_public_net_name }}"
         provider_network_type: "{{ tempest_public_net_provider_type }}"
-        provider_physical_network: "{{ tempest_public_net_physical_type | default(omit) }}"
+        provider_physical_network: "{{ tempest_public_net_physical_name | default(omit) }}"
         provider_segmentation_id: "{{ tempest_public_net_seg_id | default(omit) }}"
         external: "{{ tempest_public_router_external }}"
         project: "{{ keystone_demo_tenant_id }}"
