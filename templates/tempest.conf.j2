@@ -42,6 +42,7 @@ live_migration = false
 block_migration_for_live_migration = false
 block_migrate_cinder_iscsi = false
 spice_console = true
+config_drive = {{ ansible_architecture != 'aarch64' }}
 rescue = false
 enable_instance_password = {{ tempest_enable_instance_password }}
 interface_attach = false
