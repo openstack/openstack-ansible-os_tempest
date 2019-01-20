@@ -101,6 +101,24 @@
       executable: /bin/bash
     changed_when: false
     failed_when: false
+
+  # Copy module doesn't copy recursively with remote_src set to true
+  - name: Copy stackviz-html to home directory
+    shell: |
+      cp -r {{ stackviz_venv_bin | dirname }}/share/stackviz-html {{ tempest_log_dir }}/stackviz
+    args:
+      executable: /bin/bash
+    tags:
+      # don't trigger ANSIBLE0013
+      - skip_ansible_lint
+
+  - name: Collecting data from tempest run
+    shell: |
+      . {{ stackviz_venv_bin }}/activate
+      stackviz-export -f {{ tempest_log_dir }}/testrepository.subunit --env {{ tempest_log_dir }}/stackviz/data
+    args:
+      chdir: "{{ tempest_workspace }}"
+      executable: /bin/bash
     tags:
       # don't trigger ANSIBLE0013
       - skip_ansible_lint
