@@ -194,6 +194,7 @@
         name: "{{ tempest_private_subnet_name }}"
         cidr: "{{ tempest_private_subnet_cidr }}"
         project: "{{ keystone_demo_tenant_id }}"
+        enable_dhcp: false
       register: _add_private_subnet
       until: _add_private_subnet is success
       retries: 5
