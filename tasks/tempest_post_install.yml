@@ -52,8 +52,9 @@
             if ! tempest workspace list | grep -w {{ tempest_workspace }}; then
                 tempest workspace move --name workspace --path {{ tempest_workspace }}
             fi
+        else
+           tempest init {{ tempest_workspace }}
         fi
-        tempest init {{ tempest_workspace }}
       exit 3
     fi
   args:
