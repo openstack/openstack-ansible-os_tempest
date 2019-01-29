@@ -27,9 +27,10 @@ container_networks:
     netmask: "255.255.255.0"
     type: "veth"
   vlan_address:
+    address: "{{ vlan_address }}"
     bridge: "br-vlan"
     interface: "eth12"
-    netmask: null
+    netmask: "255.255.255.0"
     type: "veth"
 physical_host: localhost
 properties:

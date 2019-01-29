@@ -18,3 +18,4 @@ ansible_become: True
 ansible_user: root
 container_name: tempest1
 tunnel_address: 10.1.2.103
+vlan_address: 10.1.3.103
