@@ -100,6 +100,7 @@ build_timeout = 600
 
 
 [network-feature-enabled]
+port_security = true
 ipv6 = false
 api_extensions = agent,allowed-address-pairs,binding,dhcp_agent_scheduler,ext-gw-mode,external-net,extra_dhcp_opt,extra_dhcp_optagent,extraroute,l3_agent_scheduler,metering,provider,quotas,router,security-group,service-type,subnet_allocation
 
@@ -180,4 +181,3 @@ build_timeout = 600
 [volume-feature-enabled]
 backup = {{ tempest_volume_backup_enabled }}
 multi_backend = {{ tempest_volume_multi_backend_enabled }}
-
