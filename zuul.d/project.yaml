@@ -22,6 +22,8 @@
     check:
       jobs:
         - openstack-ansible-functional-tempestconf-centos-7
+        - tripleo-ci-centos-7-standalone-os-tempest
     gate:
       jobs:
         - openstack-ansible-functional-tempestconf-centos-7
+        - tripleo-ci-centos-7-standalone-os-tempest
