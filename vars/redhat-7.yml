@@ -18,7 +18,6 @@ tempest_distro_packages:
   - git
   - libxslt              # required by the python module unittest2
   - gcc                  # required to build tempest plugins (TODO) remove this when the repo server can satisfy the tempest plugin requirements
-  - libselinux-python
 
 tempest_service_distro_packages:
   - openstack-tempest
