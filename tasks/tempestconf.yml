@@ -42,13 +42,7 @@
     if [ -d {{ tempest_tempestconf_venv_bin }} ]; then
     . {{ tempest_tempestconf_venv_bin }}/activate
     fi
-    export OS_AUTH_URL="{{ keystone_service_internaluri }}"
-    export OS_IDENTITY_API_VERSION="3"
-    export OS_USERNAME="{{ keystone_admin_user_name }}"
-    export OS_PROJECT_NAME="{{ keystone_admin_tenant_name }}"
     discover-tempest-config --profile "{{ tempest_workspace }}/etc/profile.yaml"
-  environment:
-    OS_PASSWORD: "{{ keystone_auth_admin_password }}"
   args:
     chdir: "{{ tempest_workspace }}"
     executable: /bin/bash

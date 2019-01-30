@@ -316,6 +316,7 @@ tempest_tempestconf_pip_packages:
 tempest_tempestconf_profile:
   debug: true
   create: true
+  os-cloud: "{{ tempest_cloud_name }}"
   out: "{{ tempest_workspace }}/etc/tempest.conf"
   network-id: "{{ tempest_neutron_public_network_id }}"
   overrides:
