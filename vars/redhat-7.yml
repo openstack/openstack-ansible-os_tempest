@@ -25,6 +25,7 @@ tempest_service_distro_packages:
   - subunit-filters
 
 tempest_plugin_distro_packages:
+  - "{{ (tempest_service_available_aodh | bool) | ternary('python-telemetry-tests-tempest', '') }}"
   - "{{ (tempest_service_available_barbican | bool) | ternary('python-barbican-tests-tempest', '') }}"
   - "{{ (tempest_service_available_ceilometer | bool) | ternary('python-telemetry-tests-tempest', '') }}"
   - "{{ (tempest_service_available_cinder | bool) | ternary('python-cinder-tests-tempest', '') }}"
