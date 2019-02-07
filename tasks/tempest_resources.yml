@@ -42,6 +42,8 @@
         url: "{{ item.url }}"
         dest: "{{ tempest_image_dir }}/"
         checksum: "{{ item.checksum | default(omit) }}"
+        url_username: "{{ item.username | default(omit) }}"
+        url_password: "{{ item.password | default(omit) }}"
       with_items: "{{ tempest_images }}"
       when:
         - tempest_service_available_glance | bool
