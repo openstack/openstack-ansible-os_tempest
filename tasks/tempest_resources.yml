@@ -239,6 +239,25 @@
       when:
         - tempest_service_available_neutron | bool
 
+    - name: Get router admin state and ip address
+      set_fact:
+        router_admin_state: "{{ _add_router['router']['admin_state_up'] }}"
+        router_ip: "{{ _add_router['router']['external_gateway_info']['external_fixed_ips'][0]['ip_address'] }}"
+      when:
+        - tempest_service_available_neutron | bool
+
+    - name: Ping router ip address
+      shell: |
+        set -e
+        ping -c2 "{{ router_ip }}"
+      register: _ping_router
+      until: _ping_router is success
+      retries: 5
+      delay: 10
+      when:
+        - tempest_service_available_neutron | bool
+        - router_admin_state|bool == true
+
     - name: Create tempest flavors
       os_nova_flavor:
         cloud: "{{ tempest_cloud_name }}"
