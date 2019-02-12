@@ -257,6 +257,7 @@
       when:
         - tempest_service_available_neutron | bool
         - router_admin_state|bool == true
+        - tempest_network_ping_gateway | bool
 
     - name: Create tempest flavors
       os_nova_flavor:
