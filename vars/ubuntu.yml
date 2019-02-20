@@ -27,6 +27,7 @@ tempest_service_distro_packages:
   - tempest
   - python-junitxml
   - python-subunit
+  - iputils-ping
 
 # Note(odyssey4me):
 # Ubuntu does not publish tempest plugin packages. They do
