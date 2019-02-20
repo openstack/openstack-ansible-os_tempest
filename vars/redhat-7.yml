@@ -23,6 +23,7 @@ tempest_service_distro_packages:
   - openstack-tempest
   - python-subunit
   - subunit-filters
+  - iputils
 
 tempest_plugin_distro_packages:
   - "{{ (tempest_service_available_aodh | bool) | ternary('python-telemetry-tests-tempest', '') }}"
