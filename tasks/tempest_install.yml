@@ -36,3 +36,4 @@
     venv_install_destination_path: "{{ stackviz_venv_bin | dirname }}"
     venv_pip_install_args: "--isolated"
     venv_pip_packages: "{{ [ stackviz_tarball ] }}"
+  when: tempest_run_stackviz | bool
