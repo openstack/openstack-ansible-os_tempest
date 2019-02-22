@@ -37,7 +37,6 @@
 - name: Install the python venv
   include_role:
     name: "python_venv_build"
-    private: yes
   vars:
     venv_install_destination_path: "{{ tempest_venv_bin | dirname }}"
     venv_pip_install_args: "{{ tempest_pip_install_args }}"
