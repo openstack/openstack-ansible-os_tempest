@@ -164,7 +164,7 @@ tempest_compute_snapshot_enabled: True
 tempest_compute_change_password: False
 tempest_network_tenant_network_cidr: "192.168.74.0/24"
 tempest_network_tenant_network_mask_bits: 28
-tempest_network_ping_gateway: True
+tempest_network_ping_gateway: False
 
 tempest_dashboard_url: "https://{{ external_lb_vip_address | default('127.0.0.1') }}/"
 
