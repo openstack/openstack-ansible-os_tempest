@@ -36,7 +36,50 @@
     mode: "0644"
     config_overrides: "{{ tempest_tempest_conf_overrides }}"
     config_type: "ini"
+  register: copy_tempest_config
   when: not tempest_use_tempestconf | bool
+
+- name: Move over workspace when config is updated
+  shell: |
+    set -e
+
+    if [ -d  {{ tempest_venv_bin }} ]; then
+        . {{ tempest_venv_bin }}/activate
+    else
+       exit 0
+    fi
+
+    if tempest workspace list | grep ' workspace '; then
+
+        # Get a backup suffix
+        export CURDATE=$(date +"%d%^b%g_%H%M%S%Z")
+
+        # Get the dirname for 'workspace' directly from the tempest workspace list
+        WSPATH=$(dirname $(tempest workspace list | awk '{if($2 == "workspace"){print $4}}'))
+
+        # Rename the workspace
+        tempest workspace rename --old-name workspace --new-name workspace_${CURDATE}
+
+        # A workspace move only changes the config.  The move happens manually.
+        if [ -d "${WSPATH}/workspace" ]
+        then
+            mv ${WSPATH}/workspace ${WSPATH}/workspace_${CURDATE}
+            tempest workspace move --name workspace_${CURDATE} --path ${WSPATH}/workspace_${CURDATE}/
+        fi
+
+        exit 3
+    fi
+  args:
+    executable: /bin/bash
+  register: tempest_move_workspace
+  changed_when: tempest_move_workspace.rc == 3
+  failed_when:
+    - tempest_move_workspace.rc != 0
+    - tempest_move_workspace.rc != 3
+  when: copy_tempest_config.changed
+  tags:
+     # don't trigger ANSIBLE0016
+     - skip_ansible_lint
 
 - name: Initialise tempest workspace
   shell: |
@@ -48,9 +91,12 @@
         # (guilhermesp) We are adding this conditional here to avoid
         # breakage when we are upgrade from rocky to stein as the workspace
         # path has been change between these two releases
-        if tempest workspace list | grep workspace; then
-            if ! tempest workspace list | grep -w {{ tempest_workspace }}; then
-                tempest workspace move --name workspace --path {{ tempest_workspace }}
+        if tempest workspace list | grep ' workspace '; then
+            if ! tempest workspace list | grep ' workspace ' | grep -w {{ tempest_workspace }}; then
+                # Init not working on existing entry. Renme old workspace instead and init new.
+                export CURDATE=$(date +"%d%^b%g_%H%M%S%Z")
+                tempest workspace rename --old-name workspace --new-name workspace_${CURDATE}
+                tempest init {{ tempest_workspace }}
             fi
         fi
         tempest init {{ tempest_workspace }}
