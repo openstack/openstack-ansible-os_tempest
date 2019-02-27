@@ -196,7 +196,7 @@ tempest_service_available_nova_lxd: False
 
 tempest_service_available_octavia: "{{ groups['octavia_all'] is defined and groups['octavia_all'] | length > 0 }}"
 tempest_service_available_sahara: "{{ groups['sahara_all'] is defined and groups['sahara_all'] | length > 0 }}"
-tempest_service_available_swift: "{{ (groups['swift_all'] is defined and groups['swift_all'] | length > 0) or (groups['ceph-rgw'] is defined and groups['ceph-rgw'] | length > 0) or (ceph_rgws | length > 0) }}"
+tempest_service_available_swift: "{{ (groups['swift_all'] is defined and groups['swift_all'] | length > 0) or (groups['ceph-rgw'] is defined and groups['ceph-rgw'] | length > 0) or (ceph_rgws is defined and ceph_rgws | length > 0) }}"
 tempest_service_available_zaqar: "{{ groups['zaqar_all'] is defined and groups['zaqar_all'] | length > 0 }}"
 
 tempest_image_api_v1_enabled: False
