@@ -18,14 +18,17 @@
   file:
     path: "{{ item.path }}"
     state: directory
-    owner: "root"
-    group: "root"
+    owner: "{{ item.owner | default(omit) }}"
+    group: "{{ item.group | default(omit) }}"
     mode: "{{ item.mode|default('0755') }}"
   with_items:
     - path: "{{ tempest_log_dir | realpath }}"
+      owner: root
     - path: "{{ tempest_image_dir }}"
     - path: "{{ tempest_workspace }}"
     - path: "/etc/tempest"
+      owner: root
+      group: root
 
 - name: Copy tempest config
   config_template:
