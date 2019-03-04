@@ -258,7 +258,7 @@ tempest_images:
     name: "cirros"
 
 # The location where images are downloaded to
-tempest_image_dir: "/opt/cache/files"
+tempest_image_dir: "{{ lookup('env', 'HOME') }}/tempest-images"
 
 tempest_enable_instance_password: True
 
