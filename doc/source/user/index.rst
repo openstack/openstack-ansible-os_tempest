@@ -7,3 +7,4 @@ User Guide
 
   usage
   default
+  configuration
