@@ -21,7 +21,16 @@
       then
       . {{ tempest_venv_bin }}/activate
       fi
-      tempest run {% if tempest_run_concurrency is defined %}--concurrency {{ tempest_run_concurrency }}{% else %}--serial{% endif %} --whitelist-file {{ tempest_test_whitelist_file_path }}{% if tempest_test_blacklist | length > 0 %} --blacklist-file {{ tempest_test_blacklist_file_path }}{% endif %}
+      tempest run \
+      {% if tempest_run_concurrency is defined %}
+        --concurrency {{ tempest_run_concurrency }} \
+      {% else %}
+        --serial \
+      {% endif %}
+      {% if tempest_test_blacklist | length > 0 %}
+        --blacklist-file {{ tempest_test_blacklist_file_path }} \
+      {% endif %}
+        --whitelist-file {{ tempest_test_whitelist_file_path }}
     args:
       chdir: "{{ tempest_workspace }}"
       executable: /bin/bash
