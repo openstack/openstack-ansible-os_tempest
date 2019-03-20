@@ -56,7 +56,7 @@ endpoint_type = internalURL
 
 
 [identity]
-disable_ssl_certificate_validation = {{ keystone_service_internaluri_insecure | bool }}
+disable_ssl_certificate_validation = {{ tempest_keystone_interface_insecure | bool }}
 uri = {{ keystone_service_internaluri }}/v2.0
 uri_v3 = {{ keystone_service_internalurl }}
 auth_version = v3

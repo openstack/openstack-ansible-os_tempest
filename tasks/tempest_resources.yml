@@ -56,7 +56,7 @@
       os_image:
         cloud: "{{ tempest_cloud_name }}"
         interface: "{{ tempest_interface_name }}"
-        validate_certs: "{{ not (keystone_service_internaluri_insecure | bool) }}"
+        validate_certs: "{{ not (tempest_keystone_interface_insecure | bool) }}"
         name: "{{ item.name | default(item.url | basename) }}"
         filename: "{{ tempest_image_dir }}/{{ item.url | basename }}"
         container_format: bare
@@ -86,7 +86,7 @@
         description: "{{ item }} project"
         domain: "{{ tempest_domain_name }}"
         interface: "{{ tempest_interface_name }}"
-        verify: "{{ not (keystone_service_internaluri_insecure | bool) }}"
+        verify: "{{ not (tempest_keystone_interface_insecure | bool) }}"
       register: add_project
       until: add_project is success
       retries: 5
@@ -102,7 +102,7 @@
         domain: "{{ tempest_domain_name }}"
         default_project: "{{ item.project | default(item.name) }}"
         interface: "{{ tempest_interface_name }}"
-        verify: "{{ not (keystone_service_internaluri_insecure | bool) }}"
+        verify: "{{ not (tempest_keystone_interface_insecure | bool) }}"
       register: add_user
       until: add_user is success
       retries: 5
@@ -114,7 +114,7 @@
       os_keystone_role:
         cloud: "{{ tempest_cloud_name }}"
         interface: "{{ tempest_interface_name }}"
-        validate_certs: "{{ not (keystone_service_internaluri_insecure | bool) }}"
+        validate_certs: "{{ not (tempest_keystone_interface_insecure | bool) }}"
         name: "{{ item }}"
       register: add_role
       until: add_role is success
@@ -130,7 +130,7 @@
         role: "heat_stack_owner"
         project: "{{ item.project | default(item.name) }}"
         interface: "{{ tempest_interface_name }}"
-        verify: "{{ not (keystone_service_internaluri_insecure | bool) }}"
+        verify: "{{ not (tempest_keystone_interface_insecure | bool) }}"
       register: add_user_role
       until: add_user_role is success
       retries: 5
@@ -147,7 +147,7 @@
       os_network:
         cloud: "{{ tempest_cloud_name }}"
         interface: "{{ tempest_interface_name }}"
-        validate_certs: "{{ keystone_service_internaluri_insecure | ternary(false, true) }}"
+        validate_certs: "{{ tempest_keystone_interface_insecure | ternary(false, true) }}"
         name: "{{ tempest_private_net_name }}"
         provider_network_type: "{{ tempest_private_net_provider_type }}"
         provider_segmentation_id: "{{ tempest_private_net_seg_id | default(omit) }}"
@@ -169,7 +169,7 @@
       os_network:
         cloud: "{{ tempest_cloud_name }}"
         interface: "{{ tempest_interface_name }}"
-        validate_certs: "{{ keystone_service_internaluri_insecure | ternary(false, true) }}"
+        validate_certs: "{{ tempest_keystone_interface_insecure | ternary(false, true) }}"
         name: "{{ tempest_public_net_name }}"
         provider_network_type: "{{ tempest_public_net_provider_type }}"
         provider_physical_network: "{{ tempest_public_net_physical_name | default(omit) }}"
@@ -191,7 +191,7 @@
       os_subnet:
         cloud: "{{ tempest_cloud_name }}"
         interface: "{{ tempest_interface_name }}"
-        validate_certs: "{{ keystone_service_internaluri_insecure | ternary(false, true) }}"
+        validate_certs: "{{ tempest_keystone_interface_insecure | ternary(false, true) }}"
         network_name: "{{ tempest_private_net_name }}"
         name: "{{ tempest_private_subnet_name }}"
         cidr: "{{ tempest_private_subnet_cidr }}"
@@ -208,7 +208,7 @@
       os_subnet:
         cloud: "{{ tempest_cloud_name }}"
         interface: "{{ tempest_interface_name }}"
-        validate_certs: "{{ keystone_service_internaluri_insecure | ternary(false, true) }}"
+        validate_certs: "{{ tempest_keystone_interface_insecure | ternary(false, true) }}"
         network_name: "{{ tempest_public_net_name }}"
         name: "{{ tempest_public_subnet_name }}"
         cidr: "{{ tempest_public_subnet_cidr }}"
@@ -226,7 +226,7 @@
       os_router:
         cloud: "{{ tempest_cloud_name }}"
         interface: "{{ tempest_interface_name }}"
-        validate_certs: "{{ keystone_service_internaluri_insecure | ternary(false, true) }}"
+        validate_certs: "{{ tempest_keystone_interface_insecure | ternary(false, true) }}"
         name: router
         network: "{{ tempest_public_net_name }}"
         interfaces:
@@ -250,7 +250,7 @@
       os_nova_flavor:
         cloud: "{{ tempest_cloud_name }}"
         interface: "{{ tempest_interface_name }}"
-        validate_certs: "{{ keystone_service_internaluri_insecure | ternary(false, true) }}"
+        validate_certs: "{{ tempest_keystone_interface_insecure | ternary(false, true) }}"
         name: "{{ item.name }}"
         flavorid: "{{ item.id }}"
         ram: "{{ item.ram }}"
@@ -269,7 +269,7 @@
         cloud: "{{ tempest_cloud_name }}"
         name: admin
         interface: "{{ tempest_interface_name }}"
-        validate_certs: "{{ not (keystone_service_internaluri_insecure | bool) }}"
+        validate_certs: "{{ not (tempest_keystone_interface_insecure | bool) }}"
       register: _get_admin_project
       until: _get_admin_project is success
       retries: 5
