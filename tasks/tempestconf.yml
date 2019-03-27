@@ -13,19 +13,11 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-- name: Create developer mode constraint file for python-tempestconf
-  copy:
-    dest: "/opt/developer-pip-constraints.txt"
-    content: |
-      {% for item in tempest_tempestconf_developer_constraints %}
-      {{ item }}
-      {% endfor %}
-  when: tempest_developer_mode | bool
-
 - name: Install python-tempestconf on venv
   include_role:
     name: "python_venv_build"
   vars:
+    venv_build_constraints: "{{ tempest_tempestconf_git_constraints }}"
     venv_install_destination_path: "{{ tempest_tempestconf_venv_bin | dirname }}"
     venv_pip_install_args: "{{ tempest_pip_install_args }}"
     venv_pip_packages: "{{ tempest_tempestconf_pip_packages }}"

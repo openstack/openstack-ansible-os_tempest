@@ -45,28 +45,16 @@ tempest_run: no
 # from the stable release defined in global requirements.
 #tempest_git_repo: https://git.openstack.org/openstack/tempest
 tempest_git_install_branch: master
-tempest_developer_mode: False
-tempest_developer_constraints:
+tempest_upper_constraints_url: "{{ requirements_git_url | default('https://git.openstack.org/cgit/openstack/requirements/plain/upper-constraints.txt?h=' ~ requirements_git_install_branch | default('master')) }}"
+tempest_git_constraints:
   - "git+{{ tempest_git_repo }}@{{ tempest_git_install_branch }}#egg=tempest"
+  - "--constraint {{ tempest_upper_constraints_url }}"
 
-# TODO(odyssey4me):
-# This can be simplified once all the roles are using
-# python_venv_build. We can then switch to using a
-# set of constraints in pip.conf inside the venv,
-# perhaps prepared by giving a giving a list of
-# constraints to the role.
-tempest_pip_install_args: >-
-  {{ tempest_developer_mode | ternary(pip_install_developer_constraints | default('--constraint /opt/developer-pip-constraints.txt'), '') }}
-  {{ (pip_install_upper_constraints is defined) | ternary('--constraint ' + pip_install_upper_constraints | default(''), '') }}
-  {{ pip_install_options | default('') }}
+tempest_pip_install_args: "{{ pip_install_options | default('') }}"
 
 # Name of the virtual env to deploy into
 tempest_venv_tag: "{{ venv_tag | default('untagged') }}"
 tempest_venv_bin: "/openstack/venvs/tempest-{{ tempest_venv_tag }}/bin"
-# venv_download, even when true, will use the fallback method of building the
-# venv from scratch if the venv download fails.
-tempest_venv_download: "{{ not tempest_developer_mode | bool }}"
-tempest_venv_download_url: http://127.0.0.1/venvs/untagged/ubuntu/tempest.tgz
 
 # The location where the tempest logs will be placed
 tempest_log_dir: "/var/log/tempest"
@@ -320,8 +308,9 @@ tempest_tempestconf_venv_bin: "/openstack/venvs/tempestconf/bin"
 # from the stable release defined in global requirements.
 # tempest_tempestconf_git_repo: https://git.openstack.org/openstack/python-tempestconf
 tempest_tempestconf_git_install_branch: master
-tempest_tempestconf_developer_constraints:
+tempest_tempestconf_git_constraints:
   - "git+{{ tempest_tempestconf_git_repo }}@{{ tempest_tempestconf_git_install_branch }}#egg=python_tempestconf"
+  - "--constraint {{ tempest_upper_constraints_url }}"
 tempest_tempestconf_pip_packages:
   - python-tempestconf
 tempest_tempestconf_profile:
