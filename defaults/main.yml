@@ -330,8 +330,7 @@ tempest_tempestconf_profile:
   os-cloud: "{{ tempest_cloud_name }}"
   out: "{{ tempest_workspace }}/etc/tempest.conf"
   network-id: "{{ tempest_neutron_public_network_id }}"
-  overrides:
-     auth.use_dynamic_credentials: true
+  overrides: "{{ tempest_tempest_conf_overrides | default('omit') }}"
 
 # Stackviz tarball url
 stackviz_tarball: "https://tarballs.openstack.org/package-stackviz-element/stackviz-latest.tar.gz"
