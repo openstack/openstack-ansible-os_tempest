@@ -14,11 +14,12 @@
 
 - project:
     templates:
-      - openstack-ansible-role-jobs
       - check-requirements
+      - openstack-ansible-linters
+      - openstack-ansible-deploy-aio_metal-jobs
+      - openstack-ansible-deploy-aio_distro_metal-jobs
       - publish-openstack-docs-pti
       - release-notes-jobs-python3
-      - openstack-ansible-role-distro_install-jobs
     check:
       jobs:
         - openstack-ansible-functional-tempestconf-centos-7
