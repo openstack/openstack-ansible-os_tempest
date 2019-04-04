@@ -116,7 +116,7 @@
     # don't trigger ANSIBLE0013
     - skip_ansible_lint
 
-- include_tasks: tempestconf.yml
+- import_tasks: tempestconf.yml
   when: tempest_use_tempestconf | bool
   tags:
     - tempest-config

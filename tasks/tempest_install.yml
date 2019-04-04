@@ -26,11 +26,11 @@
   delay: 2
 
 - name: Install Tempest packages from PIP
-  include_tasks: tempest_install_source.yml
+  import_tasks: tempest_install_source.yml
   when: tempest_install_method == 'source'
 
 - name: Install stackviz on venv
-  include_role:
+  import_role:
     name: "python_venv_build"
   vars:
     venv_install_destination_path: "{{ stackviz_venv_bin | dirname }}"
