@@ -25,6 +25,12 @@
   tags:
     - always
 
+- name: Set tempest service specific variables
+  set_fact:
+    tempest_service_available_{{ item }}: true
+  with_items: "{{ tempest_services }}"
+  when: tempest_services | length > 0
+
 - name: Gather variables for installation method
   include_vars: "{{ tempest_install_method }}_install.yml"
   tags:
