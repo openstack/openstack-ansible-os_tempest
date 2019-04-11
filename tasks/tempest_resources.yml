@@ -291,3 +291,4 @@
     - tempest_service_available_neutron | bool
     - router_admin_state | bool
     - tempest_network_ping_gateway | bool
+    - tempest_public_net_provider_type not in ['local']
