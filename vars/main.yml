@@ -93,6 +93,11 @@ _tempest_plugins:
       repo: https://git.openstack.org/openstack/neutron-tempest-plugin
       branch: master
       install: "{{ tempest_service_available_neutron | bool }}"
+  novajoin:
+    - name: novajoin-tempest-plugin
+      repo: https://git.openstack.org/openstack/novajoin-tempest-plugin
+      branch: master
+      install: "{{ tempest_service_available_novajoin | bool }}"
   nova-lxd:
     - name: nova-lxd
       repo: https://git.openstack.org/openstack/nova-lxd
