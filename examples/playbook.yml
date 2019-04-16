@@ -1,6 +1,8 @@
 ---
-- name: os_tempest role
-  hosts: "hosts"
-  user: root
+- hosts: localhost
+  become: true
+  vars:
+    tempest_cloud_name: mycloud
+    tempest_run: true
   roles:
-    - { role: "os_tempest" }
+    - os_tempest
