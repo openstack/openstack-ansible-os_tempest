@@ -47,7 +47,7 @@ tempest_run: no
 tempest_git_install_branch: master
 tempest_upper_constraints_url: "{{ requirements_git_url | default('https://git.openstack.org/cgit/openstack/requirements/plain/upper-constraints.txt?h=' ~ requirements_git_install_branch | default('master')) }}"
 tempest_git_constraints:
-  - "git+{{ tempest_git_repo }}@{{ tempest_git_install_branch }}#egg=tempest"
+  - "{{ (tempest_git_repo is defined) | ternary('git+' ~ (tempest_git_repo | default('https://git.openstack.org/openstack/tempest')) ~ '@' ~ tempest_git_install_branch ~ '#egg=tempest', '') }}"
   - "--constraint {{ tempest_upper_constraints_url }}"
 
 tempest_pip_install_args: "{{ pip_install_options | default('') }}"
@@ -309,7 +309,7 @@ tempest_tempestconf_venv_bin: "/openstack/venvs/tempestconf/bin"
 # tempest_tempestconf_git_repo: https://git.openstack.org/openstack/python-tempestconf
 tempest_tempestconf_git_install_branch: master
 tempest_tempestconf_git_constraints:
-  - "git+{{ tempest_tempestconf_git_repo }}@{{ tempest_tempestconf_git_install_branch }}#egg=python_tempestconf"
+  - "{{ (tempest_tempestconf_git_repo is defined) | ternary('git+' ~ (tempest_tempestconf_git_repo | default('https://git.openstack.org/openstack/python-tempestconf')) ~ '@' ~ tempest_tempestconf_git_install_branch ~ '#egg=python_tempestconf', '') }}"
   - "--constraint {{ tempest_upper_constraints_url }}"
 tempest_tempestconf_pip_packages:
   - python-tempestconf
