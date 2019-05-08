@@ -23,9 +23,13 @@
       - release-notes-jobs-python3
     check:
       jobs:
+        - openstack-ansible-deploy-aio_metal-ubuntu-bionic:
+            voting: false
         - openstack-ansible-functional-tempestconf-centos-7
         - tripleo-ci-centos-7-standalone-os-tempest
     gate:
       jobs:
+        - openstack-ansible-deploy-aio_metal-ubuntu-bionic:
+            voting: false
         - openstack-ansible-functional-tempestconf-centos-7
         - tripleo-ci-centos-7-standalone-os-tempest
