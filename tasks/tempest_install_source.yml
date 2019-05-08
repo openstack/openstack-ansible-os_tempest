@@ -39,32 +39,6 @@
   retries: 5
   delay: 2
 
-- name: Check for the existance of the test-requirements.txt file
-  stat:
-    path: "/opt/{{ item.name|replace('-', '_') }}_{{ item.branch|replace('/', '_') }}/test-requirements.txt"
-  with_items: "{{ tempest_plugins }}"
-  when: item.repo is defined
-  register: _test_requirements_stat
-
-- name: Install tempest plugin requirements
-  pip:
-    requirements: "{{ item.stat.path }}"
-    state: "{{ tempest_pip_package_state }}"
-    virtualenv: "{{ tempest_venv_bin | dirname }}"
-    virtualenv_site_packages: "no"
-    extra_args: >-
-      {{ pip_install_options | default('') }}
-      --isolated
-  with_items: "{{ _test_requirements_stat.results }}"
-  when:
-    - "item.item.repo is defined"
-    - "item.stat.exists"
-    - "(item.item.install_test_requirements | default(True)) | bool"
-  register: install_tempest_plugin_requirements
-  until: install_tempest_plugin_requirements is success
-  retries: 5
-  delay: 2
-
 - name: Install tempest plugins from cloned repo
   pip:
     name: "/opt/{{ item.name|replace('-', '_') }}_{{ item.branch|replace('/', '_') }}"

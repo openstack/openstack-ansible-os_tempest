@@ -67,7 +67,6 @@ tempest_log_dir: "/var/log/tempest"
 #   - name: designate-tempest-plugin                                     #name of the plugin
 #     repo: https://git.openstack.org/openstack/designate-tempest-plugin #for installing the plugin from sources
 #     branch: master                                                     #for installing the plugin from sources
-#     install_test_requirements: True                                    #for installing the plugin with its test_requirements (default: True)
 #   - name: ironic-tempest-plugin
 #     package: ironic                                                    #for installing the plugin from packages
 tempest_plugins: "{{ _tempest_plugins.values() | sum(start=[]) | selectattr('install', 'equalto', true) | list }}"
