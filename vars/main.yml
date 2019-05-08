@@ -17,7 +17,6 @@
 # - name:
 #   repo:                      # when installing from a repo
 #   branch:                    # when installing from a repo
-#   install_test_requirements: # when installing from a repo
 #   package:                   # when installing from a pip package
 #   install:                   # boolean to enable/disable the installation of this item
 
@@ -41,7 +40,6 @@ _tempest_plugins:
     - name: congress-tempest-plugin
       repo: https://git.openstack.org/openstack/congress-tempest-plugin
       branch: master
-      install_test_requirements: false
       install: "{{ tempest_service_available_congress | bool }}"
   designate:
     - name: designate-tempest-plugin
