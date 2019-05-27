@@ -1,4 +1,5 @@
-# Copyright 2018, Red Hat, Inc.
+---
+# Copyright 2019, Logan Vig <logan2211@gmail.com>
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -12,8 +13,12 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-- job:
-    name: openstack-ansible-deploy-aio_distro_metal_tempestconf-centos-7
-    parent: openstack-ansible-deploy-aio_distro_metal-centos-7
-    pre-run:
-      - zuul.d/playbooks/pre-tempestconf.yml
+- hosts: all[0]
+  become: yes
+  tasks:
+    - name: Configure the tempestconf settings
+      copy:
+        content: |
+          ---
+          tempest_use_tempestconf: true
+        dest: /etc/openstack_deploy/user_variables_tempest.yml
