@@ -5,14 +5,14 @@ Installation
 This page describes how to install ``os_tempest`` role.
 
 To clone or view the source code of ``os_tempest``, visit the role repository
-for `os_tempest <https://git.openstack.org/cgit/openstack/openstack-ansible-os_tempest>`_.
+for `os_tempest <https://opendev.org/openstack/openstack-ansible-os_tempest>`_.
 
 Install dependencies via ``ansible-galaxy``:
 
 .. code-block:: shell
 
     $ mkdir ~/.ansible/roles -p
-    $ git clone https://git.openstack.org/openstack/openstack-ansible-os_tempest ~/.ansible/roles/os_tempest
+    $ git clone https://opendev.org/openstack/openstack-ansible-os_tempest ~/.ansible/roles/os_tempest
     $ ansible-galaxy install -r ~/.ansible/roles/os_tempest/requirements.yml --roles-path=~/.ansible/roles/
 
 Then you need to export a couple of variables, `ANSIBLE_ROLES_PATH` which

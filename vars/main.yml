@@ -53,101 +53,101 @@ tempest_images_map:
 _tempest_plugins:
   barbican:
     - name: barbican-tempest-plugin
-      repo: https://git.openstack.org/openstack/barbican-tempest-plugin
+      repo: https://opendev.org/openstack/barbican-tempest-plugin
       branch: master
       install: "{{ tempest_service_available_barbican | bool }}"
   cinder:
     - name: cinder-tempest-plugin
-      repo: https://git.openstack.org/openstack/cinder-tempest-plugin
+      repo: https://opendev.org/openstack/cinder-tempest-plugin
       branch: master
       install: "{{ tempest_service_available_cinder | bool }}"
   cloudkitty:
     - name: cloudkitty-tempest-plugin
-      repo: https://git.openstack.org/openstack/cloudkitty-tempest-plugin
+      repo: https://opendev.org/openstack/cloudkitty-tempest-plugin
       branch: master
       install: "{{ tempest_service_available_cloudkitty | bool }}"
   congress:
     - name: congress-tempest-plugin
-      repo: https://git.openstack.org/openstack/congress-tempest-plugin
+      repo: https://opendev.org/openstack/congress-tempest-plugin
       branch: master
       install: "{{ tempest_service_available_congress | bool }}"
   designate:
     - name: designate-tempest-plugin
-      repo: https://git.openstack.org/openstack/designate-tempest-plugin
+      repo: https://opendev.org/openstack/designate-tempest-plugin
       branch: master
       install: "{{ tempest_service_available_designate | bool }}"
   heat:
     - name: heat-tempest-plugin
-      repo: https://git.openstack.org/openstack/heat-tempest-plugin
+      repo: https://opendev.org/openstack/heat-tempest-plugin
       branch: master
       install: "{{ tempest_service_available_heat | bool }}"
   ironic:
     - name: ironic-tempest-plugin
-      repo: https://git.openstack.org/openstack/ironic-tempest-plugin
+      repo: https://opendev.org/openstack/ironic-tempest-plugin
       branch: master
       install: "{{ tempest_service_available_ironic | bool }}"
   keystone:
     - name: keystone-tempest-plugin
-      repo: https://git.openstack.org/openstack/keystone-tempest-plugin
+      repo: https://opendev.org/openstack/keystone-tempest-plugin
       branch: master
       install: yes
   magnum:
     - name: magnum-tempest-plugin
-      repo: https://git.openstack.org/openstack/magnum-tempest-plugin
+      repo: https://opendev.org/openstack/magnum-tempest-plugin
       branch: master
       install: "{{ tempest_service_available_magnum | bool }}"
   manila:
     - name: manila-tempest-plugin
-      repo: https://git.openstack.org/openstack/manila-tempest-plugin
+      repo: https://opendev.org/openstack/manila-tempest-plugin
       branch: master
       install: "{{ tempest_service_available_manila | bool }}"
   networking-bgpvpn:
     - name: networking-bgpvpn
-      repo: https://git.openstack.org/openstack/networking-bgpvpn
+      repo: https://opendev.org/openstack/networking-bgpvpn
       branch: master
       install: "{{ tempest_service_available_neutron_bgpvpn | bool }}"
   neutron-fwaas:
     - name: neutron-fwaas
-      repo: https://git.openstack.org/openstack/neutron-fwaas
+      repo: https://opendev.org/openstack/neutron-fwaas
       branch: master
       install: "{{ tempest_service_available_neutron_fwaas | bool }}"
   neutron-vpnaas:
     - name: neutron-vpnaas
-      repo: https://git.openstack.org/openstack/neutron-vpnaas
+      repo: https://opendev.org/openstack/neutron-vpnaas
       branch: master
       install: "{{ tempest_service_available_neutron_vpnaas | bool }}"
   neutron:
     - name: neutron-tempest-plugin
-      repo: https://git.openstack.org/openstack/neutron-tempest-plugin
+      repo: https://opendev.org/openstack/neutron-tempest-plugin
       branch: master
       install: "{{ tempest_service_available_neutron | bool }}"
   novajoin:
     - name: novajoin-tempest-plugin
-      repo: https://git.openstack.org/openstack/novajoin-tempest-plugin
+      repo: https://opendev.org/openstack/novajoin-tempest-plugin
       branch: master
       install: "{{ tempest_service_available_novajoin | bool }}"
   nova-lxd:
     - name: nova-lxd
-      repo: https://git.openstack.org/openstack/nova-lxd
+      repo: https://opendev.org/x/nova-lxd
       branch: master
       install: "{{ tempest_service_available_nova_lxd | bool }}"
   octavia:
     - name: octavia-tempest-plugin
-      repo: https://git.openstack.org/openstack/octavia-tempest-plugin
+      repo: https://opendev.org/openstack/octavia-tempest-plugin
       branch: master
       install: "{{ tempest_service_available_octavia | bool }}"
   sahara:
     - name: sahara-tests
-      repo: https://git.openstack.org/openstack/sahara-tests
+      repo: https://opendev.org/openstack/sahara-tests
       branch: master
       install: "{{ tempest_service_available_sahara | bool }}"
   telemetry:
     - name: telemetry-tempest-plugin
-      repo: https://git.openstack.org/openstack/telemetry-tempest-plugin
+      repo: https://opendev.org/openstack/telemetry-tempest-plugin
       branch: master
       install: "{{ (tempest_service_available_aodh | bool) or (tempest_service_available_ceilometer | bool) }}"
   zaqar:
     - name: zaqar-tempest-plugin
-      repo: https://git.openstack.org/openstack/zaqar-tempest-plugin
+      repo: https://opendev.org/openstack/zaqar-tempest-plugin
       branch: master
       install: "{{ tempest_service_available_zaqar | bool }}"
