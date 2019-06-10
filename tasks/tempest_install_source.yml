@@ -46,7 +46,7 @@
     virtualenv: "{{ tempest_venv_bin | dirname }}"
     virtualenv_site_packages: "no"
     extra_args: >-
-      {{ pip_install_options | default('') }}
+      {{ tempest_pip_install_args }}
       --isolated
   with_items: "{{ tempest_plugins }}"
   when: item.repo is defined
@@ -62,7 +62,7 @@
     virtualenv: "{{ tempest_venv_bin | dirname }}"
     virtualenv_site_packages: "no"
     extra_args: >-
-      {{ pip_install_options | default('') }}
+      {{ tempest_pip_install_args }}
       --isolated
   with_items: "{{ tempest_plugins }}"
   when: item.package is defined
