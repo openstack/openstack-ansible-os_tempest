@@ -14,7 +14,7 @@
 # limitations under the License.
 
 - name: Install python-tempestconf on venv
-  include_role:
+  import_role:
     name: "python_venv_build"
   vars:
     venv_build_constraints: "{{ tempest_tempestconf_git_constraints }}"
