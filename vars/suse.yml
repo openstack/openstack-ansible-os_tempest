@@ -27,9 +27,15 @@ tempest_service_distro_packages:
   - iputils
 
 tempest_plugin_distro_packages:
+  - python-keystone-tempest-plugin
+  - "{{ ((tempest_service_available_aodh | bool) or (tempest_service_available_ceilometer | bool)) | ternary('python-telemetry-tempest-plugin','') }}"
+  - "{{ (tempest_service_available_barbican | bool) | ternary('python-barbican-tempest-plugin', '') }}"
   - "{{ (tempest_service_available_cinder | bool) | ternary('python-cinder-tempest-plugin', '') }}"
+  - "{{ (tempest_service_available_designate | bool) | ternary('python-designate-tempest-plugin','') }}"
   - "{{ (tempest_service_available_heat | bool) | ternary('python-heat-tempest-plugin', '') }}"
   - "{{ (tempest_service_available_ironic | bool) | ternary('python-ironic-tempest-plugin', '') }}"
-  - python-keystone-tempest-plugin
+  - "{{ (tempest_service_available_magnum | bool) | ternary('python-magnum-tempest-plugin','') }}"
+  - "{{ (tempest_service_available_manila | bool) | ternary('python-manila-tempest-plugin','') }}"
   - "{{ (tempest_service_available_neutron | bool) | ternary('python-neutron-tempest-plugin', '') }}"
+  - "{{ (tempest_service_available_octavia | bool) | ternary('python-octavia-tempest-plugin', '') }}"
   - "{{ (tempest_use_tempestconf | bool) | ternary('python-tempestconf', '') }}"
