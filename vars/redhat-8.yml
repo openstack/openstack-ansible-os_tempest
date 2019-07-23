@@ -19,6 +19,8 @@ tempest_distro_packages:
   - gcc                  # required to build tempest plugins (TODO) remove this when the repo server can satisfy the tempest plugin requirements
   - iputils
 
+_stestr_executable: stestr-3
+
 tempest_service_distro_packages:
   - openstack-tempest
   - python3-subunit
