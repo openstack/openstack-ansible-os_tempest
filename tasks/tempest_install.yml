@@ -27,11 +27,11 @@
 
 
 # NOTE(noonedeadpunk):
-# Applying default filter for tempest_install_method is required despite the variable being defined
+# Applying default filter is required despite the variable being defined
 # in defaults as in case of non-integrated tests meta handlers from other roles might fail.
 - name: Install Tempest packages from PIP
   import_tasks: tempest_install_source.yml
-  when: (tempest_install_method | default('source')) == 'source'
+  when: (tempest_install_method | default('source')) == 'source' or (tempest_plugin_install_source | default(False))
 
 - name: Install stackviz on venv
   import_role:

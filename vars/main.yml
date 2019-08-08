@@ -151,3 +151,11 @@ _tempest_plugins:
       repo: https://opendev.org/openstack/zaqar-tempest-plugin
       branch: master
       install: "{{ tempest_service_available_zaqar | bool }}"
+
+# Note(noonedeadpunk):
+# Ubuntu does not publish tempest plugin packages. They do
+# all their testing using the source-based installation of
+# tempest.
+# For mixed setup we are using source install tasks, except
+# that we're deploying pip packages without venv.
+tempest_plugin_install_source: "{{ ((tempest_install_method == 'distro') and (ansible_os_family | lower == 'debian')) | bool }}"
