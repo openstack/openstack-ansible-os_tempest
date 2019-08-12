@@ -14,6 +14,7 @@
 # limitations under the License.
 
 galaxy_info:
+  role_name: os_tempest
   author: rcbops
   description: Installation and setup of tempest
   company: Rackspace
@@ -30,10 +31,13 @@ galaxy_info:
     - name: EL
       versions:
         - 7
+    - name: CentOS
+      versions:
+        - 7
     - name: opensuse
       versions:
         - 15
-  categories:
+  galaxy_tags:
     - cloud
     - python
     - tempest

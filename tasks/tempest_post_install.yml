@@ -151,7 +151,7 @@
   copy:
     content: |
       {% for item in tempest_test_whitelist | unique | sort %}
-      {%   if item != '' %}
+      {%   if item %}
       {{ item }}
       {%   endif %}
       {% endfor %}
@@ -165,7 +165,7 @@
   copy:
     content: |
       {% for item in tempest_test_blacklist %}
-      {% if item.test != '' %}
+      {% if item.test %}
       {{ item.test }}
       {%   endif %}
       {% endfor %}
