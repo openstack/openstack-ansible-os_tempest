@@ -36,7 +36,7 @@ tempest_plugin_distro_packages:
   - "{{ (tempest_service_available_heat | bool) | ternary('python3-heat-tests-tempest', '') }}"
   - "{{ tempest_service_available_horizon | bool | ternary('python3-horizon-tests-tempest', '') }}"
   - "{{ (tempest_service_available_ironic | bool) | ternary('python3-ironic-tests-tempest', '') }}"
-  - python-keystone-tests-tempest
+  - python3-keystone-tests-tempest
   - "{{ (tempest_service_available_magnum | bool) | ternary('python3-magnum-tests-tempest', '') }}"
   - "{{ (tempest_service_available_manila | bool) | ternary('python3-manila-tests-tempest', '') }}"
   - "{{ (tempest_service_available_mistral | bool) | ternary('python3-mistral-tests-tempest', '') }}"
