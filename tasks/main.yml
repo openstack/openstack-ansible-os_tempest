@@ -49,6 +49,9 @@
   tags:
     - tempest-config
 
+- name: Flush handlers
+  meta: flush_handlers
+
 - import_tasks: tempest_run.yml
   when: tempest_run | bool
   tags:

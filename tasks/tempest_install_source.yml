@@ -13,6 +13,9 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+# Note(noonedeadpunk) When tempest_plugin_install_source is true, we do not
+# want pip packages to be installed inside venv, since tempest itself is
+# installed via system packages so that plugins will be visable for tempest.
 - name: Install the python venv
   import_role:
     name: "python_venv_build"
@@ -25,6 +28,7 @@
       - section: "tempest"
         option: "venv_tag"
         value: "{{ tempest_venv_tag }}"
+  when: not tempest_plugin_install_source
 
 - name: Get tempest plugins from git
   git:
@@ -43,8 +47,8 @@
   pip:
     name: "/opt/{{ item.name|replace('-', '_') }}_{{ item.branch|replace('/', '_') }}"
     state: "{{ tempest_pip_package_state }}"
-    virtualenv: "{{ tempest_venv_bin | dirname }}"
-    virtualenv_site_packages: "no"
+    virtualenv: "{{ tempest_plugin_install_source | ternary(omit, tempest_venv_bin | dirname) }}"
+    virtualenv_site_packages: "{{ tempest_plugin_install_source | ternary(omit, 'no') }}"
     extra_args: >-
       {{ tempest_pip_install_args }}
       --isolated
@@ -59,8 +63,8 @@
   pip:
     name: "{{ item.package }}"
     state: "{{ tempest_pip_package_state }}"
-    virtualenv: "{{ tempest_venv_bin | dirname }}"
-    virtualenv_site_packages: "no"
+    virtualenv: "{{ tempest_mixed_setup | ternary(omit, tempest_venv_bin | dirname) }}"
+    virtualenv_site_packages: "{{ tempest_mixed_setup | ternary(omit, 'no') }}"
     extra_args: >-
       {{ tempest_pip_install_args }}
       --isolated
