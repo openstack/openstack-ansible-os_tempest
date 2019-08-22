@@ -150,6 +150,7 @@
         validate_certs: "{{ tempest_keystone_interface_insecure | ternary(false, true) }}"
         name: "{{ tempest_private_net_name }}"
         provider_network_type: "{{ tempest_private_net_provider_type }}"
+        provider_physical_network: "{{ tempest_private_net_physical_name | default(omit) }}"
         provider_segmentation_id: "{{ tempest_private_net_seg_id | default(omit) }}"
         project: "{{ keystone_demo_tenant_id }}"
       register: tempest_private_network
