@@ -28,7 +28,7 @@ tempest_service_distro_packages:
 
 tempest_plugin_distro_packages:
   - "{{ (tempest_service_available_aodh | bool) | ternary('python3-telemetry-tests-tempest', '') }}"
-  - "{{ (tempest_service_available_barbican | bool) | ternary('pytho3n-barbican-tests-tempest', '') }}"
+  - "{{ (tempest_service_available_barbican | bool) | ternary('python3-barbican-tests-tempest', '') }}"
   - "{{ (tempest_service_available_ceilometer | bool) | ternary('python3-telemetry-tests-tempest', '') }}"
   - "{{ (tempest_service_available_cinder | bool) | ternary('python3-cinder-tests-tempest', '') }}"
   - "{{ (tempest_service_available_congress | bool) | ternary('python3-congress-tests-tempest', '') }}"
