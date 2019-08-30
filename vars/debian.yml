@@ -26,6 +26,7 @@ tempest_distro_packages:
 tempest_service_distro_packages:
   - tempest
   - python-junitxml
+  - python-pip
   - python-subunit
   - iputils-ping
 
