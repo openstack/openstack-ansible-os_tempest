@@ -20,6 +20,7 @@
   import_role:
     name: "python_venv_build"
   vars:
+    venv_python_executable: "{{ tempest_venv_python_executable }}"
     venv_build_constraints: "{{ tempest_git_constraints }}"
     venv_install_destination_path: "{{ tempest_venv_bin | dirname }}"
     venv_pip_install_args: "{{ tempest_pip_install_args }}"

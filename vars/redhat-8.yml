@@ -25,7 +25,7 @@ _stestr_executable: stestr-3
 # virtualenv. By default venv_python_executable var sets to python2, changing it
 # in the role itself, breaks other roles. So for distros using python3 making the
 # change here fixes the issue.
-venv_python_executable: "python3"
+_tempest_venv_python_executable: "python3"
 
 tempest_service_distro_packages:
   - openstack-tempest
