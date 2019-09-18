@@ -181,6 +181,7 @@ tempest_service_available_ironic: "{{ groups['ironic_all'] is defined and groups
 tempest_service_available_magnum: "{{ groups['magnum_all'] is defined and groups['magnum_all'] | length > 0 }}"
 tempest_service_available_manila: "{{ groups['manila_all'] is defined and groups['manila_all'] | length > 0 }}"
 tempest_service_available_mistral: "{{ groups['mistral_all'] is defined and groups['mistral_all'] | length > 0 }}"
+tempest_service_available_murano: "{{ groups['murano_all'] is defined and groups['murano_all'] | length > 0 }}"
 tempest_service_available_neutron: "{{ groups['neutron_all'] is defined and groups['neutron_all'] | length > 0 }}"
 tempest_service_available_neutron_bgpvpn: "{{ (groups['neutron_all'] is defined) and (groups['neutron_all'] | length > 0) and ('bgpvpn' in neutron_plugin_base | default([])) }}"
 tempest_service_available_neutron_fwaas: "{{ (groups['neutron_all'] is defined) and (groups['neutron_all'] | length > 0) and (('firewall' in neutron_plugin_base | default([])) or ('firewall_v2' in neutron_plugin_base | default([]))) }}"
