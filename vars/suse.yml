@@ -17,23 +17,25 @@
 tempest_distro_packages:
   - git-core
 
+_stestr_executable: stestr
+
 tempest_service_distro_packages:
   - openstack-tempest-test
-  - "{{ (ansible_distribution_version is version ('42', '>=')) | ternary('python-python-subunit', 'python2-python-subunit') }}"
-  - "{{ (ansible_distribution_version is version ('42', '>=')) | ternary('python-os-testr', 'python2-os-testr') }}"
+  - python3-python-subunit
+  - python3-stestr
   - python-junitxml
   - iputils
 
 tempest_plugin_distro_packages:
-  - python-keystone-tempest-plugin
-  - "{{ ((tempest_service_available_aodh | bool) or (tempest_service_available_ceilometer | bool)) | ternary('python-telemetry-tempest-plugin','') }}"
-  - "{{ (tempest_service_available_barbican | bool) | ternary('python-barbican-tempest-plugin', '') }}"
-  - "{{ (tempest_service_available_cinder | bool) | ternary('python-cinder-tempest-plugin', '') }}"
-  - "{{ (tempest_service_available_designate | bool) | ternary('python-designate-tempest-plugin','') }}"
-  - "{{ (tempest_service_available_heat | bool) | ternary('python-heat-tempest-plugin', '') }}"
-  - "{{ (tempest_service_available_ironic | bool) | ternary('python-ironic-tempest-plugin', '') }}"
-  - "{{ (tempest_service_available_magnum | bool) | ternary('python-magnum-tempest-plugin','') }}"
-  - "{{ (tempest_service_available_manila | bool) | ternary('python-manila-tempest-plugin','') }}"
-  - "{{ (tempest_service_available_neutron | bool) | ternary('python-neutron-tempest-plugin', '') }}"
-  - "{{ (tempest_service_available_octavia | bool) | ternary('python-octavia-tempest-plugin', '') }}"
-  - "{{ (tempest_use_tempestconf | bool) | ternary('python-tempestconf', '') }}"
+  - python3-keystone-tempest-plugin
+  - "{{ ((tempest_service_available_aodh | bool) or (tempest_service_available_ceilometer | bool)) | ternary('python3-telemetry-tempest-plugin','') }}"
+  - "{{ (tempest_service_available_barbican | bool) | ternary('python3-barbican-tempest-plugin', '') }}"
+  - "{{ (tempest_service_available_cinder | bool) | ternary('python3-cinder-tempest-plugin', '') }}"
+  - "{{ (tempest_service_available_designate | bool) | ternary('python3-designate-tempest-plugin','') }}"
+  - "{{ (tempest_service_available_heat | bool) | ternary('python3-heat-tempest-plugin', '') }}"
+  - "{{ (tempest_service_available_ironic | bool) | ternary('python3-ironic-tempest-plugin', '') }}"
+  - "{{ (tempest_service_available_magnum | bool) | ternary('python3-magnum-tempest-plugin','') }}"
+  - "{{ (tempest_service_available_manila | bool) | ternary('python3-manila-tempest-plugin','') }}"
+  - "{{ (tempest_service_available_neutron | bool) | ternary('python3-neutron-tempest-plugin', '') }}"
+  - "{{ (tempest_service_available_octavia | bool) | ternary('python3-octavia-tempest-plugin', '') }}"
+  - "{{ (tempest_use_tempestconf | bool) | ternary('python3-python-tempestconf', '') }}"
