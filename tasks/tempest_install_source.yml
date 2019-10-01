@@ -29,11 +29,7 @@
       - section: "tempest"
         option: "venv_tag"
         value: "{{ tempest_venv_tag }}"
-  # Note(jrosser) this task can be conditional on tempest_plugin_install_source
-  # but then that variable must be in scope when the handler inside python_venv_build
-  # runs, so it is better to duplicate the underlying condition logic
-  # when: not tempest_plugin_install_source
-  when: not "{{ ((tempest_install_method | default('source') == 'distro') and (ansible_os_family | lower == 'debian')) | bool }}"
+  when: tempest_install_method | default('source') == 'source'
 
 - name: Get tempest plugins from git
   git:
