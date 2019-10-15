@@ -30,7 +30,7 @@
       {% if tempest_test_blacklist | length > 0 %}
         --blacklist-file {{ tempest_test_blacklist_file_path }} \
       {% endif %}
-        --whitelist-file {{ tempest_test_whitelist_file_path }}
+        --whitelist-file {{ tempest_test_whitelist_file_path }} > {{ tempest_log_dir }}/tempest_run.log
     args:
       chdir: "{{ tempest_workspace }}"
       executable: /bin/bash
