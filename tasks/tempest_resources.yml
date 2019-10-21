@@ -40,7 +40,7 @@
     - name: Image(s) download
       get_url:
         url: "{{ item.url }}"
-        dest: "{{ tempest_image_dir }}/"
+        dest: "{{ tempest_image_dir }}/{{ item.url | basename }}"
         checksum: "{{ item.checksum | default(omit) }}"
         url_username: "{{ item.username | default(omit) }}"
         url_password: "{{ item.password | default(omit) }}"
