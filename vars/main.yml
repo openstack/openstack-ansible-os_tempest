@@ -21,22 +21,22 @@
 # properties: a dict of custom properties to attach to the image in glance
 tempest_images_map:
   x86_64:
-    - url: "http://download.cirros-cloud.net/0.4.0/cirros-0.4.0-x86_64-disk.img"
+    - url: "https://download.cirros-cloud.net/0.4.0/cirros-0.4.0-x86_64-disk.img"
       checksum: "sha256:a8dd75ecffd4cdd96072d60c2237b448e0c8b2bc94d57f10fdbc8c481d9005b8"
       format: "qcow2"
       name: "cirros"
-    - url: "http://download.cirros-cloud.net/0.4.0/cirros-0.4.0-x86_64-disk.img"
+    - url: "https://download.cirros-cloud.net/0.4.0/cirros-0.4.0-x86_64-disk.img"
       checksum: "sha256:a8dd75ecffd4cdd96072d60c2237b448e0c8b2bc94d57f10fdbc8c481d9005b8"
       format: "qcow2"
       name: "cirros"
   aarch64:
-    - url: "http://download.cirros-cloud.net/contrib/nowster/20190515/cirros-d190515-aarch64-disk.img"
+    - url: "https://download.cirros-cloud.net/contrib/nowster/20190515/cirros-d190515-aarch64-disk.img"
       checksum: "sha256:65439061ca6e4e4a411bba8963e34c38f1f124564db72b0b26ffb2556016305e"
       format: "qcow2"
       name: "cirros"
       properties:
         hw_firmware_type: uefi
-    - url: "http://download.cirros-cloud.net/contrib/nowster/20190515/cirros-d190515-aarch64-disk.img"
+    - url: "https://download.cirros-cloud.net/contrib/nowster/20190515/cirros-d190515-aarch64-disk.img"
       checksum: "sha256:65439061ca6e4e4a411bba8963e34c38f1f124564db72b0b26ffb2556016305e"
       format: "qcow2"
       name: "cirros"
