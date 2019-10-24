@@ -109,6 +109,11 @@ _tempest_plugins:
       repo: https://opendev.org/openstack/manila-tempest-plugin
       branch: master
       install: "{{ tempest_service_available_manila | bool }}"
+  murano:
+    - name: murano-tempest-plugin
+      repo: https://opendev.org/openstack/murano-tempest-plugin
+      branch: master
+      install: "{{ tempest_service_available_murano | bool }}"
   networking-bgpvpn:
     - name: networking-bgpvpn
       repo: https://opendev.org/openstack/networking-bgpvpn
