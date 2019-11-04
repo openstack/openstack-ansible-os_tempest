@@ -15,7 +15,7 @@
 
 # Note(noonedeadpunk) When tempest_plugin_install_source is true, we do not
 # want pip packages to be installed inside venv, since tempest itself is
-# installed via system packages so that plugins will be visable for tempest.
+# installed via system packages so that plugins will be visible for tempest.
 - name: Install the python venv
   import_role:
     name: "python_venv_build"
