@@ -94,6 +94,9 @@ tempest_test_whitelist:
 #     reason: This test is failing
 #     lp: 'https://bugs.launchpad.net/openstack-ansible/+bug/123456'
 #     bz: 'https://bugzilla.redhat.com/show_bug.cgi?id=123456'
+# OR
+# tempest_test_blacklist:
+#   - 'tempest.scenario.test.minimum_basic'
 tempest_test_blacklist: []
 
 # Toggle fatal deprecations

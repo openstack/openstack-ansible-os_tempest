@@ -165,8 +165,10 @@
   copy:
     content: |
       {% for item in tempest_test_blacklist %}
-      {% if item.test %}
+      {% if item.test is defined %}
       {{ item.test }}
+      {% else %}
+      {{ item }}
       {%   endif %}
       {% endfor %}
     dest: "{{ tempest_test_blacklist_file_path }}"
