@@ -53,6 +53,7 @@
     virtualenv_site_packages: "{{ tempest_plugin_install_source | ternary(omit, 'no') }}"
     extra_args: >-
       {{ tempest_pip_install_args }}
+      --constraint {{ tempest_upper_constraints_url }}
       --isolated
   with_items: "{{ tempest_plugins }}"
   when: item.repo is defined
@@ -70,6 +71,7 @@
     virtualenv_site_packages: "{{ tempest_plugin_install_source | ternary(omit, 'no') }}"
     extra_args: >-
       {{ tempest_pip_install_args }}
+      --constraint {{ tempest_upper_constraints_url }}
       --isolated
   with_items: "{{ tempest_plugins }}"
   when: item.package is defined
