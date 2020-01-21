@@ -24,6 +24,7 @@ stestr_executable: "{{ _stestr_executable | default('stestr') }}"
 # on choosing distro it will install based on distribution
 tempest_install_method: "source"
 tempest_venv_python_executable: "{{ openstack_venv_python_executable | default(_tempest_venv_python_executable) | default('python2') }}"
+tempest_install_pip_executable: "{{ (tempest_venv_python_executable == 'python2') | ternary('pip', 'pip3') }}"
 
 # Set the package install state for distribution and pip packages
 # # Options are 'present' and 'latest'
