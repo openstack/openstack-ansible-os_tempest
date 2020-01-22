@@ -64,8 +64,8 @@
   pip:
     name: "{{ item.package }}"
     state: "{{ tempest_pip_package_state }}"
-    virtualenv: "{{ tempest_mixed_setup | ternary(omit, tempest_venv_bin | dirname) }}"
-    virtualenv_site_packages: "{{ tempest_mixed_setup | ternary(omit, 'no') }}"
+    virtualenv: "{{ tempest_plugin_install_source | ternary(omit, tempest_venv_bin | dirname) }}"
+    virtualenv_site_packages: "{{ tempest_plugin_install_source | ternary(omit, 'no') }}"
     extra_args: >-
       {{ tempest_pip_install_args }}
       --isolated
