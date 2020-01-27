@@ -45,8 +45,7 @@ tempest_run: no
 # from the stable release defined in global requirements.
 #tempest_git_repo: https://git.openstack.org/openstack/tempest
 tempest_git_install_branch: master
-tempest_upper_constraints_url: https://git.openstack.org/cgit/openstack/requirements/plain/upper-constraints.txt?h=4f9bf2f2d18784d5fc8fbae5f8e12b87aa482974
-#tempest_upper_constraints_url: "{{ requirements_git_url | default('https://git.openstack.org/cgit/openstack/requirements/plain/upper-constraints.txt?h=' ~ requirements_git_install_branch | default('master')) }}"
+tempest_upper_constraints_url: "{{ requirements_git_url | default('https://git.openstack.org/cgit/openstack/requirements/plain/upper-constraints.txt?h=' ~ requirements_git_install_branch | default('master')) }}"
 tempest_git_constraints:
   - "{{ (tempest_git_repo is defined) | ternary('git+' ~ (tempest_git_repo | default('https://git.openstack.org/openstack/tempest')) ~ '@' ~ tempest_git_install_branch ~ '#egg=tempest', '') }}"
   - "--constraint {{ tempest_upper_constraints_url }}"
