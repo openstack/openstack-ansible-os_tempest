@@ -31,8 +31,18 @@
   with_items: "{{ tempest_services }}"
   when: tempest_services | length > 0
 
-- name: Gather variables for installation method
-  include_vars: "{{ tempest_install_method }}_install.yml"
+  # NOTE(jrosser) we use source installs for temepest and it's plugins on ubuntu distro installs
+- name: Gather variables for source installs
+  include_vars: source_install.yml
+  when:
+    - ((tempest_install_method == 'source') or (tempest_install_method == 'distro' and ansible_distribution == 'Ubuntu'))
+  tags:
+    - always
+
+- name: Gather variables for distro installs
+  include_vars: distro_install.yml
+  when:
+    - tempest_install_method == 'distro'
   tags:
     - always
 

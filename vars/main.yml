@@ -43,14 +43,6 @@ tempest_images_map:
       properties:
         hw_firmware_type: uefi
 
-# Note(noonedeadpunk):
-# Ubuntu does not publish tempest plugin packages. They do
-# all their testing using the source-based installation of
-# tempest.
-# For mixed setup we are using source install tasks, except
-# that we're deploying pip packages without venv.
-tempest_plugin_install_source: "{{ ((tempest_install_method == 'distro') and (ansible_os_family | lower == 'debian')) | bool }}"
-
 # Each tempest plugin could take the following arguments:
 # - name:
 #   repo:                      # when installing from a repo
@@ -68,7 +60,7 @@ _tempest_plugins:
     - name: cinder-tempest-plugin
       repo: https://opendev.org/openstack/cinder-tempest-plugin
       branch: master
-      install: "{{ tempest_service_available_cinder | bool and not tempest_plugin_install_source }}"
+      install: "{{ tempest_service_available_cinder | bool }}"
   cloudkitty:
     - name: cloudkitty-tempest-plugin
       repo: https://opendev.org/openstack/cloudkitty-tempest-plugin
@@ -88,7 +80,7 @@ _tempest_plugins:
     - name: heat-tempest-plugin
       repo: https://opendev.org/openstack/heat-tempest-plugin
       branch: master
-      install: "{{ tempest_service_available_heat | bool and not tempest_plugin_install_source }}"
+      install: "{{ tempest_service_available_heat | bool }}"
   ironic:
     - name: ironic-tempest-plugin
       repo: https://opendev.org/openstack/ironic-tempest-plugin
@@ -133,7 +125,7 @@ _tempest_plugins:
     - name: neutron-tempest-plugin
       repo: https://opendev.org/openstack/neutron-tempest-plugin
       branch: master
-      install: "{{ tempest_service_available_neutron | bool and not tempest_plugin_install_source  }}"
+      install: "{{ tempest_service_available_neutron | bool }}"
   novajoin:
     - name: novajoin-tempest-plugin
       repo: https://opendev.org/openstack/novajoin-tempest-plugin
