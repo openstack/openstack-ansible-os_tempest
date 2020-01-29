@@ -23,9 +23,21 @@
       - release-notes-jobs-python3
     check:
       jobs:
+        - openstack-ansible-deploy-aio_distro_metal-ubuntu-bionic:
+            voting: false
+        - openstack-ansible-deploy-aio_metal-debian-stable:
+            voting: false
+        - openstack-ansible-deploy-aio_metal-centos-7:
+            voting: false
         - openstack-ansible-deploy-aio_distro_metal_tempestconf-centos-7
         - tripleo-ci-centos-7-standalone-os-tempest
     gate:
       jobs:
+        - openstack-ansible-deploy-aio_distro_metal-ubuntu-bionic:
+            voting: false
+        - openstack-ansible-deploy-aio_metal-debian-stable:
+            voting: false
+        - openstack-ansible-deploy-aio_metal-centos-7:
+            voting: false
         - openstack-ansible-deploy-aio_distro_metal_tempestconf-centos-7
         - tripleo-ci-centos-7-standalone-os-tempest
