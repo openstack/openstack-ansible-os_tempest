@@ -27,6 +27,9 @@
       {% else %}
         --serial \
       {% endif %}
+      {% if tempest_test_worker_file_path is defined %}
+        --worker-file {{ tempest_test_worker_file_path }} \
+      {% endif %}
       {% if tempest_test_blacklist | length > 0 %}
         --blacklist-file {{ tempest_test_blacklist_file_path }} \
       {% endif %}
