@@ -79,7 +79,9 @@
   failed_when:
     - tempest_move_workspace.rc != 0
     - tempest_move_workspace.rc != 3
-  when: copy_tempest_config.changed
+  when:
+    - not tempest_use_tempestconf | bool
+    - copy_tempest_config is changed
   tags:
      # don't trigger ANSIBLE0016
      - skip_ansible_lint
