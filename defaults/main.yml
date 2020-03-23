@@ -326,6 +326,6 @@ tempest_tempestconf_profile:
 
 # Stackviz tarball url
 stackviz_pip_install_args: "{{ pip_install_options | default('--isolated') }}"
-stackviz_tarball: "https://tarballs.openstack.org/package-stackviz-element/stackviz-latest.tar.gz"
+stackviz_tarball: "https://tarballs.opendev.org/openstack/stackviz/dist/stackviz-latest.tar.gz"
 stackviz_venv_bin: "/openstack/venvs/stackviz/bin"
 tempest_run_stackviz: true
