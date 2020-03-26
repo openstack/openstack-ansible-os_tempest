@@ -25,7 +25,7 @@
 
 - name: Override tempestconf profile
   copy:
-    content: "{{ tempest_tempestconf_profile | to_nice_yaml }}"
+    content: "{{ tempest_tempestconf_profile | combine(tempest_tempestconf_profile_extras) | to_nice_yaml }}"
     dest: "{{ tempest_workspace }}/etc/profile.yaml"
 
 - name: Executing python-tempestconf

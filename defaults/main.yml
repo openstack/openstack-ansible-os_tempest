@@ -322,7 +322,9 @@ tempest_tempestconf_profile:
   os-cloud: "{{ tempest_cloud_name }}"
   out: "{{ tempest_workspace }}/etc/tempest.conf"
   network-id: "{{ tempest_neutron_public_network_id }}"
-  overrides: "{{ tempest_tempest_conf_overrides | default('omit') }}"
+  overrides: "{{ tempest_tempestconf_profile_overrides }}"
+tempest_tempestconf_profile_extras: {}
+tempest_tempestconf_profile_overrides: "{{ tempest_tempest_conf_overrides }}"
 
 # Stackviz tarball url
 stackviz_pip_install_args: "{{ pip_install_options | default('--isolated') }}"
