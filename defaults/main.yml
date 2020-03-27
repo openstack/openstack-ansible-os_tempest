@@ -21,6 +21,8 @@ debug: False
 tempest_package_state: "latest"
 tempest_pip_package_state: "latest"
 
+tempest_upper_constraints_url: "https://opendev.org/openstack/requirements/raw/{{ requirements_git_install_branch | default('master') }}/upper-constraints.txt"
+
 # Set the host which will execute the shade modules
 # for the service setup. The host must already have
 # clouds.yaml properly configured.
