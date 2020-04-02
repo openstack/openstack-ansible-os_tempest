@@ -156,3 +156,8 @@ _tempest_plugins:
       repo: https://opendev.org/openstack/zaqar-tempest-plugin
       branch: master
       install: "{{ tempest_service_available_zaqar | bool }}"
+  zun:
+    - name: zun-tempest-plugin
+      repo: https://opendev.org/openstack/zun-tempest-plugin
+      branch: master
+      install: "{{ tempest_service_available_zun | bool }}"
