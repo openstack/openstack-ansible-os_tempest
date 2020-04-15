@@ -128,8 +128,7 @@ lock_path = {{ tempest_venv_bin | dirname }}/locks
 
 
 [scenario]
-img_dir = {{ tempest_image_dir }}
-img_file = {{ tempest_images[0]['url'] | basename }}
+img_file = {{ tempest_image_dir }}/{{ tempest_images[0]['url'] | basename }}
 img_container_format = bare
 img_disk_format = {{ tempest_images[0]['format'] }}
 
