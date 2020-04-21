@@ -13,61 +13,30 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+- name: Generate list of tempest plugins installed from source code
+  set_fact:
+    tempest_pip_plugins: "{{ tempest_pip_plugins | default([]) + [item.name] }}"
+    tempest_plugin_constraints: "{{ tempest_plugin_constraints | default([]) + ['git+' ~ item.repo ~ '@' ~ item.branch ~ '#egg=' ~ item.name] }}"
+  with_items: "{{ tempest_plugins }}"
+  when: item.repo is defined
+
+- name: Append to list any tempest plugins installed from python packages
+  set_fact:
+    tempest_pip_plugins: "{{ tempest_pip_plugins | default([]) + [item.package] }}"
+  with_items: "{{ tempest_plugins }}"
+  when: item.package is defined
+
 - name: Install the python venv
   import_role:
     name: "python_venv_build"
   vars:
     venv_python_executable: "{{ tempest_venv_python_executable }}"
-    venv_build_constraints: "{{ tempest_git_constraints }}"
+    venv_build_constraints: "{{ tempest_plugin_constraints + tempest_git_constraints }}"
     venv_install_destination_path: "{{ tempest_venv_bin | dirname }}"
     venv_pip_install_args: "{{ tempest_pip_install_args }}"
-    venv_pip_packages: "{{ tempest_pip_packages }}"
+    venv_wheel_build_enable: "{{ venv_build_host != inventory_hostname }}"
+    venv_pip_packages: "{{ tempest_pip_packages + tempest_pip_plugins }}"
     venv_facts_when_changed:
       - section: "tempest"
         option: "venv_tag"
         value: "{{ tempest_venv_tag }}"
-
-- name: Get tempest plugins from git
-  git:
-    repo: "{{ item.repo }}"
-    dest: "/opt/{{ item.name|replace('-', '_') }}_{{ item.branch|replace('/', '_') }}"
-    version: "{{ item.branch }}"
-    force: yes
-  with_items: "{{ tempest_plugins }}"
-  when: item.repo is defined
-  register: git_clone
-  until: git_clone is success
-  retries: 5
-  delay: 2
-
-- name: Install tempest plugins from cloned repo
-  pip:
-    name: "/opt/{{ item.name|replace('-', '_') }}_{{ item.branch|replace('/', '_') }}"
-    state: "{{ tempest_pip_package_state }}"
-    virtualenv: "{{ tempest_venv_bin | dirname }}"
-    extra_args: >-
-      {{ tempest_pip_install_args }}
-      --constraint {{ tempest_upper_constraints_url }}
-      --isolated
-  with_items: "{{ tempest_plugins }}"
-  when: item.repo is defined
-  register: install_tempest_plugins
-  until: install_tempest_plugins is success
-  retries: 5
-  delay: 2
-
-- name: Install tempest plugins from packages
-  pip:
-    name: "{{ item.package }}"
-    state: "{{ tempest_pip_package_state }}"
-    virtualenv: "{{ tempest_venv_bin | dirname }}"
-    extra_args: >-
-      {{ tempest_pip_install_args }}
-      --constraint {{ tempest_upper_constraints_url }}
-      --isolated
-  with_items: "{{ tempest_plugins }}"
-  when: item.package is defined
-  register: install_tempest_plugins_packages
-  until: install_tempest_plugins_packages is success
-  retries: 5
-  delay: 2
