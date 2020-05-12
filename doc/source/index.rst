@@ -15,7 +15,6 @@ Content:
 
    overview
    user/index
-   contributor/index
 
 
 * :ref:`search`
