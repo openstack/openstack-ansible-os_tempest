@@ -266,7 +266,7 @@
         - tempest_service_available_nova | bool
 
     - name: Get the admin user project id
-      os_project_facts:
+      os_project_info:
         cloud: "{{ tempest_cloud_name }}"
         name: admin
         interface: "{{ tempest_interface_name }}"
@@ -278,7 +278,7 @@
 
     - name: Store admin project id
       set_fact:
-        tempest_admin_tenant_id: "{{ ansible_facts.openstack_projects[0].id }}"
+        tempest_admin_tenant_id: "{{ _get_admin_project.openstack_projects[0].id }}"
 
 - name: Ping router ip address
   shell: |
