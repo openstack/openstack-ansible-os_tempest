@@ -109,7 +109,7 @@ _tempest_plugins:
   telemetry:
     - name: telemetry-tempest-plugin
       repo: https://git.openstack.org/openstack/telemetry-tempest-plugin
-      branch: master
+      branch: 0.4.0
       install: "{{ (tempest_service_available_aodh | bool) or (tempest_service_available_ceilometer | bool) }}"
   zaqar:
     - name: zaqar-tempest-plugin
