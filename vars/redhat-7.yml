@@ -41,7 +41,6 @@ tempest_plugin_distro_packages:
   - "{{ (tempest_service_available_mistral | bool) | ternary('python-mistral-tests-tempest', '') }}"
   - "{{ (tempest_service_available_murano | bool) | ternary('python-murano-tests-tempest', '') }}"
   - "{{ (tempest_service_available_neutron | bool) | ternary('python-neutron-tests-tempest', '') }}"
-  - "{{ (tempest_service_available_neutron_fwaas | bool) | ternary('python-networking-fwaas-tests', '') }}"
   - "{{ (tempest_service_available_neutron_vpnaas | bool) | ternary('python-networking-vpnaas-tests', '') }}"
   - "{{ (tempest_service_available_novajoin | bool) | ternary('python-novajoin-tests-tempest', '') }}"
   - "{{ (tempest_service_available_octavia | bool) | ternary('python-octavia-tests-tempest', '') }}"

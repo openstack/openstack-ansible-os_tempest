@@ -181,7 +181,6 @@ tempest_service_available_mistral: "{{ groups['mistral_all'] is defined and grou
 tempest_service_available_murano: "{{ groups['murano_all'] is defined and groups['murano_all'] | length > 0 }}"
 tempest_service_available_neutron: "{{ groups['neutron_all'] is defined and groups['neutron_all'] | length > 0 }}"
 tempest_service_available_neutron_bgpvpn: "{{ (groups['neutron_all'] is defined) and (groups['neutron_all'] | length > 0) and ('bgpvpn' in neutron_plugin_base | default([])) }}"
-tempest_service_available_neutron_fwaas: "{{ (groups['neutron_all'] is defined) and (groups['neutron_all'] | length > 0) and (('firewall' in neutron_plugin_base | default([])) or ('firewall_v2' in neutron_plugin_base | default([]))) }}"
 tempest_service_available_neutron_vpnaas: "{{ (groups['neutron_all'] is defined) and (groups['neutron_all'] | length > 0) and ('vpnaas' in neutron_plugin_base | default([])) }}"
 tempest_service_available_nova: "{{ groups['nova_all'] is defined and groups['nova_all'] | length > 0 }}"
 tempest_service_available_novajoin: False

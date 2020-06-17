@@ -111,11 +111,6 @@ _tempest_plugins:
       repo: https://opendev.org/openstack/networking-bgpvpn
       branch: master
       install: "{{ tempest_service_available_neutron_bgpvpn | bool }}"
-  neutron-fwaas:
-    - name: neutron-fwaas
-      repo: https://opendev.org/openstack/neutron-fwaas
-      branch: master
-      install: "{{ tempest_service_available_neutron_fwaas | bool }}"
   neutron-vpnaas:
     - name: neutron-vpnaas
       repo: https://opendev.org/openstack/neutron-vpnaas
