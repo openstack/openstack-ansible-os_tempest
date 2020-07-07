@@ -51,9 +51,11 @@
     - tempest-install
 
 - import_tasks: tempest_resources.yml
+  when: tempest_run | bool
   run_once: yes
   tags:
     - tempest-config
+    - tempest-run
 
 - import_tasks: tempest_post_install.yml
   tags:
