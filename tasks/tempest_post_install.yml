@@ -158,6 +158,7 @@
       {%   endif %}
       {% endfor %}
     dest: "{{ tempest_test_whitelist_file_path }}"
+    mode: "0644"
   when:
     - tempest_test_whitelist | length > 0
 
@@ -174,5 +175,6 @@
       {%   endif %}
       {% endfor %}
     dest: "{{ tempest_test_blacklist_file_path }}"
+    mode: "0644"
   when:
     - tempest_test_blacklist | length > 0
