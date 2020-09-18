@@ -302,7 +302,8 @@ tempest_interface_name: "internal"
 # want to generate the tempest.conf file with this tool, instead of
 # tempest.conf from the template
 tempest_use_tempestconf: false
-tempest_tempestconf_venv_bin: "/openstack/venvs/tempestconf/bin"
+tempest_tempestconf_venv_tag: "{{ venv_tag | default('untagged') }}"
+tempest_tempestconf_venv_bin: "/openstack/venvs/tempestconf-{{ tempest_tempestconf_venv_tag }}/bin"
 
 # We comment out `tempest_tempestconf_git_repo` so that the repo_build role does not attempt to
 # build the wheel from this repo/branch. Instead, we want python-tempestconf to get built
@@ -327,5 +328,6 @@ tempest_tempestconf_profile_overrides: "{{ tempest_tempest_conf_overrides }}"
 # Stackviz tarball url
 stackviz_pip_install_args: "{{ pip_install_options | default('--isolated') }}"
 stackviz_tarball: "https://tarballs.opendev.org/openstack/stackviz/dist/stackviz-latest.tar.gz"
-stackviz_venv_bin: "/openstack/venvs/stackviz/bin"
+stackviz_venv_tag: "{{ venv_tag | default('untagged') }}"
+stackviz_venv_bin: "/openstack/venvs/stackviz-{{ stackviz_venv_tag }}/bin"
 tempest_run_stackviz: true
