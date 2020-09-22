@@ -30,6 +30,8 @@
               tox_environment:
                 PYTEST_REQPASS: 1
         - tripleo-ci-centos-8-standalone
+        - tripleo-ci-centos-8-standalone-upgrade:
+            voting: false
     gate:
       jobs:
         - openstack-ansible-deploy-aio_distro_metal_tempestconf-centos-8
