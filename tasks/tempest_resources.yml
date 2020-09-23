@@ -53,7 +53,7 @@
       delay: 5
 
     - name: Upload tempest images to glance
-      os_image:
+      openstack.cloud.os_image:
         cloud: "{{ tempest_cloud_name }}"
         interface: "{{ tempest_interface_name }}"
         validate_certs: "{{ not (tempest_keystone_interface_insecure | bool) }}"
@@ -79,7 +79,7 @@
         tempest_glance_image_id_2: "{{ tempest_service_available_glance | ternary(tempest_image_create['results'][-1]['id'], '') }}"
 
     - name: Add tempest projects
-      os_project:
+      openstack.cloud.os_project:
         cloud: "{{ tempest_cloud_name }}"
         state: present
         name: "{{ item }}"
@@ -94,7 +94,7 @@
       with_items: "{{ tempest_projects }}"
 
     - name: Add tempest users
-      os_user:
+      openstack.cloud.os_user:
         cloud: "{{ tempest_cloud_name }}"
         state: present
         name: "{{ item.name }}"
@@ -111,7 +111,7 @@
       no_log: True
 
     - name: Add tempest roles
-      os_keystone_role:
+      openstack.cloud.os_keystone_role:
         cloud: "{{ tempest_cloud_name }}"
         interface: "{{ tempest_interface_name }}"
         validate_certs: "{{ not (tempest_keystone_interface_insecure | bool) }}"
@@ -123,7 +123,7 @@
       with_items: "{{ tempest_roles }}"
 
     - name: Add tempest users to heat_stack_owner role
-      os_user_role:
+      openstack.cloud.os_user_role:
         cloud: "{{ tempest_cloud_name }}"
         state: present
         user: "{{ item.name }}"
@@ -144,7 +144,7 @@
         keystone_demo_tenant_id: "{{ (add_project.results | json_query('[*].project.id'))[0] }}"
 
     - name: Ensure private network exists
-      os_network:
+      openstack.cloud.os_network:
         cloud: "{{ tempest_cloud_name }}"
         interface: "{{ tempest_interface_name }}"
         validate_certs: "{{ tempest_keystone_interface_insecure | ternary(false, true) }}"
@@ -167,7 +167,7 @@
         - tempest_service_available_neutron | bool
 
     - name: Ensure public network exists
-      os_network:
+      openstack.cloud.os_network:
         cloud: "{{ tempest_cloud_name }}"
         interface: "{{ tempest_interface_name }}"
         validate_certs: "{{ tempest_keystone_interface_insecure | ternary(false, true) }}"
@@ -189,7 +189,7 @@
         tempest_neutron_public_network_id: "{{ tempest_service_available_neutron | ternary(tempest_public_network.id, '') }}"
 
     - name: Ensure private subnet exists
-      os_subnet:
+      openstack.cloud.os_subnet:
         cloud: "{{ tempest_cloud_name }}"
         interface: "{{ tempest_interface_name }}"
         validate_certs: "{{ tempest_keystone_interface_insecure | ternary(false, true) }}"
@@ -206,7 +206,7 @@
         - tempest_service_available_neutron | bool
 
     - name: Ensure public subnet exists
-      os_subnet:
+      openstack.cloud.os_subnet:
         cloud: "{{ tempest_cloud_name }}"
         interface: "{{ tempest_interface_name }}"
         validate_certs: "{{ tempest_keystone_interface_insecure | ternary(false, true) }}"
@@ -224,7 +224,7 @@
         - tempest_service_available_neutron | bool
 
     - name: Create router
-      os_router:
+      openstack.cloud.os_router:
         cloud: "{{ tempest_cloud_name }}"
         interface: "{{ tempest_interface_name }}"
         validate_certs: "{{ tempest_keystone_interface_insecure | ternary(false, true) }}"
@@ -248,7 +248,7 @@
         - tempest_service_available_neutron | bool
 
     - name: Create tempest flavors
-      os_nova_flavor:
+      openstack.cloud.os_nova_flavor:
         cloud: "{{ tempest_cloud_name }}"
         interface: "{{ tempest_interface_name }}"
         validate_certs: "{{ tempest_keystone_interface_insecure | ternary(false, true) }}"
@@ -266,7 +266,7 @@
         - tempest_service_available_nova | bool
 
     - name: Get the admin user project id
-      os_project_info:
+      openstack.cloud.os_project_info:
         cloud: "{{ tempest_cloud_name }}"
         name: admin
         interface: "{{ tempest_interface_name }}"
