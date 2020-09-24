@@ -136,6 +136,11 @@ _tempest_plugins:
       repo: https://opendev.org/openstack/octavia-tempest-plugin
       branch: master
       install: "{{ tempest_service_available_octavia | bool }}"
+  senlin:
+    - name: senlin-tempest-plugin
+      repo: https://opendev.org/openstack/senlin-tempest-plugin
+      branch: master
+      install: "{{ tempest_service_available_senlin | bool }}"
   sahara:
     - name: sahara-tests
       repo: https://opendev.org/openstack/sahara-tests
