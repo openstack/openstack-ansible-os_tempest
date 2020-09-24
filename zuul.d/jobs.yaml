@@ -14,7 +14,7 @@
 # limitations under the License.
 
 - job:
-    name: openstack-ansible-deploy-aio_distro_metal_tempestconf-centos-7
-    parent: openstack-ansible-deploy-aio_distro_metal-centos-7
+    name: openstack-ansible-deploy-aio_distro_metal_tempestconf-centos-8
+    parent: openstack-ansible-deploy-aio_distro_metal-centos-8
     pre-run:
       - zuul.d/playbooks/pre-tempestconf.yml

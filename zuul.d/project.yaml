@@ -23,7 +23,7 @@
       - release-notes-jobs-python3
     check:
       jobs:
-        - openstack-ansible-deploy-aio_distro_metal_tempestconf-centos-7
+        - openstack-ansible-deploy-aio_distro_metal_tempestconf-centos-8
         - openstack-tox-molecule:
             voting: false
             vars:
@@ -34,7 +34,7 @@
             voting: false
     gate:
       jobs:
-        - openstack-ansible-deploy-aio_distro_metal_tempestconf-centos-7
+        - openstack-ansible-deploy-aio_distro_metal_tempestconf-centos-8
         - tripleo-ci-centos-8-standalone
         - openstack-ansible-deploy-aio_distro_metal-ubuntu-bionic:
             voting: false
