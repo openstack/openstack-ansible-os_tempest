@@ -74,7 +74,7 @@ _tempest_plugins:
   designate:
     - name: designate-tempest-plugin
       repo: https://opendev.org/openstack/designate-tempest-plugin
-      branch: master
+      branch: 0.7.0
       install: "{{ tempest_service_available_designate | bool }}"
   heat:
     - name: heat-tempest-plugin
