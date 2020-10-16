@@ -51,6 +51,8 @@
       until: fetch_url is success
       retries: 6
       delay: 5
+      tags:
+        - skip_ansible_lint
 
     - name: Upload tempest images to glance
       openstack.cloud.os_image:

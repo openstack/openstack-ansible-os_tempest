@@ -19,24 +19,21 @@ galaxy_info:
   description: Installation and setup of tempest
   company: Rackspace
   license: Apache2
-  min_ansible_version: 2.2
+  min_ansible_version: 2.10
   platforms:
     - name: Debian
       versions:
         - stretch
     - name: Ubuntu
       versions:
-        - xenial
         - bionic
+        - focal
     - name: EL
       versions:
-        - 7
+        - 8
     - name: CentOS
       versions:
-        - 7
-    - name: opensuse
-      versions:
-        - 15
+        - 8
   galaxy_tags:
     - cloud
     - python
