@@ -30,6 +30,7 @@
               tox_environment:
                 PYTEST_REQPASS: 1
         - tripleo-ci-centos-8-standalone
+        - tripleo-ci-centos-7-standalone-os-tempest-train
         - tripleo-ci-centos-8-standalone-upgrade:
             voting: false
     gate:
