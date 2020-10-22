@@ -24,16 +24,37 @@
     check:
       jobs:
         - openstack-ansible-deploy-aio_distro_metal_tempestconf-centos-8
+        - tripleo-ci-centos-8-content-provider
+        - tripleo-ci-centos-8-content-provider-ussuri
+        - tripleo-ci-centos-7-content-provider-train
         - openstack-tox-molecule:
             voting: false
             vars:
               tox_environment:
                 PYTEST_REQPASS: 1
-        - tripleo-ci-centos-8-standalone
-        - tripleo-ci-centos-7-standalone-os-tempest-train
+        - tripleo-ci-centos-8-standalone:
+            vars: &consumer_vars
+              consumer_job: true
+              build_container_images: false
+              remove_tags:
+                - build
+            dependencies:
+              - tripleo-ci-centos-8-content-provider
+        - tripleo-ci-centos-7-standalone-os-tempest-train:
+            vars: *consumer_vars
+            dependencies:
+              - tripleo-ci-centos-7-content-provider-train
         - tripleo-ci-centos-8-standalone-upgrade:
             voting: false
+            vars: *consumer_vars
+            dependencies:
+              - tripleo-ci-centos-8-content-provider
+              - tripleo-ci-centos-8-content-provider-ussuri
     gate:
       jobs:
         - openstack-ansible-deploy-aio_distro_metal_tempestconf-centos-8
-        - tripleo-ci-centos-8-standalone
+        - tripleo-ci-centos-8-content-provider
+        - tripleo-ci-centos-8-standalone:
+            vars: *consumer_vars
+            dependencies:
+              - tripleo-ci-centos-8-content-provider
