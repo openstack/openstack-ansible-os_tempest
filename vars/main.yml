@@ -94,7 +94,7 @@ _tempest_plugins:
   magnum:
     - name: magnum-tempest-plugin
       repo: https://opendev.org/openstack/magnum-tempest-plugin
-      branch: master
+      branch: 0.3.0
       install: "{{ tempest_service_available_magnum | bool }}"
   manila:
     - name: manila-tempest-plugin
