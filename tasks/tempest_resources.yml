@@ -154,6 +154,7 @@
         provider_network_type: "{{ tempest_private_net_provider_type }}"
         provider_physical_network: "{{ tempest_private_net_physical_name | default(omit) }}"
         provider_segmentation_id: "{{ tempest_private_net_seg_id | default(omit, true) }}"
+        mtu: "{{ tempest_private_net_mtu | default(omit, true) }}"
         project: "{{ keystone_demo_tenant_id }}"
       register: tempest_private_network
       until: tempest_private_network is success
