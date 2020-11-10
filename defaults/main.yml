@@ -39,6 +39,10 @@ tempest_service_setup_host_python_interpreter: "{{ openstack_service_setup_host_
 
 # Toggle whether tempest actually executes
 tempest_run: no
+
+# Toggle whether default resources are implemented
+tempest_default_role_resources: yes
+
 # Define 0 (serial) or more to use a non default concurrency
 #tempest_run_concurrency:
 

@@ -51,7 +51,7 @@
     - tempest-install
 
 - import_tasks: tempest_resources.yml
-  when: tempest_run | bool
+  when: tempest_default_role_resources | bool
   run_once: yes
   tags:
     - tempest-config
