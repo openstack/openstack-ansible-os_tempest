@@ -64,8 +64,14 @@
 - name: Flush handlers
   meta: flush_handlers
 
+- import_tasks: tempest_cleanup_init.yml
+  when: tempest_cleanup | bool
+
 - import_tasks: tempest_run.yml
   when: tempest_run | bool
   tags:
     - tempest-config
     - tempest-run
+
+- import_tasks: tempest_cleanup.yml
+  when: tempest_cleanup | bool

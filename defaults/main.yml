@@ -39,6 +39,11 @@ tempest_service_setup_host_python_interpreter: "{{ openstack_service_setup_host_
 
 # Toggle whether tempest actually executes
 tempest_run: no
+# Toggle whether tempest cleanup executes prior and after regular tempest run
+tempest_cleanup: no
+# if tempest_cleanup_dry_run is set to true, tempest cleanup will log all found
+# leftover resources to a dry_run.json file, none resources will be deleted
+#tempest_cleanup_dry_run: no
 
 # Toggle whether default resources are implemented
 tempest_default_role_resources: yes
