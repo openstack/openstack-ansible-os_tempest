@@ -119,7 +119,6 @@
     changed_when: false
     failed_when: false
 
-- block:
   # Copy module doesn't copy recursively with remote_src set to true
   - name: Copy stackviz-html to home directory
     shell: |
@@ -129,6 +128,7 @@
     tags:
       # don't trigger ANSIBLE0013
       - skip_ansible_lint
+    when: tempest_run_stackviz | bool
 
   - name: Collecting data from tempest run
     shell: |
@@ -140,9 +140,9 @@
     tags:
       # don't trigger ANSIBLE0013
       - skip_ansible_lint
-  when: tempest_run_stackviz | bool
+    when: tempest_run_stackviz | bool
 
-- name: Fail if tempest tests did not succeed
-  assert:
-    that:
-      - "tempest_tests_run.rc == 0"
+  - name: Fail if tempest tests did not succeed
+    assert:
+      that:
+        - "tempest_tests_run.rc == 0"
