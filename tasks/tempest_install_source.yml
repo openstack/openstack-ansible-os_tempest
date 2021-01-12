@@ -15,8 +15,7 @@
 
 - name: Generate list of tempest plugins installed from source code
   set_fact:
-    tempest_pip_plugins: "{{ tempest_pip_plugins | default([]) + [item.name] }}"
-    tempest_plugin_constraints: "{{ tempest_plugin_constraints | default([]) + ['git+' ~ item.repo ~ '@' ~ item.branch ~ '#egg=' ~ item.name] }}"
+    tempest_pip_plugins: "{{ tempest_pip_plugins | default([]) + ['git+' ~ item.repo ~ '@' ~ item.branch ~ '#egg=' ~ item.name] }}"
   with_items: "{{ tempest_plugins }}"
   when: item.repo is defined
 
@@ -26,12 +25,18 @@
   with_items: "{{ tempest_plugins }}"
   when: item.package is defined
 
+- name: Retrieve the constraints URL
+  uri:
+    url: "{{ tempest_upper_constraints_url }}"
+    return_content: yes
+  register: _u_c_contents
+
 - name: Install the python venv
   import_role:
     name: "python_venv_build"
   vars:
     venv_python_executable: "{{ tempest_venv_python_executable }}"
-    venv_build_constraints: "{{ tempest_plugin_constraints + tempest_git_constraints }}"
+    venv_build_constraints: "{{ (tempest_git_repo is defined) | ternary( _u_c_contents.content.split('\n') | reject('match', '[tempest=*]') | list, tempest_git_constraints) }}"
     venv_install_destination_path: "{{ tempest_venv_bin | dirname }}"
     venv_pip_install_args: "{{ tempest_pip_install_args }}"
     venv_wheel_build_enable: "{{ venv_build_host != inventory_hostname }}"
