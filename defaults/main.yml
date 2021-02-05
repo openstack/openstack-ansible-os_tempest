@@ -61,7 +61,6 @@ tempest_default_role_resources: yes
 tempest_git_install_branch: master
 tempest_upper_constraints_url: "{{ requirements_git_url | default('https://releases.openstack.org/constraints/upper/' ~ requirements_git_install_branch | default('master')) }}"
 tempest_git_constraints:
-  - "{{ (tempest_git_repo is defined) | ternary('git+' ~ (tempest_git_repo | default('https://opendev.org/openstack/tempest.git')) ~ '@' ~ tempest_git_install_branch ~ '#egg=tempest', '') }}"
   - "--constraint {{ tempest_upper_constraints_url }}"
 
 tempest_pip_install_args: "{{ pip_install_options | default('') }}"
@@ -230,7 +229,8 @@ tempest_keystone_interface_insecure: "{{ (keystone_service_internaluri_insecure 
 tempest_main_group: tempest_all
 
 tempest_pip_packages:
-  - cmd2<0.9.0 # >=0.9.0 is python3 only
+  - "{{ (tempest_git_repo is defined) | ternary('git+' ~ (tempest_git_repo | default('https://opendev.org/openstack/tempest.git')) ~ '@' ~ tempest_git_install_branch ~ '#egg=tempest', 'tempest') }}"
+  - cmd2
   - ddt
   - junitxml
   - lxml
@@ -249,7 +249,6 @@ tempest_pip_packages:
   - python-saharaclient
   - python-subunit
   - python-swiftclient
-  - tempest
   - testscenarios
   - os-testr
 
@@ -321,10 +320,9 @@ tempest_tempestconf_venv_bin: "/openstack/venvs/tempestconf-{{ tempest_tempestco
 # tempest_tempestconf_git_repo: https://opendev.org/osf/python-tempestconf
 tempest_tempestconf_git_install_branch: master
 tempest_tempestconf_git_constraints:
-  - "{{ (tempest_tempestconf_git_repo is defined) | ternary('git+' ~ (tempest_tempestconf_git_repo | default('https://opendev.org/osf/python-tempestconf')) ~ '@' ~ tempest_tempestconf_git_install_branch ~ '#egg=python_tempestconf', '') }}"
   - "--constraint {{ tempest_upper_constraints_url }}"
 tempest_tempestconf_pip_packages:
-  - python-tempestconf
+  - "{{ (tempest_tempestconf_git_repo is defined) | ternary('git+' ~ (tempest_tempestconf_git_repo | default('https://opendev.org/osf/python-tempestconf')) ~ '@' ~ tempest_tempestconf_git_install_branch ~ '#egg=python_tempestconf', 'python_tempestconf') }}"
 tempest_tempestconf_profile:
   debug: true
   create: true
