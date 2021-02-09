@@ -40,7 +40,6 @@ tempest_plugin_distro_packages:
   - "{{ (tempest_service_available_congress | bool) | ternary('python3-congress-tests-tempest', '') }}"
   - "{{ (tempest_service_available_designate | bool) | ternary('python3-designate-tests-tempest', '') }}"
   - "{{ (tempest_service_available_heat | bool) | ternary('python3-heat-tests-tempest', '') }}"
-  - "{{ tempest_service_available_horizon | bool | ternary('python3-horizon-tests-tempest', '') }}"
   - "{{ (tempest_service_available_ironic | bool) | ternary('python3-ironic-tests-tempest', '') }}"
   - python3-keystone-tests-tempest
   - "{{ (tempest_service_available_magnum | bool) | ternary('python3-magnum-tests-tempest', '') }}"
