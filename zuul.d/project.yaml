@@ -44,12 +44,6 @@
             vars: *consumer_vars
             dependencies:
               - tripleo-ci-centos-7-content-provider-train
-        - tripleo-ci-centos-8-standalone-upgrade:
-            voting: false
-            vars: *consumer_vars
-            dependencies:
-              - tripleo-ci-centos-8-content-provider
-              - tripleo-ci-centos-8-content-provider-ussuri
     gate:
       jobs:
         - openstack-ansible-deploy-aio_distro_metal_tempestconf-centos-8
