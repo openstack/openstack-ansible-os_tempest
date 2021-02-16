@@ -55,7 +55,7 @@
         - skip_ansible_lint
 
     - name: Upload tempest images to glance
-      openstack.cloud.os_image:
+      openstack.cloud.image:
         cloud: "{{ tempest_cloud_name }}"
         interface: "{{ tempest_interface_name }}"
         validate_certs: "{{ not (tempest_keystone_interface_insecure | bool) }}"
@@ -81,7 +81,7 @@
         tempest_glance_image_id_2: "{{ tempest_service_available_glance | ternary(tempest_image_create['results'][-1]['id'], '') }}"
 
     - name: Add tempest projects
-      openstack.cloud.os_project:
+      openstack.cloud.project:
         cloud: "{{ tempest_cloud_name }}"
         state: present
         name: "{{ item }}"
@@ -96,7 +96,7 @@
       with_items: "{{ tempest_projects }}"
 
     - name: Add tempest users
-      openstack.cloud.os_user:
+      openstack.cloud.identity_user:
         cloud: "{{ tempest_cloud_name }}"
         state: present
         name: "{{ item.name }}"
@@ -113,7 +113,7 @@
       no_log: True
 
     - name: Add tempest roles
-      openstack.cloud.os_keystone_role:
+      openstack.cloud.identity_role:
         cloud: "{{ tempest_cloud_name }}"
         interface: "{{ tempest_interface_name }}"
         validate_certs: "{{ not (tempest_keystone_interface_insecure | bool) }}"
@@ -125,7 +125,7 @@
       with_items: "{{ tempest_roles }}"
 
     - name: Add tempest users to heat_stack_owner role
-      openstack.cloud.os_user_role:
+      openstack.cloud.role_assignment:
         cloud: "{{ tempest_cloud_name }}"
         state: present
         user: "{{ item.name }}"
@@ -146,7 +146,7 @@
         keystone_demo_tenant_id: "{{ (add_project.results | json_query('[*].project.id'))[0] }}"
 
     - name: Ensure private network exists
-      openstack.cloud.os_network:
+      openstack.cloud.network:
         cloud: "{{ tempest_cloud_name }}"
         interface: "{{ tempest_interface_name }}"
         validate_certs: "{{ tempest_keystone_interface_insecure | ternary(false, true) }}"
@@ -170,7 +170,7 @@
         - tempest_service_available_neutron | bool
 
     - name: Ensure public network exists
-      openstack.cloud.os_network:
+      openstack.cloud.network:
         cloud: "{{ tempest_cloud_name }}"
         interface: "{{ tempest_interface_name }}"
         validate_certs: "{{ tempest_keystone_interface_insecure | ternary(false, true) }}"
@@ -192,7 +192,7 @@
         tempest_neutron_public_network_id: "{{ tempest_service_available_neutron | ternary(tempest_public_network.id, '') }}"
 
     - name: Ensure private subnet exists
-      openstack.cloud.os_subnet:
+      openstack.cloud.subnet:
         cloud: "{{ tempest_cloud_name }}"
         interface: "{{ tempest_interface_name }}"
         validate_certs: "{{ tempest_keystone_interface_insecure | ternary(false, true) }}"
@@ -209,7 +209,7 @@
         - tempest_service_available_neutron | bool
 
     - name: Ensure public subnet exists
-      openstack.cloud.os_subnet:
+      openstack.cloud.subnet:
         cloud: "{{ tempest_cloud_name }}"
         interface: "{{ tempest_interface_name }}"
         validate_certs: "{{ tempest_keystone_interface_insecure | ternary(false, true) }}"
@@ -227,7 +227,7 @@
         - tempest_service_available_neutron | bool
 
     - name: Create router
-      openstack.cloud.os_router:
+      openstack.cloud.router:
         cloud: "{{ tempest_cloud_name }}"
         interface: "{{ tempest_interface_name }}"
         validate_certs: "{{ tempest_keystone_interface_insecure | ternary(false, true) }}"
@@ -251,7 +251,7 @@
         - tempest_service_available_neutron | bool
 
     - name: Create tempest flavors
-      openstack.cloud.os_nova_flavor:
+      openstack.cloud.compute_flavor:
         cloud: "{{ tempest_cloud_name }}"
         interface: "{{ tempest_interface_name }}"
         validate_certs: "{{ tempest_keystone_interface_insecure | ternary(false, true) }}"
@@ -269,7 +269,7 @@
         - tempest_service_available_nova | bool
 
     - name: Get the admin user project id
-      openstack.cloud.os_project_info:
+      openstack.cloud.project_info:
         cloud: "{{ tempest_cloud_name }}"
         name: admin
         interface: "{{ tempest_interface_name }}"
