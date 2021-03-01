@@ -18,8 +18,8 @@
   package:
     name: "{{ tempest_package_list }}"
     state: "{{ tempest_package_state }}"
-    update_cache: "{{ (ansible_pkg_mgr in ['apt', 'zypper']) | ternary('yes', omit) }}"
-    cache_valid_time: "{{ (ansible_pkg_mgr == 'apt') | ternary(cache_timeout, omit) }}"
+    update_cache: "{{ (ansible_facts['pkg_mgr'] in ['apt', 'zypper']) | ternary('yes', omit) }}"
+    cache_valid_time: "{{ (ansible_facts['pkg_mgr'] == 'apt') | ternary(cache_timeout, omit) }}"
   register: install_packages
   until: install_packages is success
   retries: 5
@@ -31,7 +31,7 @@
 # in defaults as in case of non-integrated tests meta handlers from other roles might fail.
 - name: Install Tempest packages from PIP
   import_tasks: tempest_install_source.yml
-  when: (tempest_install_method | default('source')) == 'source' or (tempest_install_method == 'distro' and ansible_distribution == 'Ubuntu')
+  when: (tempest_install_method | default('source')) == 'source' or (tempest_install_method == 'distro' and ansible_facts['distribution'] == 'Ubuntu')
 
 - name: Install stackviz on venv
   import_role:
