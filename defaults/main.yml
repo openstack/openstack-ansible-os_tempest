@@ -35,7 +35,7 @@ tempest_pip_package_state: "latest"
 # for the service setup. The host must already have
 # clouds.yaml properly configured.
 tempest_service_setup_host: "{{ openstack_service_setup_host | default('localhost') }}"
-tempest_service_setup_host_python_interpreter: "{{ openstack_service_setup_host_python_interpreter | default((tempest_service_setup_host == 'localhost') | ternary(ansible_playbook_python, ansible_python['executable'])) }}"
+tempest_service_setup_host_python_interpreter: "{{ openstack_service_setup_host_python_interpreter | default((tempest_service_setup_host == 'localhost') | ternary(ansible_playbook_python, ansible_facts['python']['executable'])) }}"
 
 # Toggle whether tempest actually executes
 tempest_run: no
@@ -85,7 +85,7 @@ tempest_log_dir: "/var/log/tempest"
 tempest_plugins: "{{ _tempest_plugins.values() | sum(start=[]) | selectattr('install', 'equalto', true) | list }}"
 
 # tempest_workspace where tempest can be runned
-tempest_workspace: "{{ ansible_env.HOME }}/workspace"
+tempest_workspace: "{{ ansible_facts['env']['HOME'] }}/workspace"
 
 # The location where the test whitelist/blacklist will be placed
 tempest_test_whitelist_file_path: "{{ tempest_workspace }}/etc/tempest_whitelist.txt"
@@ -262,7 +262,7 @@ tempest_pip_packages:
 #     name: ...        name to use when uploading to glance (optional)
 #     properties:      a dict of custom properties to attach to the image in glance (optional)
 #       <property>: <value>
-tempest_images: "{{ tempest_images_map[ansible_architecture] }}"
+tempest_images: "{{ tempest_images_map[ansible_facts['architecture']] }}"
 
 # The location where images are downloaded to
 tempest_image_dir: "{{ lookup('env', 'HOME') }}/tempest-images"
