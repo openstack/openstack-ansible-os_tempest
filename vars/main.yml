@@ -59,7 +59,7 @@ _tempest_plugins:
   cinder:
     - name: cinder-tempest-plugin
       repo: https://opendev.org/openstack/cinder-tempest-plugin
-      branch: master
+      branch: 0.3.1
       install: "{{ tempest_service_available_cinder | bool }}"
   cloudkitty:
     - name: cloudkitty-tempest-plugin
@@ -89,7 +89,7 @@ _tempest_plugins:
   keystone:
     - name: keystone-tempest-plugin
       repo: https://opendev.org/openstack/keystone-tempest-plugin
-      branch: master
+      branch: 0.3.0
       install: yes
   magnum:
     - name: magnum-tempest-plugin
@@ -124,7 +124,7 @@ _tempest_plugins:
   neutron:
     - name: neutron-tempest-plugin
       repo: https://opendev.org/openstack/neutron-tempest-plugin
-      branch: 0.9.0
+      branch: "{{ (tempest_venv_python_executable == 'python2') | ternary('0.2.0', '0.3.0') }}"
       install: "{{ tempest_service_available_neutron | bool }}"
   novajoin:
     - name: novajoin-tempest-plugin
