@@ -51,4 +51,5 @@ tempest_plugin_distro_packages:
   - "{{ (tempest_service_available_novajoin | bool) | ternary('python3-novajoin-tests-tempest', '') }}"
   - "{{ (tempest_service_available_octavia | bool) | ternary('python3-octavia-tests-tempest', '') }}"
   - "{{ (tempest_service_available_sahara | bool) | ternary('python3-sahara-tests-tempest', '') }}"
+  - "{{ (tempest_service_available_whitebox | bool) | ternary('python3-whitebox-tests-tempest', '') }}"
   - "{{ (tempest_service_available_zaqar | bool) | ternary('python3-zaqar-tests-tempest', '') }}"
