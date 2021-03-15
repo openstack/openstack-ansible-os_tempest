@@ -22,6 +22,7 @@ tempest_distro_packages:
   - git-core
   - libxslt1.1           # required by the python module unittest2
   - build-essential      # required to build tempest plugins (TODO) remove this when repo server can satisfy the tempest plugin requirements
+  - nmap                 # provides ncat tool which is required by some of the neutron-tempest-plugin scenario tests
 
 tempest_service_distro_packages:
   - tempest

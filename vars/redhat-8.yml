@@ -18,6 +18,7 @@ tempest_distro_packages:
   - libxslt              # required by the python module unittest2
   - gcc                  # required to build tempest plugins (TODO) remove this when the repo server can satisfy the tempest plugin requirements
   - iputils
+  - nmap                 # provides ncat tool which is required by some of the neutron-tempest-plugin scenario tests
 
 _stestr_executable: stestr-3
 
