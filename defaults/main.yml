@@ -180,6 +180,7 @@ tempest_service_available_cloudkitty: "{{ groups['cloudkitty_all'] is defined an
 tempest_service_available_congress: "{{ groups['congress_all'] is defined and groups['congress_all'] | length > 0 }}"
 tempest_service_available_designate: "{{ groups['designate_all'] is defined and groups['designate_all'] | length > 0 }}"
 tempest_service_available_glance: "{{ groups['glance_all'] is defined and groups['glance_all'] | length > 0 }}"
+tempest_service_available_gnocchi: "{{ groups['gnocchi_all'] is defined and groups['gnocchi_all'] | length > 0 }}"
 tempest_service_available_heat: "{{ groups['heat_all'] is defined and groups['heat_all'] | length > 0 }}"
 tempest_service_available_horizon: "{{ groups['horizon_all'] is defined and groups['horizon_all'] | length > 0 }}"
 tempest_service_available_ironic: "{{ groups['ironic_all'] is defined and groups['ironic_all'] | length > 0 }}"
@@ -199,6 +200,7 @@ tempest_service_available_novajoin: False
 tempest_service_available_nova_lxd: False
 
 tempest_service_available_octavia: "{{ groups['octavia_all'] is defined and groups['octavia_all'] | length > 0 }}"
+tempest_service_available_panko: "{{ groups['panko_all'] is defined and groups['panko_all'] | length > 0 }}"
 tempest_service_available_sahara: "{{ groups['sahara_all'] is defined and groups['sahara_all'] | length > 0 }}"
 tempest_service_available_senlin: "{{ groups['senlin_all'] is defined and groups['senlin_all'] | length > 0 }}"
 tempest_service_available_swift: "{{ (groups['swift_all'] is defined and groups['swift_all'] | length > 0) or (groups['ceph-rgw'] is defined and groups['ceph-rgw'] | length > 0) or (ceph_rgws is defined and ceph_rgws | length > 0) }}"

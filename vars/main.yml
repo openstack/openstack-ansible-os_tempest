@@ -150,7 +150,7 @@ _tempest_plugins:
     - name: telemetry-tempest-plugin
       repo: https://opendev.org/openstack/telemetry-tempest-plugin
       branch: master
-      install: "{{ (tempest_service_available_aodh | bool) or (tempest_service_available_ceilometer | bool) }}"
+      install: "{{ (tempest_service_available_aodh | bool) or (tempest_service_available_ceilometer | bool) or (tempest_service_available_gnocchi | bool) or (tempest_service_available_panko | bool) }}"
   trove:
     - name: trove-tempest-plugin
       repo: https://opendev.org/openstack/trove-tempest-plugin
