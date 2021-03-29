@@ -35,7 +35,7 @@
     if [ -d {{ tempest_tempestconf_venv_bin }} ]; then
     . {{ tempest_tempestconf_venv_bin }}/activate
     fi
-    discover-tempest-config --profile "{{ tempest_workspace }}/etc/profile.yaml" >> "{{ tempest_workspace }}/tempestconf.log"
+    discover-tempest-config --profile "{{ tempest_workspace }}/etc/profile.yaml" >> "{{ tempest_log_dir }}/tempestconf.log"
   args:
     chdir: "{{ tempest_workspace }}"
     executable: /bin/bash
