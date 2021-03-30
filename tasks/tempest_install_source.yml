@@ -36,7 +36,7 @@
     name: "python_venv_build"
   vars:
     venv_python_executable: "{{ tempest_venv_python_executable }}"
-    venv_build_constraints: "{{ (tempest_git_repo is defined) | ternary( _u_c_contents.content.split('\n') | reject('match', '[tempest=*]') | list, tempest_git_constraints) }}"
+    venv_build_constraints: "{{ (tempest_git_repo is defined) | ternary( _u_c_contents.content.split('\n') | reject('match', '^tempest=') | list, tempest_git_constraints) }}"
     venv_install_destination_path: "{{ tempest_venv_bin | dirname }}"
     venv_pip_install_args: "{{ tempest_pip_install_args }}"
     venv_wheel_build_enable: "{{ venv_build_host != inventory_hostname }}"
