@@ -18,6 +18,7 @@
     parent: openstack-ansible-deploy-aio_distro_metal-centos-8
     pre-run:
       - zuul.d/playbooks/pre-tempestconf.yml
+    voting: false
 
 - job:
     name: tripleo-ci-centos-7-standalone-os-tempest-train

@@ -52,7 +52,6 @@
               - tripleo-ci-centos-8-content-provider-ussuri
     gate:
       jobs:
-        - openstack-ansible-deploy-aio_distro_metal_tempestconf-centos-8
         - tripleo-ci-centos-8-content-provider
         - tripleo-ci-centos-8-standalone:
             vars: *consumer_vars
