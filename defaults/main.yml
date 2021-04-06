@@ -87,29 +87,32 @@ tempest_plugins: "{{ _tempest_plugins.values() | sum(start=[]) | selectattr('ins
 # tempest_workspace where tempest can be runned
 tempest_workspace: "{{ ansible_facts['env']['HOME'] }}/workspace"
 
-# The location where the test whitelist/blacklist will be placed
-tempest_test_whitelist_file_path: "{{ tempest_workspace }}/etc/tempest_whitelist.txt"
-tempest_test_blacklist_file_path: "{{ tempest_workspace }}/etc/tempest_blacklist.txt"
+# The location where the test include/exclude lists will be placed
+tempest_test_includelist_file_path: "{{ tempest_workspace }}/etc/tempest_includelist.txt"
+tempest_test_excludelist_file_path: "{{ tempest_workspace }}/etc/tempest_excludelist.txt"
 
 # Tests to execute:
 # This sets up a list of tests to execute based on what's deployed in the environment.
-# The list gets added to the whitelist which tempest executes.
-tempest_test_whitelist:
+# The list gets added to the includelist which tempest executes.
+# Defaults to tempest_test_whitelist for backwards compatibility and migration purposes.
+tempest_test_includelist: "{{ tempest_test_whitelist | default(tempest_test_default_includelist) }}"
+tempest_test_default_includelist:
   - "smoke"
   - "{{ (tempest_service_available_ceilometer | bool) | ternary('tempest.api.telemetry', '') }}"
   - "{{ (tempest_service_available_heat | bool) | ternary('tempest.api.orchestration.stacks.test_non_empty_stack', '') }}"
 
 # Tests being skipped by os_tempest
 # Example:
-# tempest_test_blacklist:
+# tempest_test_excludelist:
 #   - test: tempest.scenario.test.minimum_basic
 #     reason: This test is failing
 #     lp: 'https://bugs.launchpad.net/openstack-ansible/+bug/123456'
 #     bz: 'https://bugzilla.redhat.com/show_bug.cgi?id=123456'
 # OR
-# tempest_test_blacklist:
+# tempest_test_excludelist:
 #   - 'tempest.scenario.test.minimum_basic'
-tempest_test_blacklist: []
+# Defaults to tempest_test_blacklist for backwards compatibility and migration purposes.
+tempest_test_excludelist: "{{ tempest_test_blacklist | default([]) }}"
 
 # Toggle fatal deprecations
 tempest_fatal_deprecations: False
