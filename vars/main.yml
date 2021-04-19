@@ -151,6 +151,11 @@ _tempest_plugins:
       repo: https://opendev.org/openstack/telemetry-tempest-plugin
       branch: master
       install: "{{ (tempest_service_available_aodh | bool) or (tempest_service_available_ceilometer | bool) }}"
+  trove:
+    - name: trove-tempest-plugin
+      repo: https://opendev.org/openstack/trove-tempest-plugin
+      branch: master
+      install: "{{ tempest_service_available_trove | bool }}"
   zaqar:
     - name: zaqar-tempest-plugin
       repo: https://opendev.org/openstack/zaqar-tempest-plugin
