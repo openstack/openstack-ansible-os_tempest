@@ -32,6 +32,9 @@ tempest_service_distro_packages:
   - python3-subunit
   - subunit-filters
 
+tempest_devel_distro_packages:
+  - python3-devel        # required for netifaces module for stackviz
+
 tempest_plugin_distro_packages:
   - "{{ (tempest_service_available_aodh | bool) | ternary('python3-telemetry-tests-tempest', '') }}"
   - "{{ (tempest_service_available_barbican | bool) | ternary('python3-barbican-tests-tempest', '') }}"

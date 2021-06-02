@@ -23,6 +23,9 @@ tempest_distro_packages:
   - libxslt1.1           # required by the python module unittest2
   - build-essential      # required to build tempest plugins (TODO) remove this when repo server can satisfy the tempest plugin requirements
 
+tempest_devel_distro_packages:
+  - python3-dev         # required for netifaces module for stackviz
+
 tempest_service_distro_packages:
   - tempest
   - python3-junitxml
