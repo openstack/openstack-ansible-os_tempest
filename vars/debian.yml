@@ -24,6 +24,9 @@ tempest_distro_packages:
   - build-essential      # required to build tempest plugins (TODO) remove this when repo server can satisfy the tempest plugin requirements
   - nmap                 # provides ncat tool which is required by some of the neutron-tempest-plugin scenario tests
 
+tempest_devel_distro_packages:
+  - python3-dev         # required for netifaces module for stackviz
+
 tempest_service_distro_packages:
   - tempest
   - python3-junitxml
