@@ -142,6 +142,24 @@
       - skip_ansible_lint
     when: tempest_run_stackviz | bool
 
+  - name: Create tempest failing tests file
+    shell: |
+      set -e
+      if [ -d {{ tempest_venv_bin }} ];
+      then
+      . {{ tempest_venv_bin }}/activate
+      fi
+      {{ stestr_executable }} failing --list  > {{ tempest_log_dir }}/failing_tests.log
+    args:
+      chdir: "{{ tempest_workspace }}"
+      executable: /bin/bash
+    failed_when: false
+    changed_when: false
+    tags:
+      # don't trigger ANSIBLE0013
+      - skip_ansible_lint
+    when: tempest_tests_run.rc != 0
+
   - name: Fail if tempest tests did not succeed
     assert:
       that:
