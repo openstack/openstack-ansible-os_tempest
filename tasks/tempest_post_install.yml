@@ -153,32 +153,32 @@
   when: "debug | bool"
   changed_when: false
 
-- name: Generate tempest test whitelist
+- name: Generate tempest test include list
   copy:
     content: |
-      {% for item in tempest_test_whitelist | unique | sort %}
+      {% for item in tempest_test_includelist | unique | sort %}
       {%   if item %}
       {{ item }}
       {%   endif %}
       {% endfor %}
-    dest: "{{ tempest_test_whitelist_file_path }}"
+    dest: "{{ tempest_test_includelist_file_path }}"
     mode: "0644"
   when:
-    - tempest_test_whitelist | length > 0
+    - tempest_test_includelist | length > 0
 
 # Tests to NOT execute:
 # This sets up a list of tests to skip, which can even include those included in the whitelist.
-- name: Generate tempest test blacklist
+- name: Generate tempest test exclude list
   copy:
     content: |
-      {% for item in tempest_test_blacklist %}
+      {% for item in tempest_test_excludelist %}
       {% if item.test is defined %}
       {{ item.test }}
       {% else %}
       {{ item }}
       {%   endif %}
       {% endfor %}
-    dest: "{{ tempest_test_blacklist_file_path }}"
+    dest: "{{ tempest_test_excludelist_file_path }}"
     mode: "0644"
   when:
-    - tempest_test_blacklist | length > 0
+    - tempest_test_excludelist | length > 0
