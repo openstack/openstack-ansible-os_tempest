@@ -135,7 +135,7 @@ tempest_private_net_name: "private"
 tempest_private_subnet_name: "private-subnet"
 tempest_private_subnet_cidr: "192.168.74.0/28"
 tempest_private_net_provider_type: "vxlan"
-tempest_private_net_seg_id: 1
+tempest_private_net_seg_id:
 # If you choose vlan as private network provider type, you must set a physical
 # name for it
 # tempest_private_net_physical_name: "private"
