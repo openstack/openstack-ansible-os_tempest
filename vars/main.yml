@@ -21,12 +21,12 @@
 # properties: a dict of custom properties to attach to the image in glance
 tempest_images_map:
   x86_64:
-    - url: "https://download.cirros-cloud.net/0.5.1/cirros-0.5.1-x86_64-disk.img"
-      checksum: "sha256:c4110030e2edf06db87f5b6e4efc27300977683d53f040996d15dcc0ad49bb5a"
+    - url: "https://download.cirros-cloud.net/0.5.2/cirros-0.5.2-x86_64-disk.img"
+      checksum: "sha256:932fcae93574e242dc3d772d5235061747dfe537668443a1f0567d893614b464"
       format: "qcow2"
       name: "cirros"
-    - url: "https://download.cirros-cloud.net/0.5.1/cirros-0.5.1-x86_64-disk.img"
-      checksum: "sha256:c4110030e2edf06db87f5b6e4efc27300977683d53f040996d15dcc0ad49bb5a"
+    - url: "https://download.cirros-cloud.net/0.5.2/cirros-0.5.2-x86_64-disk.img"
+      checksum: "sha256:932fcae93574e242dc3d772d5235061747dfe537668443a1f0567d893614b464"
       format: "qcow2"
       name: "cirros"
   aarch64:
