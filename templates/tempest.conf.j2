@@ -22,8 +22,8 @@ endpoint_type = {{ tempest_endpoint_type }}
 [compute]
 image_ref = {{ tempest_glance_image_id_1 }}
 image_ref_alt = {{ tempest_glance_image_id_2 }}
-flavor_ref = 201
-flavor_ref_alt = 202
+flavor_ref = {{ tempest_nova_flavor_id_1 }}
+flavor_ref_alt = {{ tempest_nova_flavor_id_2 }}
 fixed_network_name = private
 endpoint_type = {{ tempest_endpoint_type }}
 build_timeout = 600
