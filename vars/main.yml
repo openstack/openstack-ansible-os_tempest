@@ -119,7 +119,7 @@ _tempest_plugins:
   neutron:
     - name: neutron-tempest-plugin
       repo: https://opendev.org/openstack/neutron-tempest-plugin
-      branch: master
+      branch: 1.6.0
       install: "{{ tempest_service_available_neutron | bool }}"
   novajoin:
     - name: novajoin-tempest-plugin
