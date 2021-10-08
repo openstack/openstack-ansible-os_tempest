@@ -24,19 +24,31 @@
     check:
       jobs:
         - tripleo-ci-centos-8-content-provider
-        - openstack-ansible-deploy-aio_distro_metal_tempestconf-centos-7
+        - openstack-ansible-deploy-aio_metal-centos-7:
+            voting: false
+        - openstack-ansible-deploy-aio_distro_metal-centos-7:
+            voting: false
+        - openstack-ansible-deploy-aio_distro_metal_tempestconf-centos-7:
+            voting: false
         - openstack-tox-molecule:
             voting: false
             vars:
               tox_environment:
                 PYTEST_REQPASS: 1
-        - tripleo-ci-centos-8-standalone-os-tempest
+        - tripleo-ci-centos-8-standalone-os-tempest:
+            voting: false
         - openstack-ansible-deploy-aio_distro_metal-ubuntu-bionic:
             voting: false
     gate:
       jobs:
         - tripleo-ci-centos-8-content-provider
-        - openstack-ansible-deploy-aio_distro_metal_tempestconf-centos-7
-        - tripleo-ci-centos-8-standalone-os-tempest
+        - openstack-ansible-deploy-aio_metal-centos-7:
+            voting: false
+        - openstack-ansible-deploy-aio_distro_metal-centos-7:
+            voting: false
+        - openstack-ansible-deploy-aio_distro_metal_tempestconf-centos-7:
+            voting: false
+        - tripleo-ci-centos-8-standalone-os-tempest:
+            voting: false
         - openstack-ansible-deploy-aio_distro_metal-ubuntu-bionic:
             voting: false
