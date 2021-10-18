@@ -17,7 +17,7 @@
 tempest_run: yes
 
 # tempestconf specific settings
-tempest_tempestconf_git_repo: https://opendev.org/osf/python-tempestconf
+tempest_tempestconf_git_repo: https://opendev.org/openinfra/python-tempestconf
 
 # A sample plugin to activate the code path
 tempest_plugins:

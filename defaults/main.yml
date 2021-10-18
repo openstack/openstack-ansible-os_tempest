@@ -332,12 +332,12 @@ tempest_tempestconf_venv_bin: "/openstack/venvs/tempestconf-{{ tempest_tempestco
 # We comment out `tempest_tempestconf_git_repo` so that the repo_build role does not attempt to
 # build the wheel from this repo/branch. Instead, we want python-tempestconf to get built
 # from the stable release defined in global requirements.
-# tempest_tempestconf_git_repo: https://opendev.org/osf/python-tempestconf
+# tempest_tempestconf_git_repo: https://opendev.org/openinfra/python-tempestconf
 tempest_tempestconf_git_install_branch: master
 tempest_tempestconf_git_constraints:
   - "--constraint {{ tempest_upper_constraints_url }}"
 tempest_tempestconf_pip_packages:
-  - "{{ (tempest_tempestconf_git_repo is defined) | ternary('git+' ~ (tempest_tempestconf_git_repo | default('https://opendev.org/osf/python-tempestconf')) ~ '@' ~ tempest_tempestconf_git_install_branch ~ '#egg=python_tempestconf', 'python_tempestconf') }}"
+  - "{{ (tempest_tempestconf_git_repo is defined) | ternary('git+' ~ (tempest_tempestconf_git_repo | default('https://opendev.org/openinfra/python-tempestconf')) ~ '@' ~ tempest_tempestconf_git_install_branch ~ '#egg=python_tempestconf', 'python_tempestconf') }}"
 tempest_tempestconf_profile:
   debug: true
   create: true
