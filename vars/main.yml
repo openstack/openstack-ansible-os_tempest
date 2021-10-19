@@ -24,7 +24,7 @@ _tempest_plugins:
   barbican:
     - name: barbican-tempest-plugin
       repo: https://git.openstack.org/openstack/barbican-tempest-plugin
-      branch: master
+      branch: 0.3.0
       install: "{{ tempest_service_available_barbican | bool }}"
   cinder:
     - name: cinder-tempest-plugin
@@ -44,7 +44,7 @@ _tempest_plugins:
   designate:
     - name: designate-tempest-plugin
       repo: https://git.openstack.org/openstack/designate-tempest-plugin
-      branch: master
+      branch: 0.7.0
       install: "{{ tempest_service_available_designate | bool }}"
   heat:
     - name: heat-tempest-plugin
@@ -64,7 +64,7 @@ _tempest_plugins:
   magnum:
     - name: magnum-tempest-plugin
       repo: https://git.openstack.org/openstack/magnum-tempest-plugin
-      branch: master
+      branch: 0.3.0
       install: "{{ tempest_service_available_magnum | bool }}"
   manila:
     - name: manila-tempest-plugin
@@ -104,7 +104,7 @@ _tempest_plugins:
   sahara:
     - name: sahara-tests
       repo: https://git.openstack.org/openstack/sahara-tests
-      branch: master
+      branch: 0.10.0
       install: "{{ tempest_service_available_sahara | bool }}"
   telemetry:
     - name: telemetry-tempest-plugin
