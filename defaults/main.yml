@@ -249,7 +249,6 @@ tempest_pip_packages:
   - junitxml
   - lxml
   - nose
-  - python-ceilometerclient
   - python-cinderclient
   - python-glanceclient
   - python-heatclient
