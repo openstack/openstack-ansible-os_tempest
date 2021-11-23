@@ -35,7 +35,7 @@ python-tempestconf
 
 python-tempestconf is a tool which generates a ``tempest.conf`` file necessary
 for Tempest execution. For more information about the tool, please,
-`follow its official documentation <https://docs.openstack.org/python-tempestconf/latest/index.html>`_.
+`follow its official documentation <https://docs.opendev.org/openinfra/python-tempestconf/latest/>`_.
 
 If you want ``os_tempest`` to execute ``python-tempestconf``, prior to Tempest
 execution in order to generate ``tempest.conf`` file, set
@@ -46,10 +46,10 @@ execution in order to generate ``tempest.conf`` file, set
     tempest_use_tempestconf: true
 
 More information about ``python-tempestconf`` arguments can
-`be found here <https://docs.openstack.org/python-tempestconf/latest/cli/cli_options.html>`_.
+`be found here <https://docs.opendev.org/openinfra/python-tempestconf/latest/cli/cli_options.html>`_.
 
 The best way how to pass any arguments to ``python-tempestconf`` is using its
-`profile feature <https://docs.openstack.org/python-tempestconf/latest/user/profile.html>`_.
+`profile feature <https://docs.opendev.org/openinfra/python-tempestconf/latest/user/profile.html>`_.
 
 ``os_tempest`` provides *tempest_tempestconf_profile* variable for setting
 desired python-tempestconf's arguments.
