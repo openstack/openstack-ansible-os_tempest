@@ -40,4 +40,8 @@ galaxy_info:
     - tempest
     - development
     - openstack
+
+collections:
+  - openstack.config_template
+
 dependencies: []
