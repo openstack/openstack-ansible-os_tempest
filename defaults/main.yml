@@ -155,13 +155,8 @@ tempest_public_router_external: "True"
 # tempest_public_subnet_allocation_pools: "10.1.13.150-10.1.13.200"
 tempest_public_subnet_allocation_pools: ""
 
-tempest_compute_ssh_user: cirros
 tempest_compute_image_ssh_user: cirros
 tempest_compute_run_ssh: True
-tempest_compute_console_output_enabled: True
-tempest_compute_resize_enabled: True
-tempest_compute_snapshot_enabled: True
-tempest_compute_change_password: False
 tempest_network_ping_gateway: False
 
 tempest_dashboard_url: "https://{{ external_lb_vip_address | default('127.0.0.1') }}/"
@@ -212,23 +207,7 @@ tempest_service_available_whitebox: False
 tempest_service_available_zaqar: "{{ groups['zaqar_all'] is defined and groups['zaqar_all'] | length > 0 }}"
 tempest_service_available_zun: "{{ groups['zun_all'] is defined and groups['zun_all'] | length > 0 }}"
 
-tempest_image_api_v1_enabled: False
-tempest_image_api_v2_enabled: True
-
 tempest_swift_enabled: True
-tempest_swift_container_sync: True
-tempest_swift_object_versioning: True
-tempest_swift_discoverable_apis:
-  - bulk
-  - object
-  - container_quotas
-  - container_sync
-  - slo
-  - tempurl
-
-tempest_volume_backend_names: [ backend1, backend2 ]
-tempest_volume_backup_enabled: False
-tempest_volume_multi_backend_enabled: False
 
 # Var for setting ssl verification
 tempest_keystone_interface_insecure: "{{ (keystone_service_internaluri_insecure | default(false)) | bool }}"
@@ -273,8 +252,6 @@ tempest_images: "{{ tempest_images_map[ansible_facts['architecture']] }}"
 
 # The location where images are downloaded to
 tempest_image_dir: "{{ lookup('env', 'HOME') }}/tempest-images"
-
-tempest_enable_instance_password: True
 
 tempest_flavors:
   - name: tempest1

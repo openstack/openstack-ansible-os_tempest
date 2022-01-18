@@ -29,24 +29,6 @@ endpoint_type = {{ tempest_endpoint_type }}
 build_timeout = 600
 
 
-[compute-feature-enabled]
-change_password = {{ tempest_compute_change_password }}
-console_output = {{ tempest_compute_console_output_enabled }}
-resize = {{ tempest_compute_resize_enabled }}
-pause = false
-shelve = false
-suspend = false
-live_migration = false
-block_migration_for_live_migration = false
-block_migrate_cinder_iscsi = false
-spice_console = true
-config_drive = {{ ansible_facts['architecture'] != 'aarch64' }}
-rescue = false
-enable_instance_password = {{ tempest_enable_instance_password }}
-interface_attach = false
-snapshot = {{ tempest_compute_resize_enabled }}
-
-
 [data_processing]
 endpoint_type = {{ tempest_endpoint_type }}
 
@@ -62,20 +44,10 @@ v2_public_endpoint_type = {{ tempest_endpoint_type }}
 v3_endpoint_type = {{ tempest_endpoint_type }}
 
 
-[identity-feature-enabled]
-trust = true
-application_credentials = true
-
-
 [image]
 endpoint_type = {{ tempest_endpoint_type }}
 http_image = {{ tempest_images[0]['url'] }}
 build_timeout = 600
-
-
-[image-feature-enabled]
-api_v1 = {{ tempest_image_api_v1_enabled }}
-api_v2 = {{ tempest_image_api_v2_enabled }}
 
 
 [input-scenario]
@@ -93,21 +65,9 @@ floating_network_name = {{ tempest_public_net_name }}
 build_timeout = 600
 
 
-[network-feature-enabled]
-port_security = true
-ipv6 = false
-api_extensions = agent,allowed-address-pairs,binding,dhcp_agent_scheduler,ext-gw-mode,external-net,extra_dhcp_opt,extra_dhcp_optagent,extraroute,l3_agent_scheduler,metering,provider,quotas,router,security-group,service-type,subnet_allocation
-
-
 [object-storage]
 endpoint_type = {{ tempest_endpoint_type }}
 operator_role = swiftoperator
-
-
-[object-storage-feature-enabled]
-container_sync = {{ tempest_swift_container_sync }}
-object_versioning = {{ tempest_swift_object_versioning }}
-discoverable_apis = {{ tempest_swift_discoverable_apis | join(',') }}
 
 
 [heat_plugin]
@@ -169,10 +129,4 @@ ssh_timeout = 600
 [volume]
 endpoint_type = {{ tempest_endpoint_type }}
 catalog_type = volumev3
-# NOTE: These backends are only tested when multi_backend is enabled
-backend_names = {{ tempest_volume_backend_names | join(',') }}
 build_timeout = 600
-
-[volume-feature-enabled]
-backup = {{ tempest_volume_backup_enabled }}
-multi_backend = {{ tempest_volume_multi_backend_enabled }}
