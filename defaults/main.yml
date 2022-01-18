@@ -313,6 +313,9 @@ tempest_domain_name: "default"
 ## The name of interface from clouds.yaml
 tempest_interface_name: "internal"
 
+# The default endpoint type to use by tempest
+tempest_endpoint_type: internalURL
+
 # python-tempestconf variables
 # The tempest_use_tempestconf by default is set to false, set to true if you
 # want to generate the tempest.conf file with this tool, instead of

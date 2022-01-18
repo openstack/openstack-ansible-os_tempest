@@ -16,7 +16,7 @@ admin_password = {{ keystone_auth_admin_password }}
 
 
 [baremetal]
-endpoint_type = internalURL
+endpoint_type = {{ tempest_endpoint_type }}
 
 
 [compute]
@@ -25,7 +25,7 @@ image_ref_alt = {{ tempest_glance_image_id_2 }}
 flavor_ref = 201
 flavor_ref_alt = 202
 fixed_network_name = private
-endpoint_type = internalURL
+endpoint_type = {{ tempest_endpoint_type }}
 build_timeout = 600
 
 
@@ -48,7 +48,7 @@ snapshot = {{ tempest_compute_resize_enabled }}
 
 
 [data_processing]
-endpoint_type = internalURL
+endpoint_type = {{ tempest_endpoint_type }}
 
 [debug]
 
@@ -57,9 +57,9 @@ endpoint_type = internalURL
 disable_ssl_certificate_validation = {{ tempest_keystone_interface_insecure | bool }}
 uri = {{ keystone_service_internaluri }}/v2.0
 uri_v3 = {{ keystone_service_internalurl }}
-v2_admin_endpoint_type = adminURL
-v2_public_endpoint_type = internalURL
-v3_endpoint_type = adminURL
+v2_admin_endpoint_type = {{ tempest_endpoint_type }}
+v2_public_endpoint_type = {{ tempest_endpoint_type }}
+v3_endpoint_type = {{ tempest_endpoint_type }}
 
 
 [identity-feature-enabled]
@@ -68,7 +68,7 @@ application_credentials = true
 
 
 [image]
-endpoint_type = internalURL
+endpoint_type = {{ tempest_endpoint_type }}
 http_image = {{ tempest_images[0]['url'] }}
 build_timeout = 600
 
@@ -87,7 +87,7 @@ api_v2 = {{ tempest_image_api_v2_enabled }}
 
 
 [network]
-endpoint_type = internalURL
+endpoint_type = {{ tempest_endpoint_type }}
 public_network_id = {{ tempest_neutron_public_network_id }}
 floating_network_name = {{ tempest_public_net_name }}
 build_timeout = 600
@@ -100,7 +100,7 @@ api_extensions = agent,allowed-address-pairs,binding,dhcp_agent_scheduler,ext-gw
 
 
 [object-storage]
-endpoint_type = internalURL
+endpoint_type = {{ tempest_endpoint_type }}
 operator_role = swiftoperator
 
 
@@ -111,7 +111,7 @@ discoverable_apis = {{ tempest_swift_discoverable_apis | join(',') }}
 
 
 [orchestration]
-endpoint_type = internalURL
+endpoint_type = {{ tempest_endpoint_type }}
 instance_type = tempest1
 
 
@@ -150,13 +150,13 @@ trove = {{ tempest_service_available_trove }}
 zun = {{ tempest_service_available_zun }}
 
 [telemetry]
-endpoint_type = internalURL
+endpoint_type = {{ tempest_endpoint_type }}
 
 [dashboard]
 dashboard_url = {{ tempest_dashboard_url }}
 
 [alarming]
-endpoint_type = internalURL
+endpoint_type = {{ tempest_endpoint_type }}
 
 [validation]
 run_validation = {{ tempest_compute_run_ssh }}
@@ -167,7 +167,7 @@ ssh_timeout = 600
 
 
 [volume]
-endpoint_type = internalURL
+endpoint_type = {{ tempest_endpoint_type }}
 catalog_type = volumev3
 # NOTE: These backends are only tested when multi_backend is enabled
 backend_names = {{ tempest_volume_backend_names | join(',') }}
