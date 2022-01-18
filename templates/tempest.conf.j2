@@ -4,7 +4,6 @@
 # Disable stderr logging
 use_stderr = False
 debug = {{ debug }}
-fatal_deprecations = {{ tempest_fatal_deprecations }}
 log_file = {{ tempest_log_dir}}/tempest.log
 
 
@@ -92,8 +91,6 @@ api_v2 = {{ tempest_image_api_v2_enabled }}
 
 [network]
 endpoint_type = internalURL
-project_network_cidr = {{ tempest_network_tenant_network_cidr }}
-project_network_mask_bits = {{ tempest_network_tenant_network_mask_bits }}
 project_networks_reachable = false
 public_network_id = {{ tempest_neutron_public_network_id }}
 floating_network_name = {{ tempest_public_net_name }}
