@@ -9,7 +9,6 @@ log_file = {{ tempest_log_dir}}/tempest.log
 
 [auth]
 use_dynamic_credentials = True
-default_credentials_domain_name = Default
 admin_domain_name = Default
 admin_username = {{ keystone_admin_user_name }}
 admin_project_name = {{ keystone_admin_tenant_name }}
@@ -58,11 +57,9 @@ endpoint_type = internalURL
 disable_ssl_certificate_validation = {{ tempest_keystone_interface_insecure | bool }}
 uri = {{ keystone_service_internaluri }}/v2.0
 uri_v3 = {{ keystone_service_internalurl }}
-auth_version = v3
 v2_admin_endpoint_type = adminURL
 v2_public_endpoint_type = internalURL
 v3_endpoint_type = adminURL
-admin_role = admin
 
 
 [identity-feature-enabled]
@@ -91,7 +88,6 @@ api_v2 = {{ tempest_image_api_v2_enabled }}
 
 [network]
 endpoint_type = internalURL
-project_networks_reachable = false
 public_network_id = {{ tempest_neutron_public_network_id }}
 floating_network_name = {{ tempest_public_net_name }}
 build_timeout = 600
@@ -106,7 +102,6 @@ api_extensions = agent,allowed-address-pairs,binding,dhcp_agent_scheduler,ext-gw
 [object-storage]
 endpoint_type = internalURL
 operator_role = swiftoperator
-reseller_admin_role = ResellerAdmin
 
 
 [object-storage-feature-enabled]
@@ -165,9 +160,7 @@ endpoint_type = internalURL
 
 [validation]
 run_validation = {{ tempest_compute_run_ssh }}
-auth_method = keypair
 image_ssh_user = {{ tempest_compute_image_ssh_user }}
-floating_ip_range = 10.0.0.0/29
 ping_timeout = 240
 connect_timeout = 120
 ssh_timeout = 600
