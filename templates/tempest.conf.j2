@@ -8,11 +8,17 @@ log_file = {{ tempest_log_dir}}/tempest.log
 
 
 [auth]
+{% if tempest_test_accounts | length > 0 %}
+use_dynamic_credentials = False
+test_accounts_file = {{ tempest_test_accounts_file_path }}
+{% else %}
 use_dynamic_credentials = True
 admin_domain_name = Default
 admin_username = {{ keystone_admin_user_name }}
 admin_project_name = {{ keystone_admin_tenant_name }}
 admin_password = {{ keystone_auth_admin_password }}
+create_isolated_networks = {{ tempest_create_isolated_networks }}
+{% endif %}
 
 
 [baremetal]
@@ -24,7 +30,9 @@ image_ref = {{ tempest_glance_image_id_1 }}
 image_ref_alt = {{ tempest_glance_image_id_2 }}
 flavor_ref = {{ tempest_nova_flavor_id_1 }}
 flavor_ref_alt = {{ tempest_nova_flavor_id_2 }}
-fixed_network_name = private
+{% if not tempest_create_isolated_networks | bool %}
+fixed_network_name = {{ tempest_fixed_network_name }}
+{% endif %}
 endpoint_type = {{ tempest_endpoint_type }}
 build_timeout = 600
 
