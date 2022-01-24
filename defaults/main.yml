@@ -187,7 +187,6 @@ tempest_service_available_barbican: "{{ groups['barbican_all'] is defined and gr
 tempest_service_available_ceilometer: "{{ groups['ceilometer_all'] is defined and groups['ceilometer_all'] | length > 0 }}"
 tempest_service_available_cinder: "{{ groups['cinder_all'] is defined and groups['cinder_all'] | length > 0 }}"
 tempest_service_available_cloudkitty: "{{ groups['cloudkitty_all'] is defined and groups['cloudkitty_all'] | length > 0 }}"
-tempest_service_available_congress: "{{ groups['congress_all'] is defined and groups['congress_all'] | length > 0 }}"
 tempest_service_available_designate: "{{ groups['designate_all'] is defined and groups['designate_all'] | length > 0 }}"
 tempest_service_available_glance: "{{ groups['glance_all'] is defined and groups['glance_all'] | length > 0 }}"
 tempest_service_available_gnocchi: "{{ groups['gnocchi_all'] is defined and groups['gnocchi_all'] | length > 0 }}"
@@ -203,12 +202,6 @@ tempest_service_available_neutron_bgpvpn: "{{ (groups['neutron_all'] is defined)
 tempest_service_available_neutron_vpnaas: "{{ (groups['neutron_all'] is defined) and (groups['neutron_all'] | length > 0) and ('vpnaas' in neutron_plugin_base | default([])) }}"
 tempest_service_available_nova: "{{ groups['nova_all'] is defined and groups['nova_all'] | length > 0 }}"
 tempest_service_available_novajoin: False
-# NOTE(jrosser) The lxd tempest test currently fails because the nova-lxd tempest
-# plugin attempts to contact the compute node LXD daemon unix socket directly,
-# which cannot work from container to host or in a multinode test
-#tempest_service_available_nova_lxd: "{{ groups['nova_all'] is defined and groups['nova_all'] | length > 0 and nova_virt_type | default('kvm') == 'lxd' }}"
-tempest_service_available_nova_lxd: False
-
 tempest_service_available_octavia: "{{ groups['octavia_all'] is defined and groups['octavia_all'] | length > 0 }}"
 tempest_service_available_panko: "{{ groups['panko_all'] is defined and groups['panko_all'] | length > 0 }}"
 tempest_service_available_sahara: "{{ groups['sahara_all'] is defined and groups['sahara_all'] | length > 0 }}"

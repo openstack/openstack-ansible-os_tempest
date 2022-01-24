@@ -66,11 +66,6 @@ _tempest_plugins:
       repo: https://opendev.org/openstack/cloudkitty-tempest-plugin
       branch: master
       install: "{{ tempest_service_available_cloudkitty | bool }}"
-  congress:
-    - name: congress-tempest-plugin
-      repo: https://opendev.org/openstack/congress-tempest-plugin
-      branch: master
-      install: "{{ tempest_service_available_congress | bool }}"
   designate:
     - name: designate-tempest-plugin
       repo: https://opendev.org/openstack/designate-tempest-plugin
@@ -106,31 +101,16 @@ _tempest_plugins:
       repo: https://opendev.org/openstack/murano-tempest-plugin
       branch: master
       install: "{{ tempest_service_available_murano | bool }}"
-  networking-bgpvpn:
-    - name: networking-bgpvpn
-      repo: https://opendev.org/openstack/networking-bgpvpn
-      branch: master
-      install: "{{ tempest_service_available_neutron_bgpvpn | bool }}"
-  neutron-vpnaas:
-    - name: neutron-vpnaas
-      repo: https://opendev.org/openstack/neutron-vpnaas
-      branch: master
-      install: "{{ tempest_service_available_neutron_vpnaas | bool }}"
   neutron:
     - name: neutron-tempest-plugin
       repo: https://opendev.org/openstack/neutron-tempest-plugin
       branch: master
-      install: "{{ tempest_service_available_neutron | bool }}"
+      install: "{{ tempest_service_available_neutron or tempest_service_available_neutron_bgpvpn or tempest_service_available_neutron_vpnaas }}"
   novajoin:
     - name: novajoin-tempest-plugin
       repo: https://opendev.org/openstack/novajoin-tempest-plugin
       branch: master
       install: "{{ tempest_service_available_novajoin | bool }}"
-  nova-lxd:
-    - name: nova-lxd
-      repo: https://opendev.org/x/nova-lxd
-      branch: master
-      install: "{{ tempest_service_available_nova_lxd | bool }}"
   octavia:
     - name: octavia-tempest-plugin
       repo: https://opendev.org/openstack/octavia-tempest-plugin
