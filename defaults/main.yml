@@ -84,6 +84,63 @@ tempest_log_dir: "/var/log/tempest"
 #     package: ironic                                                    #for installing the plugin from packages
 tempest_plugins: "{{ _tempest_plugins.values() | sum(start=[]) | selectattr('install', 'equalto', true) | list }}"
 
+tempest_plugin_barbican_git_repo: https://opendev.org/openstack/barbican-tempest-plugin
+tempest_plugin_barbican_git_install_branch: master
+
+tempest_plugin_cinder_git_repo: https://opendev.org/openstack/cinder-tempest-plugin
+tempest_plugin_cinder_git_install_branch: master
+
+tempest_plugin_cloudkitty_git_repo: https://opendev.org/openstack/cloudkitty-tempest-plugin
+tempest_plugin_cloudkitty_git_install_branch: master
+
+tempest_plugin_designate_git_repo: https://opendev.org/openstack/designate-tempest-plugin
+tempest_plugin_designate_git_install_branch: master
+
+tempest_plugin_heat_git_repo: https://opendev.org/openstack/heat-tempest-plugin
+tempest_plugin_heat_git_install_branch: master
+
+tempest_plugin_ironic_git_repo: https://opendev.org/openstack/ironic-tempest-plugin
+tempest_plugin_ironic_git_install_branch: master
+
+tempest_plugin_keystone_git_repo: https://opendev.org/openstack/keystone-tempest-plugin
+tempest_plugin_keystone_git_install_branch: master
+
+tempest_plugin_magnum_git_repo: https://opendev.org/openstack/magnum-tempest-plugin
+tempest_plugin_magnum_git_install_branch: master
+
+tempest_plugin_manila_git_repo: https://opendev.org/openstack/manila-tempest-plugin
+tempest_plugin_manila_git_install_branch: master
+
+tempest_plugin_murano_git_repo: https://opendev.org/openstack/murano-tempest-plugin
+tempest_plugin_murano_git_install_branch: master
+
+tempest_plugin_neutron_git_repo: https://opendev.org/openstack/neutron-tempest-plugin
+tempest_plugin_neutron_git_install_branch: master
+
+tempest_plugin_novajoin_git_repo: https://opendev.org/x/novajoin-tempest-plugin
+tempest_plugin_novajoin_git_install_branch: master
+
+tempest_plugin_octavia_git_repo: https://opendev.org/openstack/octavia-tempest-plugin
+tempest_plugin_octavia_git_install_branch: master
+
+tempest_plugin_senlin_git_repo: https://opendev.org/openstack/senlin-tempest-plugin
+tempest_plugin_senlin_git_install_branch: master
+
+tempest_plugin_sahara_git_repo: https://opendev.org/openstack/sahara-tests
+tempest_plugin_sahara_git_install_branch: master
+
+tempest_plugin_telemetry_git_repo: https://opendev.org/openstack/telemetry-tempest-plugin
+tempest_plugin_telemetry_git_install_branch: master
+
+tempest_plugin_trove_git_repo: https://opendev.org/openstack/trove-tempest-plugin
+tempest_plugin_trove_git_install_branch: master
+
+tempest_plugin_zaqar_git_repo: https://opendev.org/openstack/zaqar-tempest-plugin
+tempest_plugin_zaqar_git_install_branch: master
+
+tempest_plugin_zun_git_repo: https://opendev.org/openstack/zun-tempest-plugin
+tempest_plugin_zun_git_install_branch: master
+
 # tempest_workspace where tempest can be runned
 tempest_workspace: "{{ ansible_facts['env']['HOME'] }}/workspace"
 
