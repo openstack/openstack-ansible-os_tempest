@@ -96,6 +96,9 @@ tempest_plugin_cloudkitty_git_install_branch: master
 tempest_plugin_designate_git_repo: https://opendev.org/openstack/designate-tempest-plugin
 tempest_plugin_designate_git_install_branch: master
 
+tempest_plugin_glance_git_repo: https://opendev.org/openstack/glance-tempest-plugin
+tempest_plugin_glance_git_install_branch: master
+
 tempest_plugin_heat_git_repo: https://opendev.org/openstack/heat-tempest-plugin
 tempest_plugin_heat_git_install_branch: master
 

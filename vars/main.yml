@@ -71,6 +71,11 @@ _tempest_plugins:
       repo: "{{ tempest_plugin_designate_git_repo }}"
       branch: "{{ tempest_plugin_designate_git_install_branch }}"
       install: "{{ tempest_service_available_designate | bool }}"
+  glance:
+    - name: glance-tempest-plugin
+      repo: "{{ tempest_plugin_glance_git_repo }}"
+      branch: "{{ tempest_plugin_glance_git_install_branch }}"
+      install: "{{ tempest_service_available_glance | bool }}"
   heat:
     - name: heat-tempest-plugin
       repo: "{{ tempest_plugin_heat_git_repo }}"

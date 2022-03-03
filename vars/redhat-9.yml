@@ -42,6 +42,7 @@ tempest_plugin_distro_packages:
   - "{{ (tempest_service_available_ceilometer | bool) | ternary('python3-telemetry-tests-tempest', '') }}"
   - "{{ (tempest_service_available_cinder | bool) | ternary('python3-cinder-tests-tempest', '') }}"
   - "{{ (tempest_service_available_designate | bool) | ternary('python3-designate-tests-tempest', '') }}"
+  - "{{ (tempest_service_available_glance | bool) | ternary('python3-glance-tests-tempest', '') }}"
   - "{{ (tempest_service_available_heat | bool) | ternary('python3-heat-tests-tempest', '') }}"
   - "{{ (tempest_service_available_ironic | bool) | ternary('python3-ironic-tests-tempest', '') }}"
   - python3-keystone-tests-tempest
