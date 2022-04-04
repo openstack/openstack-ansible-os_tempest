@@ -24,7 +24,6 @@
     check:
       jobs:
         - tripleo-ci-centos-8-content-provider
-        - tripleo-ci-centos-8-content-provider-ussuri
         - tripleo-ci-centos-7-content-provider-train
         - openstack-tox-molecule:
             voting: false
@@ -43,12 +42,6 @@
             vars: *consumer_vars
             dependencies:
               - tripleo-ci-centos-7-content-provider-train
-        - tripleo-ci-centos-8-standalone-upgrade:
-            voting: false
-            vars: *consumer_vars
-            dependencies:
-              - tripleo-ci-centos-8-content-provider
-              - tripleo-ci-centos-8-content-provider-ussuri
     gate:
       jobs:
         - tripleo-ci-centos-8-content-provider
