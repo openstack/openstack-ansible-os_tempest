@@ -12,7 +12,8 @@ use_dynamic_credentials = False
 test_accounts_file = {{ tempest_test_accounts_file_path }}
 {% else %}
 use_dynamic_credentials = True
-admin_domain_name = Default
+default_credentials_domain_name = {{ tempest_domain_name }}
+admin_domain_name = {{ tempest_domain_name }}
 admin_username = {{ keystone_admin_user_name }}
 admin_project_name = {{ keystone_admin_tenant_name }}
 admin_password = {{ keystone_auth_admin_password }}
