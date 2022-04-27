@@ -45,6 +45,15 @@ tempest_cleanup: no
 # leftover resources to a dry_run.json file, none resources will be deleted
 #tempest_cleanup_dry_run: no
 
+# Credential Provider Mechanisms
+# If tempest_test_accounts is not an empty string, then use_dynamic_credentials will be turned off
+tempest_test_accounts: ""
+tempest_test_accounts_file_path: "{{ tempest_workspace }}/etc/tempest_accounts.yaml"
+# tempest_create_isolated_networks has an effect only when use_dynamic_credentials is enabled
+tempest_create_isolated_networks: true
+# tempest_fixed_network_name has an effect only when tempest_create_isolated_networks is disabled
+tempest_fixed_network_name: public
+
 # Tempest Resources
 # Toggle whether default resources are implemented
 tempest_default_role_resources: yes
