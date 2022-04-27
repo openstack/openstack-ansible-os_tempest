@@ -29,6 +29,23 @@ For more information about named clouds, please, follow to the
     ``clouds.yaml`` file has to be present on the target host - the host
     ``os_tempest`` is gonna be executed against.
 
+Resource creation
+-------------------------
+
+Tempest requires some openstack resources(like flavors and images) in order to
+function properly.
+It is possible to choose which resources should be created or to skip resource
+creation at all.
+Below example shows how to use already existing public network and images.
+
+.. code-block:: yaml
+
+    tempest_default_role_resources: true
+    tempest_public_net_create: false
+    tempest_neutron_public_network_id: <network_id>
+    tempest_images_create: false
+    tempest_glance_image_id_1: <image_id>
+    tempest_glance_image_id_2: <image_id>
 
 python-tempestconf
 ------------------

@@ -45,8 +45,15 @@ tempest_cleanup: no
 # leftover resources to a dry_run.json file, none resources will be deleted
 #tempest_cleanup_dry_run: no
 
+# Tempest Resources
 # Toggle whether default resources are implemented
 tempest_default_role_resources: yes
+tempest_public_net_create: true
+tempest_private_net_create: false
+tempest_router_create: false
+tempest_images_create: true
+tempest_flavors_create: true
+tempest_projects_create: "{{ tempest_public_net_create or tempest_private_net_create or tempest_router_create }}"
 
 # Define 0 (serial) or more to use a non default concurrency
 #tempest_run_concurrency:
@@ -320,16 +327,7 @@ tempest_flavors:
 
 # The projects for tempest to use
 tempest_projects:
-  - "demo"
-  - "alt_demo"
-
-# The users for tempest to use
-tempest_users:
-  - name: "demo"
-  - name: "alt_demo"
-
-# The keystone roles for tempest to use
-tempest_roles: []
+  - "tempest"
 
 ## Tunable overrides
 tempest_tempest_conf_overrides: {}
