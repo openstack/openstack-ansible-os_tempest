@@ -24,12 +24,10 @@ stestr_executable: "{{ _stestr_executable | default('stestr') }}"
 # on choosing distro it will install based on distribution
 tempest_install_method: "source"
 tempest_venv_python_executable: "{{ openstack_venv_python_executable | default(_tempest_venv_python_executable) | default('python3') }}"
-tempest_install_pip_executable: "{{ (tempest_venv_python_executable == 'python2') | ternary('pip', 'pip3') }}"
 
 # Set the package install state for distribution and pip packages
 # # Options are 'present' and 'latest'
 tempest_package_state: "latest"
-tempest_pip_package_state: "latest"
 
 # Set the host which will execute the shade modules
 # for the service setup. The host must already have
@@ -276,12 +274,8 @@ tempest_service_available_whitebox: False
 tempest_service_available_zaqar: "{{ groups['zaqar_all'] is defined and groups['zaqar_all'] | length > 0 }}"
 tempest_service_available_zun: "{{ groups['zun_all'] is defined and groups['zun_all'] | length > 0 }}"
 
-tempest_swift_enabled: True
-
 # Var for setting ssl verification
 tempest_keystone_interface_insecure: "{{ (keystone_service_internaluri_insecure | default(false)) | bool }}"
-
-tempest_main_group: tempest_all
 
 tempest_pip_packages:
   - "{{ (tempest_git_repo is defined) | ternary('git+' ~ (tempest_git_repo | default('https://opendev.org/openstack/tempest.git')) ~ '@' ~ tempest_git_install_branch ~ '#egg=tempest', 'tempest') }}"
