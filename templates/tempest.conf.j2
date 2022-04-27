@@ -146,5 +146,5 @@ operator_role = swiftoperator
 {% if tempest_service_available_heat | bool %}
 [heat_plugin]
 endpoint_type = {{ tempest_endpoint_type }}
-instance_type = tempest1
+instance_type = {{ tempest_nova_flavor_id_1 }}
 {% endif %}
