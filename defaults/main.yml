@@ -339,7 +339,7 @@ tempest_tempest_conf_overrides: {}
 tempest_cloud_name: "default"
 
 ## The name of domain from clouds.yaml
-tempest_domain_name: "default"
+tempest_domain_name: "Default"
 
 ## The name of interface from clouds.yaml
 tempest_interface_name: "internal"
