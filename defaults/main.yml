@@ -345,7 +345,7 @@ tempest_domain_name: "Default"
 tempest_interface_name: "internal"
 
 # The default endpoint type to use by tempest
-tempest_endpoint_type: internalURL
+tempest_endpoint_type: "internal"
 
 # python-tempestconf variables
 # The tempest_use_tempestconf by default is set to false, set to true if you
