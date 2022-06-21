@@ -74,7 +74,8 @@ image_ref = {{ tempest_glance_image_id_1 }}
 image_ref_alt = {{ tempest_glance_image_id_2 }}
 flavor_ref = {{ tempest_nova_flavor_id_1 }}
 flavor_ref_alt = {{ tempest_nova_flavor_id_2 }}
-{% if not tempest_create_isolated_networks | bool %}
+# do not define fixed_network_name when dynamic credentials are used together with tempest_create_isolated_networks
+{% if not ((tempest_test_accounts | length == 0) and (tempest_create_isolated_networks | bool)) %}
 fixed_network_name = {{ tempest_fixed_network_name }}
 {% endif %}
 endpoint_type = {{ tempest_endpoint_type }}

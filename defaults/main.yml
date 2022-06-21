@@ -49,7 +49,7 @@ tempest_test_accounts: ""
 tempest_test_accounts_file_path: "{{ tempest_workspace }}/etc/tempest_accounts.yaml"
 # tempest_create_isolated_networks has an effect only when use_dynamic_credentials is enabled
 tempest_create_isolated_networks: true
-# tempest_fixed_network_name has an effect only when tempest_create_isolated_networks is disabled
+# tempest_fixed_network_name does not have an effect when dynamic credentials are used together with tempest_create_isolated_networks
 tempest_fixed_network_name: public
 
 # Tempest Resources
