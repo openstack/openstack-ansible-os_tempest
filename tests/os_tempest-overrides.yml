@@ -24,6 +24,7 @@ tempest_plugins:
   - name: sahara-tests
     repo: https://opendev.org/openstack/sahara-tests
     branch: master
+    install: true
 
 neutron_provider_networks:
   network_types: "vxlan,flat"

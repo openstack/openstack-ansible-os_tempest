@@ -90,13 +90,15 @@ tempest_log_dir: "/var/log/tempest"
 # By default, the following tempest plugins are installed.
 # Override ``tempest_plugins`` variable with your own plugins, depending
 # on your installation.
-# The structure of each item of the list is the following:
-#   - name: designate-tempest-plugin                                     #name of the plugin
-#     repo: https://opendev.org/openstack/designate-tempest-plugin #for installing the plugin from sources
-#     branch: master                                                     #for installing the plugin from sources
-#   - name: ironic-tempest-plugin
-#     package: ironic                                                    #for installing the plugin from packages
-tempest_plugins: "{{ _tempest_plugins.values() | sum(start=[]) | selectattr('install', 'equalto', true) | list }}"
+# Example structure:
+# - name: designate-tempest-plugin                                     #name of the plugin
+#   repo: https://opendev.org/openstack/designate-tempest-plugin #for installing the plugin from sources
+#   branch: master                                                     #for installing the plugin from sources
+#   install: true
+# - name: ironic-tempest-plugin
+#   package: ironic                                                    #for installing the plugin from packages
+#   install: true
+tempest_plugins: "{{ _tempest_plugins | selectattr('install', 'equalto', true) }}"
 
 tempest_plugin_barbican_git_repo: https://opendev.org/openstack/barbican-tempest-plugin
 tempest_plugin_barbican_git_install_branch: master

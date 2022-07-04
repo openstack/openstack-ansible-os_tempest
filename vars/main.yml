@@ -51,103 +51,83 @@ tempest_images_map:
 #   install:                   # boolean to enable/disable the installation of this item
 
 _tempest_plugins:
-  barbican:
-    - name: barbican-tempest-plugin
-      repo: "{{ tempest_plugin_barbican_git_repo }}"
-      branch: "{{ tempest_plugin_barbican_git_install_branch }}"
-      install: "{{ tempest_service_available_barbican | bool }}"
-  cinder:
-    - name: cinder-tempest-plugin
-      repo: "{{ tempest_plugin_cinder_git_repo }}"
-      branch: "{{ tempest_plugin_cinder_git_install_branch }}"
-      install: "{{ tempest_service_available_cinder | bool }}"
-  cloudkitty:
-    - name: cloudkitty-tempest-plugin
-      repo: "{{ tempest_plugin_cloudkitty_git_repo }}"
-      branch: "{{ tempest_plugin_cloudkitty_git_install_branch }}"
-      install: "{{ tempest_service_available_cloudkitty | bool }}"
-  designate:
-    - name: designate-tempest-plugin
-      repo: "{{ tempest_plugin_designate_git_repo }}"
-      branch: "{{ tempest_plugin_designate_git_install_branch }}"
-      install: "{{ tempest_service_available_designate | bool }}"
-  glance:
-    - name: glance-tempest-plugin
-      repo: "{{ tempest_plugin_glance_git_repo }}"
-      branch: "{{ tempest_plugin_glance_git_install_branch }}"
-      install: "{{ tempest_service_available_glance | bool }}"
-  heat:
-    - name: heat-tempest-plugin
-      repo: "{{ tempest_plugin_heat_git_repo }}"
-      branch: "{{ tempest_plugin_heat_git_install_branch }}"
-      install: "{{ tempest_service_available_heat | bool }}"
-  ironic:
-    - name: ironic-tempest-plugin
-      repo: "{{ tempest_plugin_ironic_git_repo }}"
-      branch: "{{ tempest_plugin_ironic_git_install_branch }}"
-      install: "{{ tempest_service_available_ironic | bool }}"
-  keystone:
-    - name: keystone-tempest-plugin
-      repo: "{{ tempest_plugin_keystone_git_repo }}"
-      branch: "{{ tempest_plugin_keystone_git_install_branch }}"
-      install: yes
-  magnum:
-    - name: magnum-tempest-plugin
-      repo: "{{ tempest_plugin_magnum_git_repo }}"
-      branch: "{{ tempest_plugin_magnum_git_install_branch }}"
-      install: "{{ tempest_service_available_magnum | bool }}"
-  manila:
-    - name: manila-tempest-plugin
-      repo: "{{ tempest_plugin_manila_git_repo }}"
-      branch: "{{ tempest_plugin_manila_git_install_branch }}"
-      install: "{{ tempest_service_available_manila | bool }}"
-  murano:
-    - name: murano-tempest-plugin
-      repo: "{{ tempest_plugin_murano_git_repo }}"
-      branch: "{{ tempest_plugin_murano_git_install_branch }}"
-      install: "{{ tempest_service_available_murano | bool }}"
-  neutron:
-    - name: neutron-tempest-plugin
-      repo: "{{ tempest_plugin_neutron_git_repo }}"
-      branch: "{{ tempest_plugin_neutron_git_install_branch }}"
-      install: "{{ tempest_service_available_neutron or tempest_service_available_neutron_bgpvpn or tempest_service_available_neutron_vpnaas }}"
-  novajoin:
-    - name: novajoin-tempest-plugin
-      repo: "{{ tempest_plugin_novajoin_git_repo }}"
-      branch: "{{ tempest_plugin_novajoin_git_install_branch }}"
-      install: "{{ tempest_service_available_novajoin | bool }}"
-  octavia:
-    - name: octavia-tempest-plugin
-      repo: "{{ tempest_plugin_octavia_git_repo }}"
-      branch: "{{ tempest_plugin_octavia_git_install_branch }}"
-      install: "{{ tempest_service_available_octavia | bool }}"
-  senlin:
-    - name: senlin-tempest-plugin
-      repo: "{{ tempest_plugin_senlin_git_repo }}"
-      branch: "{{ tempest_plugin_senlin_git_install_branch }}"
-      install: "{{ tempest_service_available_senlin | bool }}"
-  sahara:
-    - name: sahara-tests
-      repo: "{{ tempest_plugin_sahara_git_repo }}"
-      branch: "{{ tempest_plugin_sahara_git_install_branch }}"
-      install: "{{ tempest_service_available_sahara | bool }}"
-  telemetry:
-    - name: telemetry-tempest-plugin
-      repo: "{{ tempest_plugin_telemetry_git_repo }}"
-      branch: "{{ tempest_plugin_telemetry_git_install_branch }}"
-      install: "{{ (tempest_service_available_aodh | bool) or (tempest_service_available_ceilometer | bool) or (tempest_service_available_gnocchi | bool) or (tempest_service_available_panko | bool) }}"
-  trove:
-    - name: trove-tempest-plugin
-      repo: "{{ tempest_plugin_trove_git_repo }}"
-      branch: "{{ tempest_plugin_trove_git_install_branch }}"
-      install: "{{ tempest_service_available_trove | bool }}"
-  zaqar:
-    - name: zaqar-tempest-plugin
-      repo: "{{ tempest_plugin_zaqar_git_repo }}"
-      branch: "{{ tempest_plugin_zaqar_git_install_branch }}"
-      install: "{{ tempest_service_available_zaqar | bool }}"
-  zun:
-    - name: zun-tempest-plugin
-      repo: "{{ tempest_plugin_zun_git_repo }}"
-      branch: "{{ tempest_plugin_zun_git_install_branch }}"
-      install: "{{ tempest_service_available_zun | bool }}"
+  - name: barbican-tempest-plugin
+    repo: "{{ tempest_plugin_barbican_git_repo }}"
+    branch: "{{ tempest_plugin_barbican_git_install_branch }}"
+    install: "{{ tempest_service_available_barbican | bool }}"
+  - name: cinder-tempest-plugin
+    repo: "{{ tempest_plugin_cinder_git_repo }}"
+    branch: "{{ tempest_plugin_cinder_git_install_branch }}"
+    install: "{{ tempest_service_available_cinder | bool }}"
+  - name: cloudkitty-tempest-plugin
+    repo: "{{ tempest_plugin_cloudkitty_git_repo }}"
+    branch: "{{ tempest_plugin_cloudkitty_git_install_branch }}"
+    install: "{{ tempest_service_available_cloudkitty | bool }}"
+  - name: designate-tempest-plugin
+    repo: "{{ tempest_plugin_designate_git_repo }}"
+    branch: "{{ tempest_plugin_designate_git_install_branch }}"
+    install: "{{ tempest_service_available_designate | bool }}"
+  - name: glance-tempest-plugin
+    repo: "{{ tempest_plugin_glance_git_repo }}"
+    branch: "{{ tempest_plugin_glance_git_install_branch }}"
+    install: "{{ tempest_service_available_glance | bool }}"
+  - name: heat-tempest-plugin
+    repo: "{{ tempest_plugin_heat_git_repo }}"
+    branch: "{{ tempest_plugin_heat_git_install_branch }}"
+    install: "{{ tempest_service_available_heat | bool }}"
+  - name: ironic-tempest-plugin
+    repo: "{{ tempest_plugin_ironic_git_repo }}"
+    branch: "{{ tempest_plugin_ironic_git_install_branch }}"
+    install: "{{ tempest_service_available_ironic | bool }}"
+  - name: keystone-tempest-plugin
+    repo: "{{ tempest_plugin_keystone_git_repo }}"
+    branch: "{{ tempest_plugin_keystone_git_install_branch }}"
+    install: yes
+  - name: magnum-tempest-plugin
+    repo: "{{ tempest_plugin_magnum_git_repo }}"
+    branch: "{{ tempest_plugin_magnum_git_install_branch }}"
+    install: "{{ tempest_service_available_magnum | bool }}"
+  - name: manila-tempest-plugin
+    repo: "{{ tempest_plugin_manila_git_repo }}"
+    branch: "{{ tempest_plugin_manila_git_install_branch }}"
+    install: "{{ tempest_service_available_manila | bool }}"
+  - name: murano-tempest-plugin
+    repo: "{{ tempest_plugin_murano_git_repo }}"
+    branch: "{{ tempest_plugin_murano_git_install_branch }}"
+    install: "{{ tempest_service_available_murano | bool }}"
+  - name: neutron-tempest-plugin
+    repo: "{{ tempest_plugin_neutron_git_repo }}"
+    branch: "{{ tempest_plugin_neutron_git_install_branch }}"
+    install: "{{ tempest_service_available_neutron or tempest_service_available_neutron_bgpvpn or tempest_service_available_neutron_vpnaas }}"
+  - name: novajoin-tempest-plugin
+    repo: "{{ tempest_plugin_novajoin_git_repo }}"
+    branch: "{{ tempest_plugin_novajoin_git_install_branch }}"
+    install: "{{ tempest_service_available_novajoin | bool }}"
+  - name: octavia-tempest-plugin
+    repo: "{{ tempest_plugin_octavia_git_repo }}"
+    branch: "{{ tempest_plugin_octavia_git_install_branch }}"
+    install: "{{ tempest_service_available_octavia | bool }}"
+  - name: senlin-tempest-plugin
+    repo: "{{ tempest_plugin_senlin_git_repo }}"
+    branch: "{{ tempest_plugin_senlin_git_install_branch }}"
+    install: "{{ tempest_service_available_senlin | bool }}"
+  - name: sahara-tests
+    repo: "{{ tempest_plugin_sahara_git_repo }}"
+    branch: "{{ tempest_plugin_sahara_git_install_branch }}"
+    install: "{{ tempest_service_available_sahara | bool }}"
+  - name: telemetry-tempest-plugin
+    repo: "{{ tempest_plugin_telemetry_git_repo }}"
+    branch: "{{ tempest_plugin_telemetry_git_install_branch }}"
+    install: "{{ (tempest_service_available_aodh | bool) or (tempest_service_available_ceilometer | bool) or (tempest_service_available_gnocchi | bool) or (tempest_service_available_panko | bool) }}"
+  - name: trove-tempest-plugin
+    repo: "{{ tempest_plugin_trove_git_repo }}"
+    branch: "{{ tempest_plugin_trove_git_install_branch }}"
+    install: "{{ tempest_service_available_trove | bool }}"
+  - name: zaqar-tempest-plugin
+    repo: "{{ tempest_plugin_zaqar_git_repo }}"
+    branch: "{{ tempest_plugin_zaqar_git_install_branch }}"
+    install: "{{ tempest_service_available_zaqar | bool }}"
+  - name: zun-tempest-plugin
+    repo: "{{ tempest_plugin_zun_git_repo }}"
+    branch: "{{ tempest_plugin_zun_git_install_branch }}"
+    install: "{{ tempest_service_available_zun | bool }}"
