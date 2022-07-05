@@ -87,18 +87,14 @@ tempest_venv_bin: "/openstack/venvs/tempest-{{ tempest_venv_tag }}/bin"
 tempest_log_dir: "/var/log/tempest"
 
 ## Tempest Plugins
-# By default, the following tempest plugins are installed.
-# Override ``tempest_plugins`` variable with your own plugins, depending
-# on your installation.
-# Example structure:
-# - name: designate-tempest-plugin                                     #name of the plugin
-#   repo: https://opendev.org/openstack/designate-tempest-plugin #for installing the plugin from sources
-#   branch: master                                                     #for installing the plugin from sources
-#   install: true
-# - name: ironic-tempest-plugin
-#   package: ironic                                                    #for installing the plugin from packages
-#   install: true
-tempest_plugins: "{{ _tempest_plugins | selectattr('install', 'equalto', true) }}"
+# Extra plugins can be defined in ``tempest_extra_plugins``.
+# tempest_extra_plugins:
+#   - name: custom-tempest-plugin
+#     repo: https://opendev.org/openstack/custom-tempest-plugin
+#     branch: master
+#     install: true
+tempest_extra_plugins: []
+tempest_plugins: "{{ (_tempest_plugins + tempest_extra_plugins) | selectattr('install', 'equalto', true) }}"
 
 tempest_plugin_barbican_git_repo: https://opendev.org/openstack/barbican-tempest-plugin
 tempest_plugin_barbican_git_install_branch: master
