@@ -56,7 +56,7 @@
     - name: Ensure that all required variables are set when tempest_router_create is enabled
       assert:
         that:
-          - tempest_public_net_create
+          - (tempest_public_net_create or tempest_neutron_public_network_id is defined)
           - tempest_private_net_create
       when:
         - tempest_router_create
@@ -264,7 +264,7 @@
         interface: "{{ tempest_interface_name }}"
         validate_certs: "{{ tempest_keystone_interface_insecure | ternary(false, true) }}"
         name: router
-        network: "{{ tempest_public_net_name }}"
+        network: "{{ tempest_neutron_public_network_id }}"
         interfaces:
           - "{{ tempest_private_subnet_name }}"
         project: "{{ keystone_demo_tenant_id }}"
