@@ -103,7 +103,7 @@ build_timeout = 600
 [network]
 endpoint_type = {{ tempest_endpoint_type }}
 public_network_id = {{ tempest_neutron_public_network_id }}
-floating_network_name = {{ tempest_public_net_name }}
+floating_network_name = {{ tempest_neutron_public_network_id }}
 build_timeout = 600
 {% endif %}
 
