@@ -18,25 +18,3 @@
     parent: openstack-ansible-deploy-aio_distro_metal-centos-7
     pre-run:
       - zuul.d/playbooks/pre-tempestconf.yml
-
-- job:
-    name: tripleo-ci-centos-8-standalone-os-tempest
-    parent: tripleo-ci-base-standalone
-    nodeset: single-centos-8-node
-    vars:
-      featureset: '052'
-      featureset_override:
-        use_os_tempest: true
-        tempest_tempest_conf_overrides:
-          auth.use_dynamic_credentials: true
-        tempest_test_whitelist:
-          - 'tempest.api.identity.v3'
-          - 'tempest.scenario.test_server_basic_ops'
-          - 'tempest.api.volume.admin.test_multi_backend'
-          - 'tempest.scenario.test_object_storage_basic_ops'
-      consumer_job: true
-      build_container_images: false
-      remove_tags:
-        - build
-    dependencies:
-      - tripleo-ci-centos-8-content-provider
