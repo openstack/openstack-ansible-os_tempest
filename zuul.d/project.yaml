@@ -23,29 +23,8 @@
       - release-notes-jobs-python3
     check:
       jobs:
-        - tripleo-ci-centos-8-content-provider
-        - tripleo-ci-centos-7-content-provider-train
         - openstack-tox-molecule:
             voting: false
             vars:
               tox_environment:
                 PYTEST_REQPASS: 1
-        - tripleo-ci-centos-8-standalone:
-            vars: &consumer_vars
-              consumer_job: true
-              build_container_images: false
-              remove_tags:
-                - build
-            dependencies:
-              - tripleo-ci-centos-8-content-provider
-        - tripleo-ci-centos-7-standalone-os-tempest-train:
-            vars: *consumer_vars
-            dependencies:
-              - tripleo-ci-centos-7-content-provider-train
-    gate:
-      jobs:
-        - tripleo-ci-centos-8-content-provider
-        - tripleo-ci-centos-8-standalone:
-            vars: *consumer_vars
-            dependencies:
-              - tripleo-ci-centos-8-content-provider
