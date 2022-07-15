@@ -19,23 +19,3 @@
     pre-run:
       - zuul.d/playbooks/pre-tempestconf.yml
     voting: false
-
-- job:
-    name: tripleo-ci-centos-7-standalone-os-tempest-train
-    parent: tripleo-ci-base-standalone
-    nodeset: single-centos-7-node
-    branches: master
-    override-checkout: 'stable/train'
-    vars:
-      branch_override: 'stable/train'
-      featureset: '052'
-      featureset_override:
-        use_os_tempest: true
-        tempest_tempest_conf_overrides:
-          auth.use_dynamic_credentials: true
-        tempest_test_includelist:
-          - 'tempest.api.identity.v3'
-          - 'tempest.scenario.test_server_basic_ops'
-          - 'tempest.api.volume.admin.test_multi_backend'
-          - 'tempest.scenario.test_object_storage_basic_ops'
-
