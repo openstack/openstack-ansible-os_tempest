@@ -19,7 +19,7 @@ cache_timeout: 600
 _stestr_executable: "{{ (tempest_install_method == 'distro') | ternary('testr', 'stestr') }}"
 
 tempest_distro_packages:
-  - git-core
+  - git
   - libxslt1.1           # required by the python module unittest2
   - build-essential      # required to build tempest plugins (TODO) remove this when repo server can satisfy the tempest plugin requirements
   - nmap                 # provides ncat tool which is required by some of the neutron-tempest-plugin scenario tests
