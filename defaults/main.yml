@@ -269,6 +269,7 @@ tempest_service_available_senlin: "{{ groups['senlin_all'] is defined and groups
 tempest_service_available_swift: "{{ (groups['swift_all'] is defined and groups['swift_all'] | length > 0) or (groups['ceph-rgw'] is defined and groups['ceph-rgw'] | length > 0) or (ceph_rgws is defined and ceph_rgws | length > 0) }}"
 tempest_service_available_trove: "{{ groups['trove_all'] is defined and groups['trove_all'] | length > 0 }}"
 tempest_service_available_whitebox: False
+tempest_service_available_whitebox_neutron: False
 tempest_service_available_zaqar: "{{ groups['zaqar_all'] is defined and groups['zaqar_all'] | length > 0 }}"
 tempest_service_available_zun: "{{ groups['zun_all'] is defined and groups['zun_all'] | length > 0 }}"
 
