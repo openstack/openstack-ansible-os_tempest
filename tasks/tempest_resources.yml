@@ -140,9 +140,11 @@
     # These facts are used in tempest.conf.j2; we set an empty string if it is not
     # set above to ensure the template will parse correctly.
     - name: Store first tempest image id
+      vars:
+        res: "{{ tempest_image_create['results'] }}"
       set_fact:
-        tempest_glance_image_id_1: "{{ tempest_service_available_glance | ternary(tempest_image_create['results'][0]['id'], '') }}"
-        tempest_glance_image_id_2: "{{ tempest_service_available_glance | ternary(tempest_image_create['results'][-1]['id'], '') }}"
+        tempest_glance_image_id_1: "{{ res[0]['id'] | default(res[0]['image']['id'] | default('')) }}"
+        tempest_glance_image_id_2: "{{ res[-1]['id'] | default(res[-1]['image']['id'] | default('')) }}"
       when:
         - tempest_images_create | bool
 
