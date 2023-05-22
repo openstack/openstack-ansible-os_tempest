@@ -40,7 +40,7 @@
     venv_install_destination_path: "{{ tempest_venv_bin | dirname }}"
     venv_build_distro_package_list: "{{ tempest_devel_distro_packages }}"
     venv_pip_install_args: "{{ tempest_pip_install_args }}"
-    venv_wheel_build_enable: "{{ venv_build_host != inventory_hostname }}"
+    venv_wheel_build_enable: "{{ tempest_install_method == 'source' }}"
     venv_pip_packages: "{{ tempest_pip_packages + tempest_pip_plugins }}"
     venv_facts_when_changed:
       - section: "tempest"
