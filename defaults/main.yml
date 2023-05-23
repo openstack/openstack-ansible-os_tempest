@@ -22,7 +22,7 @@ stestr_executable: "{{ _stestr_executable | default('stestr') }}"
 # set the tempest_install_method to source or distro
 # on choosing source it will install from git or venv
 # on choosing distro it will install based on distribution
-tempest_install_method: "source"
+tempest_install_method: "{{ service_install_method | default('source') }}"
 tempest_venv_python_executable: "{{ openstack_venv_python_executable | default(_tempest_venv_python_executable) | default('python3') }}"
 
 # Set the package install state for distribution and pip packages
