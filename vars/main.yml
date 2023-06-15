@@ -21,23 +21,23 @@
 # properties: a dict of custom properties to attach to the image in glance
 tempest_images_map:
   x86_64:
-    - url: "https://download.cirros-cloud.net/0.6.2/cirros-0.6.2-x86_64-disk.img"
-      checksum: "c8fc807773e5354afe61636071771906"
+    - url: "https://download.cirros-cloud.net/0.6.3/cirros-0.6.3-x86_64-disk.img"
+      checksum: "md5:87617e24a5e30cb3b87fda8c0764838f"
       format: "qcow2"
       name: "cirros 0.6"
       visibility: community
       tags:
         - managed_by_tempest
-    - url: "https://download.cirros-cloud.net/0.5.2/cirros-0.5.2-x86_64-disk.img"
-      checksum: "b874c39491a2377b8490f5f1e89761a4"
+    - url: "https://download.cirros-cloud.net/0.5.3/cirros-0.5.3-x86_64-disk.img"
+      checksum: "md5:14c53503216fa0c8dbe22edf8e0cd074"
       format: "qcow2"
       name: "cirros 0.5"
       visibility: community
       tags:
         - managed_by_tempest
   aarch64:
-    - url: "https://download.cirros-cloud.net/0.6.2/cirros-0.6.2-aarch64-disk.img"
-      checksum: "c1c58e8a058d50e1d1891df8bad171b2"
+    - url: "https://download.cirros-cloud.net/0.6.3/cirros-0.6.3-aarch64-disk.img"
+      checksum: "md5:28009b5399ef386f7720258de40d43cf"
       format: "qcow2"
       name: "cirros 0.6"
       visibility: community
@@ -45,8 +45,8 @@ tempest_images_map:
         - managed_by_tempest
         # properties:
         #   hw_firmware_type: uefi
-    - url: "https://download.cirros-cloud.net/0.5.2/cirros-0.5.2-aarch64-disk.img"
-      checksum: "9067fe7e99229a1a6d908b331c5763df"
+    - url: "https://download.cirros-cloud.net/0.5.3/cirros-0.5.3-aarch64-disk.img"
+      checksum: "md5:9729d321422932078ac8e78ddfbf66bf"
       format: "qcow2"
       name: "cirros 0.5"
       visibility: community
