@@ -95,6 +95,7 @@
       file:
         path: "{{ tempest_image_dir }}"
         state: directory
+        mode: "0755"
       when:
         - tempest_service_available_glance | bool
         - tempest_images_create | bool
@@ -174,7 +175,7 @@
 
     - name: Store demo tenant id
       set_fact:
-        keystone_demo_tenant_id: "{{ (add_project.results | json_query('[*].project.id'))[0] }}"
+        keystone_demo_tenant_id: "{{ (add_project.results | json_query('[*].project.id'))[0] }}" # noqa: jinja[invalid]
       when:
         - tempest_projects_create | bool
 
@@ -320,6 +321,7 @@
     set -e
     ping -c2 "{{ router_ip }}"
   register: _ping_router
+  changed_when: false
   until: _ping_router is success
   retries: 5
   delay: 10

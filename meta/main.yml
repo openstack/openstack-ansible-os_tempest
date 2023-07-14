@@ -15,25 +15,23 @@
 
 galaxy_info:
   role_name: os_tempest
+  namespace: openstack
   author: rcbops
   description: Installation and setup of tempest
   company: Rackspace
   license: Apache2
-  min_ansible_version: 2.10
+  min_ansible_version: "2.10"
   platforms:
     - name: Debian
       versions:
-        - buster
+        - bullseye
     - name: Ubuntu
       versions:
-        - bionic
         - focal
+        - jammy
     - name: EL
       versions:
-        - 8
-    - name: CentOS
-      versions:
-        - 8
+        - "9"
   galaxy_tags:
     - cloud
     - python

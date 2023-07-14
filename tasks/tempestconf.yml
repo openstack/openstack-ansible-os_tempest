@@ -48,3 +48,4 @@
     src: "{{ tempest_workspace }}/etc/tempest.conf"
     dest: "/etc/tempest/tempest.conf"
     remote_src: yes
+    mode: "0644"

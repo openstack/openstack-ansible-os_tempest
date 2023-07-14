@@ -20,7 +20,7 @@
     state: directory
     owner: "{{ item.owner | default(omit) }}"
     group: "{{ item.group | default(omit) }}"
-    mode: "{{ item.mode|default('0755') }}"
+    mode: "{{ item.mode | default('0755') }}"
   with_items:
     - path: "{{ tempest_log_dir | realpath }}"
       owner: root
@@ -83,8 +83,8 @@
     - not tempest_use_tempestconf | bool
     - copy_tempest_config is changed
   tags:
-     # don't trigger ANSIBLE0016
-     - skip_ansible_lint
+    # don't trigger ANSIBLE0016
+    - skip_ansible_lint
 
 - name: Initialise tempest workspace
   shell: |
@@ -122,7 +122,8 @@
     # don't trigger ANSIBLE0013
     - skip_ansible_lint
 
-- import_tasks: tempestconf.yml
+- name: Importing tempestconf tasks
+  import_tasks: tempestconf.yml
   when: tempest_use_tempestconf | bool
   tags:
     - tempest-config
@@ -135,6 +136,7 @@
        . {{ tempest_venv_bin }}/activate
     fi
     tempest list-plugins
+  changed_when: false
   args:
     executable: /bin/bash
   when: "debug | bool"

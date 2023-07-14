@@ -30,7 +30,7 @@
 
 - name: Set tempest service specific variables
   set_fact:
-    tempest_service_available_{{ item }}: true
+    tempest_service_available_{{ item }}: true # noqa: var-naming[no-jinja]
   with_items: "{{ tempest_services }}"
   when: tempest_services | length > 0
 
@@ -49,32 +49,38 @@
   tags:
     - always
 
-- import_tasks: tempest_install.yml
+- name: Importing tempest_install tasks
+  import_tasks: tempest_install.yml
   tags:
     - tempest-install
 
-- import_tasks: tempest_resources.yml
+- name: Importing tempest_resources tasks
+  import_tasks: tempest_resources.yml
   when: tempest_default_role_resources | bool
   run_once: yes
   tags:
     - tempest-config
     - tempest-run
 
-- import_tasks: tempest_post_install.yml
+- name: Importing tempest_post_install tasks
+  import_tasks: tempest_post_install.yml
   tags:
     - tempest-config
 
 - name: Flush handlers
   meta: flush_handlers
 
-- import_tasks: tempest_cleanup_init.yml
+- name: Importing tempest_cleanup_init tasks
+  import_tasks: tempest_cleanup_init.yml
   when: tempest_cleanup | bool
 
-- import_tasks: tempest_run.yml
+- name: Importing tempest_run tasks
+  import_tasks: tempest_run.yml
   when: tempest_run | bool
   tags:
     - tempest-config
     - tempest-run
 
-- import_tasks: tempest_cleanup.yml
+- name: Importing tempest_cleanup tasks
+  import_tasks: tempest_cleanup.yml
   when: tempest_cleanup | bool

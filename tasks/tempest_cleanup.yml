@@ -13,21 +13,21 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-- block:
-  - name: Cleanup leftover resources
-    shell: >
-      set -e;
-      if [ -d {{ tempest_venv_bin }} ];
-      then
-      . {{ tempest_venv_bin }}/activate;
-      fi;
-      tempest cleanup
-      {% if tempest_cleanup_dry_run | bool %}
-        --dry-run
-      {% endif %}
-      {% if debug | bool %}
-        --debug
-      {% endif %}
-    args:
-      chdir: "{{ tempest_workspace }}"
-      executable: /bin/bash
+- name: Cleanup leftover resources
+  shell: >
+    set -e;
+    if [ -d {{ tempest_venv_bin }} ];
+    then
+    . {{ tempest_venv_bin }}/activate;
+    fi;
+    tempest cleanup
+    {% if tempest_cleanup_dry_run | bool %}
+      --dry-run
+    {% endif %}
+    {% if debug | bool %}
+      --debug
+    {% endif %}
+  changed_when: false
+  args:
+    chdir: "{{ tempest_workspace }}"
+    executable: /bin/bash

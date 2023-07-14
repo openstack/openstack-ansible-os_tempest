@@ -13,19 +13,19 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-- block:
-  - name: Generate saved_state.json for tempest cleanup
-    shell: |
-      set -e
-      if [ -d {{ tempest_venv_bin }} ];
-      then
-      . {{ tempest_venv_bin }}/activate
-      fi
-      tempest cleanup \
-      {% if debug | bool %}
-        --debug \
-      {% endif %}
-        --init-saved-state
-    args:
-      chdir: "{{ tempest_workspace }}"
-      executable: /bin/bash
+- name: Generate saved_state.json for tempest cleanup
+  shell: |
+    set -e
+    if [ -d {{ tempest_venv_bin }} ];
+    then
+    . {{ tempest_venv_bin }}/activate
+    fi
+    tempest cleanup \
+    {% if debug | bool %}
+      --debug \
+    {% endif %}
+      --init-saved-state
+  changed_when: false
+  args:
+    chdir: "{{ tempest_workspace }}"
+    executable: /bin/bash

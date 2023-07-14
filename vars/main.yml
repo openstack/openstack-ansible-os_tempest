@@ -34,14 +34,10 @@ tempest_images_map:
       checksum: "sha256:db9420c481c11dee17860aa46fb1a3efa05fa4fb152726d6344e24da03cb0ccf"
       format: "qcow2"
       name: "cirros"
-        #      properties:
-        #hw_firmware_type: uefi
     - url: "https://download.cirros-cloud.net/0.6.1/cirros-0.6.1-aarch64-disk.img"
       checksum: "sha256:db9420c481c11dee17860aa46fb1a3efa05fa4fb152726d6344e24da03cb0ccf"
       format: "qcow2"
       name: "cirros"
-        #properties:
-        #hw_firmware_type: uefi
 
 # Each tempest plugin could take the following arguments:
 # - name:
@@ -118,7 +114,13 @@ _tempest_plugins:
   - name: telemetry-tempest-plugin
     repo: "{{ tempest_plugin_telemetry_git_repo }}"
     branch: "{{ tempest_plugin_telemetry_git_install_branch }}"
-    install: "{{ (tempest_service_available_aodh | bool) or (tempest_service_available_ceilometer | bool) or (tempest_service_available_gnocchi | bool) or (tempest_service_available_panko | bool) }}"
+    install: >-
+      {{
+        (tempest_service_available_aodh | bool) or
+        (tempest_service_available_ceilometer | bool) or
+        (tempest_service_available_gnocchi | bool) or
+        (tempest_service_available_panko | bool)
+      }}
   - name: trove-tempest-plugin
     repo: "{{ tempest_plugin_trove_git_repo }}"
     branch: "{{ tempest_plugin_trove_git_install_branch }}"
