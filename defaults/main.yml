@@ -165,8 +165,8 @@ tempest_plugin_zun_git_install_branch: master
 tempest_workspace: "{{ ansible_facts['env']['HOME'] }}/workspace"
 
 # The location where the test include/exclude lists will be placed
-tempest_test_includelist_file_path: "{{ tempest_workspace }}/etc/tempest_includelist.txt"
-tempest_test_excludelist_file_path: "{{ tempest_workspace }}/etc/tempest_excludelist.txt"
+tempest_includelist_file_path: "{{ tempest_workspace }}/etc/tempest_includelist.txt"
+tempest_excludelist_file_path: "{{ tempest_workspace }}/etc/tempest_excludelist.txt"
 
 # Tests to execute:
 # This sets up a list of tests to execute based on what's deployed in the environment.

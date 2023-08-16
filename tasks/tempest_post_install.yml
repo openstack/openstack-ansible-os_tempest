@@ -163,7 +163,7 @@
       {{ item }}
       {%   endif %}
       {% endfor %}
-    dest: "{{ tempest_test_includelist_file_path }}"
+    dest: "{{ tempest_includelist_file_path }}"
     mode: "0644"
   when:
     - tempest_test_includelist | length > 0
@@ -180,7 +180,7 @@
       {{ item }}
       {%   endif %}
       {% endfor %}
-    dest: "{{ tempest_test_excludelist_file_path }}"
+    dest: "{{ tempest_excludelist_file_path }}"
     mode: "0644"
   when:
     - tempest_test_excludelist | length > 0
