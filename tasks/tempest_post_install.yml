@@ -155,10 +155,6 @@
   when: "debug | bool"
   changed_when: false
 
-# TODO(arxcruz) Right now, we have the tempest_test_whitelist parsed as -e
-# argument in ansible in several of our jobs, so it is right now hard to get
-# rid of all of it in all the places. Once we implement the include list in the
-# openstack-tempest-skiplist side, we can remove the tempest_Test_extra_test.
 - name: Generate tempest test include list
   copy:
     content: |
@@ -173,7 +169,7 @@
     - tempest_test_includelist | length > 0
 
 # Tests to NOT execute:
-# This sets up a list of tests to skip, which can even include those included in the whitelist.
+# This sets up a list of tests to skip, which can even include those included in the includelist.
 - name: Generate tempest test exclude list
   copy:
     content: |

@@ -171,17 +171,12 @@ tempest_test_excludelist_file_path: "{{ tempest_workspace }}/etc/tempest_exclude
 # Tests to execute:
 # This sets up a list of tests to execute based on what's deployed in the environment.
 # The list gets added to the includelist which tempest executes.
-# Defaults to tempest_test_whitelist for backwards compatibility and migration purposes.
-tempest_test_includelist: "{{ tempest_test_whitelist | default(tempest_test_default_includelist) }}"
+tempest_test_includelist: "{{ tempest_test_default_includelist }}"
 tempest_test_default_includelist:
   - "smoke"
   - "{{ (tempest_service_available_ceilometer | bool) | ternary('tempest.api.telemetry', '') }}"
   - "{{ (tempest_service_available_heat | bool) | ternary('tempest.api.orchestration.stacks.test_non_empty_stack', '') }}"
 
-# TODO(arxcruz) Right now, we have the tempest_test_whitelist parsed as -e
-# argument in ansible in several of our jobs, so it is right now hard to get
-# rid of all of it in all the places. Once we implement the include list in the
-# openstack-tempest-skiplist side, we can remove it
 # Extra test to be executed
 tempest_test_extra_test: []
 
@@ -195,8 +190,7 @@ tempest_test_extra_test: []
 # OR
 # tempest_test_excludelist:
 #   - 'tempest.scenario.test.minimum_basic'
-# Defaults to tempest_test_blacklist for backwards compatibility and migration purposes.
-tempest_test_excludelist: "{{ tempest_test_blacklist | default([]) }}"
+tempest_test_excludelist: []
 
 # Private network configuration
 # Currently supports 2 types
