@@ -185,6 +185,13 @@
   when:
     - _tempest_test_excludelist | length > 0
 
+- name: Remove tempest test exclude list when there are no exclusions
+  file:
+    path: "{{ tempest_excludelist_file_path }}"
+    state: absent
+  when:
+    - tempest_test_excludelist | length == 0
+
 - name: Drop test_accounts_file
   copy:
     content: "{{ tempest_test_accounts }}"
