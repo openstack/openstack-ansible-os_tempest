@@ -168,14 +168,14 @@ tempest_workspace: "{{ ansible_facts['env']['HOME'] }}/workspace"
 tempest_includelist_file_path: "{{ tempest_workspace }}/etc/tempest_includelist.txt"
 tempest_excludelist_file_path: "{{ tempest_workspace }}/etc/tempest_excludelist.txt"
 
+# Variable prefixes that will be dynamically gathered to create the include/exclude list
+tempest_test_search_includelist_pattern: 'tempest_test_includelist_'
+tempest_test_search_excludelist_pattern: 'tempest_test_excludelist_'
+
 # Tests to execute:
 # This sets up a list of tests to execute based on what's deployed in the environment.
 # The list gets added to the includelist which tempest executes.
-tempest_test_includelist: "{{ tempest_test_default_includelist }}"
-tempest_test_default_includelist:
-  - "smoke"
-  - "{{ (tempest_service_available_ceilometer | bool) | ternary('tempest.api.telemetry', '') }}"
-  - "{{ (tempest_service_available_heat | bool) | ternary('tempest.api.orchestration.stacks.test_non_empty_stack', '') }}"
+tempest_test_includelist: []
 
 # Extra test to be executed
 tempest_test_extra_test: []

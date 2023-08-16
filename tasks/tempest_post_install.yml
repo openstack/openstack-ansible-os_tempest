@@ -158,7 +158,7 @@
 - name: Generate tempest test include list
   copy:
     content: |
-      {% for item in (tempest_test_includelist + tempest_test_extra_test) | unique | sort %}
+      {% for item in (_tempest_test_includelist + tempest_test_extra_test) | unique | sort %}
       {%   if item %}
       {{ item }}
       {%   endif %}
@@ -166,14 +166,14 @@
     dest: "{{ tempest_includelist_file_path }}"
     mode: "0644"
   when:
-    - tempest_test_includelist | length > 0
+    - _tempest_test_includelist | length > 0
 
 # Tests to NOT execute:
 # This sets up a list of tests to skip, which can even include those included in the includelist.
 - name: Generate tempest test exclude list
   copy:
     content: |
-      {% for item in tempest_test_excludelist %}
+      {% for item in _tempest_test_excludelist %}
       {% if item.test is defined %}
       {{ item.test }}
       {% else %}
@@ -183,7 +183,7 @@
     dest: "{{ tempest_excludelist_file_path }}"
     mode: "0644"
   when:
-    - tempest_test_excludelist | length > 0
+    - _tempest_test_excludelist | length > 0
 
 - name: Drop test_accounts_file
   copy:

@@ -133,3 +133,13 @@ _tempest_plugins:
     repo: "{{ tempest_plugin_zun_git_repo }}"
     branch: "{{ tempest_plugin_zun_git_install_branch }}"
     install: "{{ tempest_service_available_zun | bool }}"
+
+# gather include/exclude lists from any variables starting with the defined search pattern
+# allows many different ansible vars to be combined easily to make a single include/exclude list
+_tempest_test_gathered_includelist: "{{ query('vars', *query('varnames', '^' ~ tempest_test_search_includelist_pattern)) | flatten(levels=1) }}"
+_tempest_test_gathered_excludelist: "{{ query('vars', *query('varnames', '^' ~ tempest_test_search_excludelist_pattern)) | flatten(levels=1) }}"
+
+# maintain backward compatibility by combining the original role default
+# with any dynamically gathered variables
+_tempest_test_includelist: "{{ tempest_test_includelist | union(_tempest_test_gathered_includelist) }}"
+_tempest_test_excludelist: "{{ tempest_test_excludelist | union(_tempest_test_gathered_excludelist) }}"
