@@ -143,3 +143,6 @@ _tempest_test_gathered_excludelist: "{{ query('vars', *query('varnames', '^' ~ t
 # with any dynamically gathered variables
 _tempest_test_includelist: "{{ tempest_test_includelist | union(_tempest_test_gathered_includelist) }}"
 _tempest_test_excludelist: "{{ tempest_test_excludelist | union(_tempest_test_gathered_excludelist) }}"
+
+# gather tempest config overrides from any variables starting wth the defined search pattern
+_tempest_tempest_conf_overrides_gathered: "{{ query('vars', *query('varnames', '^' ~ tempest_tempest_conf_search_overrides_pattern)) | combine }}"

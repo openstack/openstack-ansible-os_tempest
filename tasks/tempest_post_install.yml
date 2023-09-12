@@ -37,7 +37,7 @@
     owner: "root"
     group: "root"
     mode: "0644"
-    config_overrides: "{{ tempest_tempest_conf_overrides }}"
+    config_overrides: "{{ _tempest_tempest_conf_overrides_gathered }}"
     config_type: "ini"
   register: copy_tempest_config
   when: not tempest_use_tempestconf | bool
