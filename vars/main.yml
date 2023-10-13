@@ -118,8 +118,7 @@ _tempest_plugins:
       {{
         (tempest_service_available_aodh | bool) or
         (tempest_service_available_ceilometer | bool) or
-        (tempest_service_available_gnocchi | bool) or
-        (tempest_service_available_panko | bool)
+        (tempest_service_available_gnocchi | bool)
       }}
   - name: trove-tempest-plugin
     repo: "{{ tempest_plugin_trove_git_repo }}"
