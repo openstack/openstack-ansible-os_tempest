@@ -41,6 +41,7 @@ img_disk_format = {{ tempest_images[0]['format'] }}
 http_timeout = 120
 
 [service_available]
+blazar = {{ tempest_service_available_blazar }}
 cinder = {{ tempest_service_available_cinder }}
 neutron = {{ tempest_service_available_neutron }}
 glance = {{ tempest_service_available_glance }}

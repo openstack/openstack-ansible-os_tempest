@@ -51,6 +51,10 @@ _tempest_plugins:
     repo: "{{ tempest_plugin_barbican_git_repo }}"
     branch: "{{ tempest_plugin_barbican_git_install_branch }}"
     install: "{{ tempest_service_available_barbican | bool }}"
+  - name: blazar-tempest-plugin
+    repo: "{{ tempest_plugin_blazar_git_repo }}"
+    branch: "{{ tempest_plugin_blazar_git_install_branch }}"
+    install: "{{ tempest_service_available_blazar | bool }}"
   - name: cinder-tempest-plugin
     repo: "{{ tempest_plugin_cinder_git_repo }}"
     branch: "{{ tempest_plugin_cinder_git_install_branch }}"
