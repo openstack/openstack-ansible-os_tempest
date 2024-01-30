@@ -31,7 +31,7 @@
         {% if tempest_test_worker_file_path is defined %}
           --worker-file {{ tempest_test_worker_file_path }} \
         {% endif %}
-        {% if tempest_test_excludelist | length > 0 %}
+        {% if _tempest_test_excludelist | length > 0 %}
           --exclude-list {{ tempest_excludelist_file_path }} \
         {% endif %}
           --include-list {{ tempest_includelist_file_path }} > {{ tempest_log_dir }}/tempest_run.log
@@ -110,7 +110,7 @@
         fi
         tempest run \
           --include-list {{ tempest_includelist_file_path }} \
-        {% if tempest_test_excludelist | length > 0 %}
+        {% if _tempest_test_excludelist | length > 0 %}
           --exclude-list {{ tempest_excludelist_file_path }} \
         {% endif %}
           --list-tests &> {{ tempest_log_dir }}/test_list.txt
