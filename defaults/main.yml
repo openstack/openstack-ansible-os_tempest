@@ -204,7 +204,7 @@ tempest_private_net_name: "private"
 tempest_private_subnet_name: "private-subnet"
 tempest_private_subnet_cidr: "192.168.74.0/28"
 tempest_private_net_provider_type: "vxlan"
-tempest_private_net_seg_id:
+# tempest_private_net_seg_id:
 # If you choose vlan as private network provider type, you must set a physical
 # name for it
 # tempest_private_net_physical_name: "private"
@@ -223,11 +223,10 @@ tempest_public_net_provider_type: "flat"
 # The use of _type is to provide backwards compatibility for
 # overrides in S and can be removed in T.
 tempest_public_net_physical_name: "{{ tempest_public_net_physical_type | default('flat') }}"
-tempest_public_net_seg_id: ""
+# tempest_public_net_seg_id:
 tempest_public_router_external: "True"
 # Example allocation range:
 # tempest_public_subnet_allocation_pools: "10.1.13.150-10.1.13.200"
-tempest_public_subnet_allocation_pools: ""
 
 tempest_compute_image_ssh_user: cirros
 tempest_compute_run_ssh: True

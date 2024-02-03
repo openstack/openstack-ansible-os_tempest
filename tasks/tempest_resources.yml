@@ -18,303 +18,258 @@
 # appropriate python libraries in that venv. If the delegation
 # is to another host, we assume that it is accessible by the
 # system python instead.
-- name: Setup the tempest resources
+
+- name: Ensure that all required variables are set when tempest_public_net_create is enabled
+  assert:
+    that:
+      - tempest_public_net_name is defined
+      - tempest_public_net_provider_type is defined
+      - tempest_public_net_physical_name is defined
+      - tempest_public_subnet_name is defined
+      - tempest_public_subnet_cidr is defined
+      - tempest_public_net_physical_name is defined
+      - tempest_public_router_external is defined
+  when:
+    - tempest_public_net_create
+
+- name: Ensure that all required variables are set when tempest_public_net_create is disabled
+  assert:
+    that:
+      - tempest_neutron_public_network_id is defined
+  when:
+    - not tempest_public_net_create
+
+- name: Ensure that all required variables are set when tempest_private_net_create is enabled
+  assert:
+    that:
+      - tempest_private_net_name is defined
+      - tempest_private_subnet_name is defined
+      - tempest_private_subnet_cidr is defined
+      - tempest_private_net_provider_type is defined
+  when:
+    - tempest_private_net_create
+
+- name: Ensure that all required variables are set when tempest_router_create is enabled
+  assert:
+    that:
+      - (tempest_public_net_create or tempest_neutron_public_network_id is defined)
+      - tempest_private_net_create
+  when:
+    - tempest_router_create
+
+- name: Ensure that all required variables are set when tempest_images_create is disabled
+  assert:
+    that:
+      - tempest_glance_image_id_1 is defined
+      - tempest_glance_image_id_2 is defined
+  when:
+    - not tempest_images_create
+
+- name: Ensure that all required variables are set when tempest_flavors_create is enabled
+  assert:
+    that:
+      - "tempest_flavors | length > 0"
+  when:
+    - tempest_flavors_create
+
+- name: Ensure that all required variables are set when tempest_flavors_create is disabled
+  assert:
+    that:
+      - tempest_nova_flavor_id_1 is defined
+  when:
+    - not tempest_flavors_create
+
+- name: Ensures you have at least one image to upload
+  assert:
+    that:
+      - "tempest_images | length > 0"
+  when:
+    - tempest_service_available_glance | bool
+    - tempest_images_create | bool
+
+- name: Creating OpenStack Projects
+  ansible.builtin.include_role:
+    name: openstack.osa.openstack_resources
+  vars:
+    openstack_resources_identity:
+      domains:
+        - name: "{{ tempest_domain_name }}"
+      projects: |-
+        {% set projects = [] %}
+        {% for project in tempest_projects %}
+        {%   set _ = projects.append({
+                'name': project,
+                'description': project ~ ' project',
+                'domain': tempest_domain_name
+        })  %}
+        {% endfor %}
+        {{ projects }}
+  when:
+    - tempest_projects_create | bool
+
+- name: Get tempest tenant data
   delegate_to: "{{ tempest_service_setup_host }}"
+  run_once: true
   vars:
     ansible_python_interpreter: "{{ tempest_service_setup_host_python_interpreter }}"
   block:
-    - name: Ensure that all required variables are set when tempest_public_net_create is enabled
-      assert:
-        that:
-          - tempest_public_net_name is defined
-          - tempest_public_net_provider_type is defined
-          - tempest_public_net_physical_name is defined
-          - tempest_public_subnet_name is defined
-          - tempest_public_subnet_cidr is defined
-          - tempest_public_net_physical_name is defined
-          - tempest_public_router_external is defined
-      when:
-        - tempest_public_net_create
-
-    - name: Ensure that all required variables are set when tempest_public_net_create is disabled
-      assert:
-        that:
-          - tempest_neutron_public_network_id is defined
-      when:
-        - not tempest_public_net_create
-
-    - name: Ensure that all required variables are set when tempest_private_net_create is enabled
-      assert:
-        that:
-          - tempest_private_net_name is defined
-          - tempest_private_subnet_name is defined
-          - tempest_private_subnet_cidr is defined
-          - tempest_private_net_provider_type is defined
-      when:
-        - tempest_private_net_create
-
-    - name: Ensure that all required variables are set when tempest_router_create is enabled
-      assert:
-        that:
-          - (tempest_public_net_create or tempest_neutron_public_network_id is defined)
-          - tempest_private_net_create
-      when:
-        - tempest_router_create
-
-    - name: Ensure that all required variables are set when tempest_images_create is disabled
-      assert:
-        that:
-          - tempest_glance_image_id_1 is defined
-          - tempest_glance_image_id_2 is defined
-      when:
-        - not tempest_images_create
-
-    - name: Ensure that all required variables are set when tempest_flavors_create is enabled
-      assert:
-        that:
-          - "tempest_flavors | length > 0"
-      when:
-        - tempest_flavors_create
-
-    - name: Ensure that all required variables are set when tempest_flavors_create is disabled
-      assert:
-        that:
-          - tempest_nova_flavor_id_1 is defined
-      when:
-        - not tempest_flavors_create
-
-    - name: Ensures you have at least one image to upload
-      assert:
-        that:
-          - "tempest_images | length > 0"
-      when:
-        - tempest_service_available_glance | bool
-        - tempest_images_create | bool
-
-    - name: Create deployment-host tempest_image_dir
-      file:
-        path: "{{ tempest_image_dir }}"
-        state: directory
-        mode: "0755"
-      when:
-        - tempest_service_available_glance | bool
-        - tempest_images_create | bool
-
-    - name: Image(s) download
-      get_url:
-        url: "{{ item.url }}"
-        dest: "{{ tempest_image_dir }}/{{ item.url | basename }}"
-        checksum: "{{ item.checksum | default(omit) }}"
-        url_username: "{{ item.username | default(omit) }}"
-        url_password: "{{ item.password | default(omit) }}"
-      with_items: "{{ tempest_images }}"
-      when:
-        - tempest_service_available_glance | bool
-        - tempest_images_create | bool
-      register: fetch_url
-      until: fetch_url is success
-      retries: 6
-      delay: 5
-      tags:
-        - skip_ansible_lint
-
-    - name: Upload tempest images to glance
-      openstack.cloud.image:
+    - name: Get tempest tenant UUID
+      openstack.cloud.project_info:
         cloud: "{{ tempest_cloud_name }}"
         interface: "{{ tempest_interface_name }}"
-        validate_certs: "{{ not (tempest_keystone_interface_insecure | bool) }}"
-        name: "{{ item.name | default(item.url | basename) }}"
-        filename: "{{ tempest_image_dir }}/{{ item.url | basename }}"
-        container_format: bare
-        disk_format: "{{ item.format }}"
-        is_public: True
-        properties: "{{ item.properties | default(omit) }}"
-      with_items: "{{ tempest_images }}"
-      register: tempest_image_create
-      until: tempest_image_create is success
-      retries: 5
-      delay: 15
-      when:
-        - tempest_service_available_glance | bool
-        - tempest_images_create | bool
-
-    # These facts are used in tempest.conf.j2; we set an empty string if it is not
-    # set above to ensure the template will parse correctly.
-    - name: Store first tempest image id
-      vars:
-        res: "{{ tempest_image_create['results'] }}"
-      set_fact:
-        tempest_glance_image_id_1: "{{ res[0]['id'] | default(res[0]['image']['id'] | default('')) }}"
-        tempest_glance_image_id_2: "{{ res[-1]['id'] | default(res[-1]['image']['id'] | default('')) }}"
-      when:
-        - tempest_images_create | bool
-
-    - name: Store tempest flavor id
-      set_fact:
-        tempest_nova_flavor_id_1: "{{ tempest_service_available_nova | ternary(tempest_flavors[0]['id'], '1') }}"
-        tempest_nova_flavor_id_2: "{{ tempest_service_available_nova | ternary(tempest_flavors[-1]['id'], '2') }}"
-      when:
-        - tempest_flavors_create | bool
-
-    - name: Add tempest projects
-      openstack.cloud.project:
-        cloud: "{{ tempest_cloud_name }}"
-        state: present
-        name: "{{ item }}"
-        description: "{{ item }} project"
         domain: "{{ tempest_domain_name }}"
-        interface: "{{ tempest_interface_name }}"
-        verify: "{{ not (tempest_keystone_interface_insecure | bool) }}"
-      register: add_project
-      until: add_project is success
-      retries: 5
-      delay: 10
-      with_items: "{{ tempest_projects }}"
-      when:
-        - tempest_projects_create | bool
+        name: "{{ project }}"
+      loop: "{{ tempest_projects }}"
+      loop_control:
+        loop_var: project
+        label: "{{ project }}"
+      register: tempest_project_details
 
-    - name: Store demo tenant id
-      set_fact:
-        keystone_demo_tenant_id: "{{ (add_project.results | json_query('[*].project.id'))[0] }}" # noqa: jinja[invalid]
-      when:
-        - tempest_projects_create | bool
+- name: Get demo tenant id
+  set_fact:
+    keystone_demo_tenant_id: >-
+      {{ (tempest_project_details.results | map(attribute='projects') | list | flatten | map(attribute='id') | list)[0] }}
 
-    - name: Ensure private network exists
-      openstack.cloud.network:
+- name: Creating OpenStack resources
+  ansible.builtin.include_role:
+    name: openstack.osa.openstack_resources
+  vars:
+    _private_network:
+      name: "{{ tempest_private_net_name }}"
+      network_type: "{{ tempest_private_net_provider_type }}"
+      physical_network: "{{ tempest_private_net_physical_name | default(omit) }}"
+      segmentation_id: "{{ tempest_private_net_seg_id | default(omit) }}"
+      mtu: "{{ tempest_private_net_mtu | default(omit) }}"
+      project: "{{ keystone_demo_tenant_id }}"
+      subnets:
+        - name: "{{ tempest_private_subnet_name }}"
+          cidr: "{{ tempest_private_subnet_cidr }}"
+          dhcp: false
+
+    _public_network:
+      name: "{{ tempest_public_net_name }}"
+      network_type: "{{ tempest_public_net_provider_type }}"
+      physical_network: "{{ tempest_public_net_physical_name | default(omit) }}"
+      segmentation_id: "{{ tempest_public_net_seg_id | default(omit) }}"
+      external: "{{ tempest_public_router_external }}"
+      project: "{{ keystone_demo_tenant_id }}"
+      subnets:
+        - name: "{{ tempest_public_subnet_name }}"
+          cidr: "{{ tempest_public_subnet_cidr }}"
+          allocation_start: "{{ tempest_public_subnet_allocation_pools.split('-')[0] | default(omit) }}"
+          allocation_end: "{{ tempest_public_subnet_allocation_pools.split('-')[1] | default(omit) }}"
+          gateway: "{{ tempest_public_subnet_gateway_ip | default(omit) }}"
+
+    _router:
+      name: router
+      network: "{{ tempest_public_net_name }}"
+      interfaces:
+        - "{{ tempest_private_subnet_name }}"
+      project: "{{ keystone_demo_tenant_id }}"
+    _compute_resources:
+      flavors:
+        - specs: "{{ tempest_flavors }}"
+
+    _image_resources:
+      images: "{{ tempest_images | default([]) }}"
+
+    _network_resources: |-
+      {% set resources = {'networks': [], 'routers': [], 'security_groups': []} %}
+      {% if tempest_private_net_create | bool %}
+      {%   set _ = resources['networks'].append(_private_network) %}
+      {% endif %}
+      {% if tempest_public_net_create | bool %}
+      {%   set _ = resources['networks'].append(_public_network) %}
+      {% endif %}
+      {% if tempest_router_create | bool %}
+      {%   set _ = resources['routers'].append(_router) %}
+      {% endif %}
+      {{ resources }}
+    openstack_resources_setup_host: "{{ tempest_service_setup_host }}"
+    openstack_resources_python_interpreter: "{{ tempest_service_setup_host_python_interpreter }}"
+    openstack_resources_cloud_name: "{{ tempest_cloud_name }}"
+    openstack_resources_interface: "{{ tempest_interface_name }}"
+    openstack_resources_network: "{{ tempest_service_available_neutron | ternary(_network_resources, {}) }}"
+    openstack_resources_image: "{{ tempest_images_create | ternary(_image_resources, {}) }}"
+    openstack_resources_compute: "{{ (tempest_service_available_nova and tempest_flavors_create) | ternary(_compute_resources, {}) }}"
+
+- name: Get tempest resources data
+  delegate_to: "{{ tempest_service_setup_host }}"
+  run_once: true
+  vars:
+    ansible_python_interpreter: "{{ tempest_service_setup_host_python_interpreter }}"
+  block:
+    - name: Get tempest images
+      openstack.cloud.image_info:
         cloud: "{{ tempest_cloud_name }}"
         interface: "{{ tempest_interface_name }}"
-        validate_certs: "{{ tempest_keystone_interface_insecure | ternary(false, true) }}"
-        name: "{{ tempest_private_net_name }}"
-        provider_network_type: "{{ tempest_private_net_provider_type }}"
-        provider_physical_network: "{{ tempest_private_net_physical_name | default(omit) }}"
-        provider_segmentation_id: "{{ tempest_private_net_seg_id | default(omit, true) }}"
-        mtu: "{{ tempest_private_net_mtu | default(omit, true) }}"
-        project: "{{ keystone_demo_tenant_id }}"
-      register: tempest_private_network
-      until: tempest_private_network is success
-      retries: 5
-      delay: 10
+        filters:
+          'name': "{{ image['name'] }}"
+          'tags':
+            - 'managed_by_tempest'
+      loop: "{{ tempest_images }}"
+      loop_control:
+        loop_var: image
+        label: "{{ image['name'] }}"
+      register: tempest_image_details
       when:
-        - tempest_service_available_neutron | bool
-        - tempest_private_net_create | bool
+        - tempest_images_create | bool
 
-    - name: Ensure public network exists
-      openstack.cloud.network:
+    - name: Get tempest public network UUID
+      openstack.cloud.networks_info:
         cloud: "{{ tempest_cloud_name }}"
         interface: "{{ tempest_interface_name }}"
-        validate_certs: "{{ tempest_keystone_interface_insecure | ternary(false, true) }}"
         name: "{{ tempest_public_net_name }}"
-        provider_network_type: "{{ tempest_public_net_provider_type }}"
-        provider_physical_network: "{{ tempest_public_net_physical_name | default(omit) }}"
-        provider_segmentation_id: "{{ tempest_public_net_seg_id | default(omit, true) }}"
-        external: "{{ tempest_public_router_external }}"
-        project: "{{ keystone_demo_tenant_id }}"
-      register: tempest_public_network
-      until: tempest_public_network is success
-      retries: 5
-      delay: 10
+        filters:
+          project_id: "{{ keystone_demo_tenant_id }}"
+      register: tempest_public_network_details
       when:
         - tempest_service_available_neutron | bool
         - tempest_public_net_create | bool
 
-    - name: Store neutron public network id
-      set_fact:
-        tempest_neutron_public_network_id: "{{ tempest_service_available_neutron | ternary(tempest_public_network.id, '') }}"
-      when:
-        - tempest_service_available_neutron | bool
-        - tempest_public_net_create | bool
-
-    - name: Ensure private subnet exists
-      openstack.cloud.subnet:
+    - name: Get tempest router details
+      openstack.cloud.routers_info:
         cloud: "{{ tempest_cloud_name }}"
         interface: "{{ tempest_interface_name }}"
-        validate_certs: "{{ tempest_keystone_interface_insecure | ternary(false, true) }}"
-        network_name: "{{ tempest_private_net_name }}"
-        name: "{{ tempest_private_subnet_name }}"
-        cidr: "{{ tempest_private_subnet_cidr }}"
-        project: "{{ keystone_demo_tenant_id }}"
-        enable_dhcp: false
-      register: _add_private_subnet
-      until: _add_private_subnet is success
-      retries: 5
-      delay: 10
-      when:
-        - tempest_service_available_neutron | bool
-        - tempest_private_net_create | bool
-
-    - name: Ensure public subnet exists
-      openstack.cloud.subnet:
-        cloud: "{{ tempest_cloud_name }}"
-        interface: "{{ tempest_interface_name }}"
-        validate_certs: "{{ tempest_keystone_interface_insecure | ternary(false, true) }}"
-        network_name: "{{ tempest_public_net_name }}"
-        name: "{{ tempest_public_subnet_name }}"
-        cidr: "{{ tempest_public_subnet_cidr }}"
-        allocation_pool_start: "{{ tempest_public_subnet_allocation_pools.split('-')[0] | default(omit) }}"
-        allocation_pool_end: "{{ tempest_public_subnet_allocation_pools.split('-')[1] | default(omit) }}"
-        gateway_ip: "{{ tempest_public_subnet_gateway_ip | default(omit) }}"
-      register: _add_public_subnet
-      until: _add_public_subnet is success
-      retries: 5
-      delay: 10
-      when:
-        - tempest_service_available_neutron | bool
-        - tempest_public_net_create | bool
-
-    - name: Create router
-      openstack.cloud.router:
-        cloud: "{{ tempest_cloud_name }}"
-        interface: "{{ tempest_interface_name }}"
-        validate_certs: "{{ tempest_keystone_interface_insecure | ternary(false, true) }}"
         name: router
-        network: "{{ tempest_neutron_public_network_id }}"
-        interfaces:
-          - "{{ tempest_private_subnet_name }}"
-        project: "{{ keystone_demo_tenant_id }}"
-      register: _add_router
-      until: _add_router is success
-      retries: 5
-      delay: 10
+        filters:
+          project_id: "{{ keystone_demo_tenant_id }}"
       when:
         - tempest_service_available_neutron | bool
         - tempest_router_create | bool
 
-    - name: Get router admin state and ip address
-      set_fact:
-        router_admin_state: "{{ _add_router['router']['is_admin_state_up'] }}"
-        router_ip: "{{ _add_router['router']['external_gateway_info']['external_fixed_ips'][0]['ip_address'] }}"
-      when:
-        - tempest_service_available_neutron | bool
-        - tempest_router_create | bool
-        - "'is_admin_state_up' in _add_router.router"
+# These facts are used in tempest.conf.j2; we set an empty string if it is not
+# set above to ensure the template will parse correctly.
+- name: Store first tempest image id
+  vars:
+    res: "{{ tempest_image_details['results'] | map(attribute='images') | flatten }}"
+  set_fact:
+    tempest_glance_image_id_1: "{{ res[0]['id'] | default('') }}"
+    tempest_glance_image_id_2: "{{ res[-1]['id'] | default('') }}"
+  when:
+    - tempest_images_create | bool
 
-    - name: Get router admin state and ip address for older collection versions
-      set_fact:
-        router_admin_state: "{{ _add_router['router']['admin_state_up'] }}"
-        router_ip: "{{ _add_router['router']['external_gateway_info']['external_fixed_ips'][0]['ip_address'] }}"
-      when:
-        - tempest_service_available_neutron | bool
-        - tempest_router_create | bool
-        - "'admin_state_up' in _add_router.router"
+- name: Store tempest flavor id
+  set_fact:
+    tempest_nova_flavor_id_1: "{{ tempest_service_available_nova | ternary(tempest_flavors[0]['id'], '1') }}"
+    tempest_nova_flavor_id_2: "{{ tempest_service_available_nova | ternary(tempest_flavors[-1]['id'], '2') }}"
+  when:
+    - tempest_flavors_create | bool
 
-    - name: Create tempest flavors
-      openstack.cloud.compute_flavor:
-        cloud: "{{ tempest_cloud_name }}"
-        interface: "{{ tempest_interface_name }}"
-        validate_certs: "{{ tempest_keystone_interface_insecure | ternary(false, true) }}"
-        name: "{{ item.name }}"
-        flavorid: "{{ item.id }}"
-        ram: "{{ item.ram }}"
-        disk: "{{ item.disk }}"
-        vcpus: "{{ item.vcpus }}"
-      with_items: "{{ tempest_flavors }}"
-      register: _add_flavors
-      until: _add_flavors is success
-      retries: 5
-      delay: 10
-      when:
-        - tempest_service_available_nova | bool
-        - tempest_flavors_create | bool
+- name: Store neutron public network id
+  set_fact:
+    tempest_neutron_public_network_id: "{{ tempest_service_available_neutron | ternary(tempest_public_network_details['networks'][0]['id'], '') }}"
+  when:
+    - tempest_service_available_neutron | bool
+    - tempest_public_net_create | bool
+
+- name: Get router admin state and ip address
+  set_fact:
+    router_admin_state: "{{ _add_router['routers'][0]['is_admin_state_up'] }}"
+    router_ip: "{{ _add_router['routers'][0]['external_gateway_info']['external_fixed_ips'][0]['ip_address'] }}"
+  when:
+    - tempest_service_available_neutron | bool
+    - tempest_router_create | bool
 
 - name: Ping router ip address
   shell: |

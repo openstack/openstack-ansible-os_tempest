@@ -21,23 +21,39 @@
 # properties: a dict of custom properties to attach to the image in glance
 tempest_images_map:
   x86_64:
-    - url: "https://download.cirros-cloud.net/0.6.1/cirros-0.6.1-x86_64-disk.img"
-      checksum: "sha256:cc704ab14342c1c8a8d91b66a7fc611d921c8b8f1aaf4695f9d6463d913fa8d1"
+    - url: "https://download.cirros-cloud.net/0.6.2/cirros-0.6.2-x86_64-disk.img"
+      checksum: "c8fc807773e5354afe61636071771906"
       format: "qcow2"
-      name: "cirros"
-    - url: "https://download.cirros-cloud.net/0.6.1/cirros-0.6.1-x86_64-disk.img"
-      checksum: "sha256:cc704ab14342c1c8a8d91b66a7fc611d921c8b8f1aaf4695f9d6463d913fa8d1"
+      name: "cirros 0.6"
+      visibility: community
+      tags:
+        - managed_by_tempest
+    - url: "https://download.cirros-cloud.net/0.5.2/cirros-0.5.2-x86_64-disk.img"
+      checksum: "b874c39491a2377b8490f5f1e89761a4"
       format: "qcow2"
-      name: "cirros"
+      name: "cirros 0.5"
+      visibility: community
+      tags:
+        - managed_by_tempest
   aarch64:
-    - url: "https://download.cirros-cloud.net/0.6.1/cirros-0.6.1-aarch64-disk.img"
-      checksum: "sha256:db9420c481c11dee17860aa46fb1a3efa05fa4fb152726d6344e24da03cb0ccf"
+    - url: "https://download.cirros-cloud.net/0.6.2/cirros-0.6.2-aarch64-disk.img"
+      checksum: "c1c58e8a058d50e1d1891df8bad171b2"
       format: "qcow2"
-      name: "cirros"
-    - url: "https://download.cirros-cloud.net/0.6.1/cirros-0.6.1-aarch64-disk.img"
-      checksum: "sha256:db9420c481c11dee17860aa46fb1a3efa05fa4fb152726d6344e24da03cb0ccf"
+      name: "cirros 0.6"
+      visibility: community
+      tags:
+        - managed_by_tempest
+        # properties:
+        #   hw_firmware_type: uefi
+    - url: "https://download.cirros-cloud.net/0.5.2/cirros-0.5.2-aarch64-disk.img"
+      checksum: "9067fe7e99229a1a6d908b331c5763df"
       format: "qcow2"
-      name: "cirros"
+      name: "cirros 0.5"
+      visibility: community
+      tags:
+        - managed_by_tempest
+        # properties:
+        #   hw_firmware_type: uefi
 
 # Each tempest plugin could take the following arguments:
 # - name:
