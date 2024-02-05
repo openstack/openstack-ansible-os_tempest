@@ -190,7 +190,7 @@
     openstack_resources_cloud_name: "{{ tempest_cloud_name }}"
     openstack_resources_interface: "{{ tempest_interface_name }}"
     openstack_resources_network: "{{ tempest_service_available_neutron | ternary(_network_resources, {}) }}"
-    openstack_resources_image: "{{ tempest_images_create | ternary(_image_resources, {}) }}"
+    openstack_resources_image: "{{ (tempest_service_available_glance and tempest_images_create) | ternary(_image_resources, {}) }}"
     openstack_resources_compute: "{{ (tempest_service_available_nova and tempest_flavors_create) | ternary(_compute_resources, {}) }}"
 
 - name: Get tempest resources data
@@ -213,6 +213,7 @@
         label: "{{ image['name'] }}"
       register: tempest_image_details
       when:
+        - tempest_service_available_glance | bool
         - tempest_images_create | bool
 
     - name: Get tempest public network UUID
@@ -247,6 +248,7 @@
     tempest_glance_image_id_1: "{{ res[0]['id'] | default('') }}"
     tempest_glance_image_id_2: "{{ res[-1]['id'] | default('') }}"
   when:
+    - tempest_service_available_glance | bool
     - tempest_images_create | bool
 
 - name: Store tempest flavor id
@@ -254,6 +256,7 @@
     tempest_nova_flavor_id_1: "{{ tempest_service_available_nova | ternary(tempest_flavors[0]['id'], '1') }}"
     tempest_nova_flavor_id_2: "{{ tempest_service_available_nova | ternary(tempest_flavors[-1]['id'], '2') }}"
   when:
+    - tempest_service_available_nova | bool
     - tempest_flavors_create | bool
 
 - name: Store neutron public network id
