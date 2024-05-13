@@ -153,6 +153,7 @@
       segmentation_id: "{{ tempest_public_net_seg_id | default(omit) }}"
       external: "{{ tempest_public_router_external }}"
       project: "{{ keystone_demo_tenant_id }}"
+      shared: "{{ tempest_public_net_shared }}"
       subnets:
         - name: "{{ tempest_public_subnet_name }}"
           cidr: "{{ tempest_public_subnet_cidr }}"

@@ -220,6 +220,7 @@ tempest_public_subnet_cidr: "10.1.13.0/24"
 # tempest_public_subnet_gateway_ip:
 tempest_public_net_provider_type: "flat"
 tempest_public_net_physical_name: "physnet1"
+tempest_public_net_shared: False
 # tempest_public_net_seg_id:
 tempest_public_router_external: "True"
 # Example allocation range:
