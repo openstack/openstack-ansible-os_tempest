@@ -34,7 +34,7 @@
   with_items: "{{ tempest_services }}"
   when: tempest_services | length > 0
 
-  # NOTE(jrosser) we use source installs for temepest and it's plugins on ubuntu distro installs
+# NOTE(jrosser) we use source installs for temepest and it's plugins on ubuntu distro installs
 - name: Gather variables for source installs
   include_vars: source_install.yml
   when:
@@ -57,7 +57,7 @@
 - name: Importing tempest_resources tasks
   import_tasks: tempest_resources.yml
   when: tempest_default_role_resources | bool
-  run_once: yes
+  run_once: true
   tags:
     - tempest-config
     - tempest-run

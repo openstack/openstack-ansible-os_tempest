@@ -98,7 +98,7 @@ _tempest_plugins:
   - name: keystone-tempest-plugin
     repo: "{{ tempest_plugin_keystone_git_repo }}"
     branch: "{{ tempest_plugin_keystone_git_install_branch }}"
-    install: yes
+    install: true
   - name: magnum-tempest-plugin
     repo: "{{ tempest_plugin_magnum_git_repo }}"
     branch: "{{ tempest_plugin_magnum_git_install_branch }}"

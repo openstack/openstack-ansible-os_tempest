@@ -14,7 +14,7 @@
 # limitations under the License.
 
 ## Verbosity Options
-debug: False
+debug: false
 
 stestr_executable: "{{ _stestr_executable | default('stestr') }}"
 
@@ -40,9 +40,9 @@ tempest_service_setup_host_python_interpreter: >-
   }}
 
 # Toggle whether tempest actually executes
-tempest_run: no
+tempest_run: false
 # Toggle whether tempest cleanup executes prior and after regular tempest run
-tempest_cleanup: no
+tempest_cleanup: false
 # if tempest_cleanup_dry_run is set to true, tempest cleanup will log all found
 # leftover resources to a dry_run.json file, none resources will be deleted
 # tempest_cleanup_dry_run: no
@@ -58,7 +58,7 @@ tempest_fixed_network_name: public
 
 # Tempest Resources
 # Toggle whether default resources are implemented
-tempest_default_role_resources: yes
+tempest_default_role_resources: true
 tempest_public_net_create: true
 tempest_private_net_create: false
 tempest_router_create: false
@@ -172,8 +172,8 @@ tempest_includelist_file_path: "{{ tempest_workspace }}/etc/tempest_includelist.
 tempest_excludelist_file_path: "{{ tempest_workspace }}/etc/tempest_excludelist.txt"
 
 # Variable prefixes that will be dynamically gathered to create the include/exclude list
-tempest_test_search_includelist_pattern: 'tempest_test_includelist_'
-tempest_test_search_excludelist_pattern: 'tempest_test_excludelist_'
+tempest_test_search_includelist_pattern: "tempest_test_includelist_"
+tempest_test_search_excludelist_pattern: "tempest_test_excludelist_"
 
 # Tests to execute:
 # This sets up a list of tests to execute based on what's deployed in the environment.
@@ -220,15 +220,15 @@ tempest_public_subnet_cidr: "10.1.13.0/24"
 # tempest_public_subnet_gateway_ip:
 tempest_public_net_provider_type: "flat"
 tempest_public_net_physical_name: "physnet1"
-tempest_public_net_shared: False
+tempest_public_net_shared: false
 # tempest_public_net_seg_id:
 tempest_public_router_external: "True"
 # Example allocation range:
 # tempest_public_subnet_allocation_pools: "10.1.13.150-10.1.13.200"
 
 tempest_compute_image_ssh_user: cirros
-tempest_compute_run_ssh: True
-tempest_network_ping_gateway: False
+tempest_compute_run_ssh: true
+tempest_network_ping_gateway: false
 
 tempest_dashboard_url: "https://{{ external_lb_vip_address | default('127.0.0.1') }}/"
 
@@ -263,7 +263,7 @@ tempest_service_available_neutron_bgpvpn: >-
 tempest_service_available_neutron_vpnaas: >-
   {{ (groups['neutron_all'] is defined) and (groups['neutron_all'] | length > 0) and ('vpnaas' in neutron_plugin_base | default([])) }}
 tempest_service_available_nova: "{{ groups['nova_all'] is defined and groups['nova_all'] | length > 0 }}"
-tempest_service_available_novajoin: False
+tempest_service_available_novajoin: false
 tempest_service_available_octavia: "{{ groups['octavia_all'] is defined and groups['octavia_all'] | length > 0 }}"
 tempest_service_available_sahara: "{{ groups['sahara_all'] is defined and groups['sahara_all'] | length > 0 }}"
 tempest_service_available_senlin: "{{ groups['senlin_all'] is defined and groups['senlin_all'] | length > 0 }}"
@@ -274,8 +274,8 @@ tempest_service_available_swift: >-
     (ceph_rgws is defined and ceph_rgws | length > 0)
   }}
 tempest_service_available_trove: "{{ groups['trove_all'] is defined and groups['trove_all'] | length > 0 }}"
-tempest_service_available_whitebox: False
-tempest_service_available_whitebox_neutron: False
+tempest_service_available_whitebox: false
+tempest_service_available_whitebox_neutron: false
 tempest_service_available_zaqar: "{{ groups['zaqar_all'] is defined and groups['zaqar_all'] | length > 0 }}"
 tempest_service_available_zun: "{{ groups['zun_all'] is defined and groups['zun_all'] | length > 0 }}"
 
@@ -342,7 +342,7 @@ tempest_projects:
   - "tempest"
 
 ## Tunable overrides
-tempest_tempest_conf_search_overrides_pattern: 'tempest_tempest_conf_overrides'
+tempest_tempest_conf_search_overrides_pattern: "tempest_tempest_conf_overrides"
 tempest_tempest_conf_overrides: {}
 
 ## The name of cloud from clouds.yaml

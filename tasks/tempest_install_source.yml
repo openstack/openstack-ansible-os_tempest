@@ -28,7 +28,7 @@
 - name: Retrieve the constraints URL
   uri:
     url: "{{ tempest_upper_constraints_url }}"
-    return_content: yes
+    return_content: true
   register: _u_c_contents
 
 - name: Install the python venv

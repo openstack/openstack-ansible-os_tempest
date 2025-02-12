@@ -25,7 +25,6 @@
   retries: 5
   delay: 2
 
-
 # NOTE(noonedeadpunk):
 # Applying default filter is required despite the variable being defined
 # in defaults as in case of non-integrated tests meta handlers from other roles might fail.
@@ -40,5 +39,5 @@
     venv_install_destination_path: "{{ stackviz_venv_bin | dirname }}"
     venv_pip_install_args: "{{ stackviz_pip_install_args }}"
     venv_pip_packages: "{{ [stackviz_tarball] }}"
-    venv_wheel_build_enable: no
+    venv_wheel_build_enable: false
   when: tempest_run_stackviz | bool

@@ -47,5 +47,5 @@
   copy:
     src: "{{ tempest_workspace }}/etc/tempest.conf"
     dest: "/etc/tempest/tempest.conf"
-    remote_src: yes
+    remote_src: true
     mode: "0644"

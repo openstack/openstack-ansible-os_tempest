@@ -14,7 +14,7 @@
 # limitations under the License.
 
 - hosts: all[0]
-  become: yes
+  become: true
   tasks:
     - name: Configure the tempestconf settings
       copy:

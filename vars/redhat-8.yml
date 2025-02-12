@@ -15,10 +15,10 @@
 
 tempest_distro_packages:
   - git
-  - libxslt              # required by the python module unittest2
-  - gcc                  # required to build tempest plugins (TODO) remove this when the repo server can satisfy the tempest plugin requirements
+  - libxslt # required by the python module unittest2
+  - gcc # required to build tempest plugins (TODO) remove this when the repo server can satisfy the tempest plugin requirements
   - iputils
-  - nmap                 # provides ncat tool which is required by some of the neutron-tempest-plugin scenario tests
+  - nmap # provides ncat tool which is required by some of the neutron-tempest-plugin scenario tests
 
 _stestr_executable: stestr-3
 
@@ -34,7 +34,7 @@ tempest_service_distro_packages:
   - subunit-filters
 
 tempest_devel_distro_packages:
-  - python3-devel        # required for netifaces module for stackviz
+  - python3-devel # required for netifaces module for stackviz
 
 tempest_plugin_distro_packages:
   - "{{ (tempest_service_available_aodh | bool) | ternary('python3-telemetry-tests-tempest', '') }}"
