@@ -20,7 +20,7 @@
 # system python instead.
 
 - name: Ensure that all required variables are set when tempest_public_net_create is enabled
-  assert:
+  ansible.builtin.assert:
     that:
       - tempest_public_net_name is defined
       - tempest_public_net_provider_type is defined
@@ -33,14 +33,14 @@
     - tempest_public_net_create
 
 - name: Ensure that all required variables are set when tempest_public_net_create is disabled
-  assert:
+  ansible.builtin.assert:
     that:
       - tempest_neutron_public_network_id is defined
   when:
     - not tempest_public_net_create
 
 - name: Ensure that all required variables are set when tempest_private_net_create is enabled
-  assert:
+  ansible.builtin.assert:
     that:
       - tempest_private_net_name is defined
       - tempest_private_subnet_name is defined
@@ -50,7 +50,7 @@
     - tempest_private_net_create
 
 - name: Ensure that all required variables are set when tempest_router_create is enabled
-  assert:
+  ansible.builtin.assert:
     that:
       - (tempest_public_net_create or tempest_neutron_public_network_id is defined)
       - tempest_private_net_create
@@ -58,7 +58,7 @@
     - tempest_router_create
 
 - name: Ensure that all required variables are set when tempest_images_create is disabled
-  assert:
+  ansible.builtin.assert:
     that:
       - tempest_glance_image_id_1 is defined
       - tempest_glance_image_id_2 is defined
@@ -66,21 +66,21 @@
     - not tempest_images_create
 
 - name: Ensure that all required variables are set when tempest_flavors_create is enabled
-  assert:
+  ansible.builtin.assert:
     that:
       - "tempest_flavors | length > 0"
   when:
     - tempest_flavors_create
 
 - name: Ensure that all required variables are set when tempest_flavors_create is disabled
-  assert:
+  ansible.builtin.assert:
     that:
       - tempest_nova_flavor_id_1 is defined
   when:
     - not tempest_flavors_create
 
 - name: Ensures you have at least one image to upload
-  assert:
+  ansible.builtin.assert:
     that:
       - "tempest_images | length > 0"
   when:
@@ -126,7 +126,7 @@
       register: tempest_project_details
 
 - name: Get demo tenant id
-  set_fact:
+  ansible.builtin.set_fact:
     keystone_demo_tenant_id: >-
       {{ (tempest_project_details.results | map(attribute='projects') | list | flatten | map(attribute='id') | list)[0] }}
 
@@ -245,7 +245,7 @@
 - name: Store first tempest image id
   vars:
     res: "{{ tempest_image_details['results'] | map(attribute='images') | flatten }}"
-  set_fact:
+  ansible.builtin.set_fact:
     tempest_glance_image_id_1: "{{ res[0]['id'] | default('') }}"
     tempest_glance_image_id_2: "{{ res[-1]['id'] | default('') }}"
   when:
@@ -253,7 +253,7 @@
     - tempest_images_create | bool
 
 - name: Store tempest flavor id
-  set_fact:
+  ansible.builtin.set_fact:
     tempest_nova_flavor_id_1: "{{ tempest_service_available_nova | ternary(tempest_flavors[0]['id'], '1') }}"
     tempest_nova_flavor_id_2: "{{ tempest_service_available_nova | ternary(tempest_flavors[-1]['id'], '2') }}"
   when:
@@ -261,14 +261,14 @@
     - tempest_flavors_create | bool
 
 - name: Store neutron public network id
-  set_fact:
+  ansible.builtin.set_fact:
     tempest_neutron_public_network_id: "{{ tempest_service_available_neutron | ternary(tempest_public_network_details['networks'][0]['id'], '') }}"
   when:
     - tempest_service_available_neutron | bool
     - tempest_public_net_create | bool
 
 - name: Get router admin state and ip address
-  set_fact:
+  ansible.builtin.set_fact:
     router_admin_state: "{{ _add_router['routers'][0]['is_admin_state_up'] }}"
     router_ip: "{{ _add_router['routers'][0]['external_gateway_info']['external_fixed_ips'][0]['ip_address'] }}"
   when:
@@ -276,7 +276,7 @@
     - tempest_router_create | bool
 
 - name: Ping router ip address
-  shell: |
+  ansible.builtin.shell: |
     set -e
     ping -c2 "{{ router_ip }}"
   register: _ping_router

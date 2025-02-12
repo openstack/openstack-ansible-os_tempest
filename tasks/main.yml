@@ -14,7 +14,7 @@
 # limitations under the License.
 
 - name: Gather variables for each operating system
-  include_vars: "{{ lookup('first_found', params) }}"
+  ansible.builtin.include_vars: "{{ lookup('first_found', params) }}"
   vars:
     params:
       files:
@@ -29,33 +29,33 @@
     - always
 
 - name: Set tempest service specific variables
-  set_fact:
+  ansible.builtin.set_fact:
     tempest_service_available_{{ item }}: true # noqa: var-naming[no-jinja]
   with_items: "{{ tempest_services }}"
   when: tempest_services | length > 0
 
 # NOTE(jrosser) we use source installs for temepest and it's plugins on ubuntu distro installs
 - name: Gather variables for source installs
-  include_vars: source_install.yml
+  ansible.builtin.include_vars: source_install.yml
   when:
     - ((tempest_install_method == 'source') or (tempest_install_method == 'distro' and ansible_facts['distribution'] == 'Ubuntu'))
   tags:
     - always
 
 - name: Gather variables for distro installs
-  include_vars: distro_install.yml
+  ansible.builtin.include_vars: distro_install.yml
   when:
     - tempest_install_method == 'distro'
   tags:
     - always
 
 - name: Importing tempest_install tasks
-  import_tasks: tempest_install.yml
+  ansible.builtin.import_tasks: tempest_install.yml
   tags:
     - tempest-install
 
 - name: Importing tempest_resources tasks
-  import_tasks: tempest_resources.yml
+  ansible.builtin.import_tasks: tempest_resources.yml
   when: tempest_default_role_resources | bool
   run_once: true
   tags:
@@ -63,24 +63,24 @@
     - tempest-run
 
 - name: Importing tempest_post_install tasks
-  import_tasks: tempest_post_install.yml
+  ansible.builtin.import_tasks: tempest_post_install.yml
   tags:
     - tempest-config
 
 - name: Flush handlers
-  meta: flush_handlers
+  ansible.builtin.meta: flush_handlers
 
 - name: Importing tempest_cleanup_init tasks
-  import_tasks: tempest_cleanup_init.yml
+  ansible.builtin.import_tasks: tempest_cleanup_init.yml
   when: tempest_cleanup | bool
 
 - name: Importing tempest_run tasks
-  import_tasks: tempest_run.yml
+  ansible.builtin.import_tasks: tempest_run.yml
   when: tempest_run | bool
   tags:
     - tempest-config
     - tempest-run
 
 - name: Importing tempest_cleanup tasks
-  import_tasks: tempest_cleanup.yml
+  ansible.builtin.import_tasks: tempest_cleanup.yml
   when: tempest_cleanup | bool

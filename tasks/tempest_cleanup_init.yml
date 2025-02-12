@@ -14,7 +14,7 @@
 # limitations under the License.
 
 - name: Generate saved_state.json for tempest cleanup
-  shell: |
+  ansible.builtin.shell: |
     set -e
     if [ -d {{ tempest_venv_bin }} ];
     then

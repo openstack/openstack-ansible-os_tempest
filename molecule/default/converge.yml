@@ -4,5 +4,5 @@
   gather_facts: false
   tasks:
     - name: this does nothing
-      debug:
+      ansible.builtin.debug:
         msg: foo

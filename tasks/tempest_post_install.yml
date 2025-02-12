@@ -15,7 +15,7 @@
 # limitations under the License.
 
 - name: Create tempest directories
-  file:
+  ansible.builtin.file:
     path: "{{ item.path }}"
     state: directory
     owner: "{{ item.owner | default(omit) }}"
@@ -31,7 +31,7 @@
       group: root
 
 - name: Copy tempest config
-  config_template:
+  openstack.config_template.config_template:
     src: "tempest.conf.j2"
     dest: "/etc/tempest/tempest.conf"
     owner: "root"
@@ -43,7 +43,7 @@
   when: not tempest_use_tempestconf | bool
 
 - name: Move over workspace when config is updated
-  shell: |
+  ansible.builtin.shell: |
     set -e
 
     if [ -d  {{ tempest_venv_bin }} ]; then
@@ -87,7 +87,7 @@
     - skip_ansible_lint
 
 - name: Initialise tempest workspace
-  shell: |
+  ansible.builtin.shell: |
     set -e
     if [ ! -d {{ tempest_workspace }}/etc ]; then
         if [ -d {{ tempest_venv_bin }} ]; then
@@ -123,14 +123,14 @@
     - skip_ansible_lint
 
 - name: Importing tempestconf tasks
-  import_tasks: tempestconf.yml
+  ansible.builtin.import_tasks: tempestconf.yml
   when: tempest_use_tempestconf | bool
   tags:
     - tempest-config
     - tempestconf
 
 - name: List installed tempest plugins
-  shell: |
+  ansible.builtin.shell: |
     set -e
     if [ -d {{ tempest_venv_bin }} ]; then
        . {{ tempest_venv_bin }}/activate
@@ -142,7 +142,7 @@
   when: "debug | bool"
 
 - name: List tempest tests
-  shell: |
+  ansible.builtin.shell: |
     set -e
     if [ -d {{ tempest_venv_bin }} ];
     then
@@ -156,7 +156,7 @@
   changed_when: false
 
 - name: Generate tempest test include list
-  copy:
+  ansible.builtin.copy:
     content: |
       {% for item in (_tempest_test_includelist + tempest_test_extra_test) | unique | sort %}
       {%   if item %}
@@ -171,7 +171,7 @@
 # Tests to NOT execute:
 # This sets up a list of tests to skip, which can even include those included in the includelist.
 - name: Generate tempest test exclude list
-  copy:
+  ansible.builtin.copy:
     content: |
       {% for item in _tempest_test_excludelist %}
       {% if item.test is defined %}
@@ -186,14 +186,14 @@
     - _tempest_test_excludelist | length > 0
 
 - name: Remove tempest test exclude list when there are no exclusions
-  file:
+  ansible.builtin.file:
     path: "{{ tempest_excludelist_file_path }}"
     state: absent
   when:
     - _tempest_test_excludelist | length == 0
 
 - name: Drop test_accounts_file
-  copy:
+  ansible.builtin.copy:
     content: "{{ tempest_test_accounts }}"
     dest: "{{ tempest_test_accounts_file_path }}"
     mode: "0644"

@@ -14,7 +14,7 @@
 # limitations under the License.
 
 - name: Install python-tempestconf on venv
-  import_role:
+  ansible.builtin.import_role:
     name: "python_venv_build"
   vars:
     venv_build_constraints: "{{ tempest_tempestconf_git_constraints }}"
@@ -24,13 +24,13 @@
   when: tempest_install_method == 'source'
 
 - name: Override tempestconf profile
-  copy:
+  ansible.builtin.copy:
     content: "{{ tempest_tempestconf_profile | combine(tempest_tempestconf_profile_extras, recursive=True) | to_nice_yaml }}"
     dest: "{{ tempest_workspace }}/etc/profile.yaml"
     mode: "0644"
 
 - name: Executing python-tempestconf
-  shell: |
+  ansible.builtin.shell: |
     set -e
     if [ -d {{ tempest_tempestconf_venv_bin }} ]; then
     . {{ tempest_tempestconf_venv_bin }}/activate
@@ -44,7 +44,7 @@
     - skip_ansible_lint
 
 - name: Copy tempest.conf to /etc/tempest
-  copy:
+  ansible.builtin.copy:
     src: "{{ tempest_workspace }}/etc/tempest.conf"
     dest: "/etc/tempest/tempest.conf"
     remote_src: true
