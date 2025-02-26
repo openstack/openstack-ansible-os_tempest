@@ -88,7 +88,7 @@ build_timeout = 600
 {% if tempest_service_available_cinder | bool %}
 [volume]
 endpoint_type = {{ tempest_endpoint_type }}
-catalog_type = volumev3
+catalog_type = block-storage
 build_timeout = 600
 {% endif %}
 
