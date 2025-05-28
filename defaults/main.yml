@@ -146,12 +146,6 @@ tempest_plugin_novajoin_git_install_branch: master
 tempest_plugin_octavia_git_repo: https://opendev.org/openstack/octavia-tempest-plugin
 tempest_plugin_octavia_git_install_branch: master
 
-tempest_plugin_senlin_git_repo: https://opendev.org/openstack/senlin-tempest-plugin
-tempest_plugin_senlin_git_install_branch: master
-
-tempest_plugin_sahara_git_repo: https://opendev.org/openstack/sahara-tests
-tempest_plugin_sahara_git_install_branch: master
-
 tempest_plugin_telemetry_git_repo: https://opendev.org/openstack/telemetry-tempest-plugin
 tempest_plugin_telemetry_git_install_branch: master
 
@@ -265,8 +259,6 @@ tempest_service_available_neutron_vpnaas: >-
 tempest_service_available_nova: "{{ groups['nova_all'] is defined and groups['nova_all'] | length > 0 }}"
 tempest_service_available_novajoin: false
 tempest_service_available_octavia: "{{ groups['octavia_all'] is defined and groups['octavia_all'] | length > 0 }}"
-tempest_service_available_sahara: "{{ groups['sahara_all'] is defined and groups['sahara_all'] | length > 0 }}"
-tempest_service_available_senlin: "{{ groups['senlin_all'] is defined and groups['senlin_all'] | length > 0 }}"
 tempest_service_available_swift: >-
   {{
     (groups['swift_all'] is defined and groups['swift_all'] | length > 0) or
@@ -302,8 +294,6 @@ tempest_pip_packages:
   - python-neutronclient
   - python-novaclient
   - python-openstackclient
-  - python-senlinclient
-  - python-saharaclient
   - python-subunit
   - python-swiftclient
   - python-troveclient

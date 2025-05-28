@@ -123,14 +123,6 @@ _tempest_plugins:
     repo: "{{ tempest_plugin_octavia_git_repo }}"
     branch: "{{ tempest_plugin_octavia_git_install_branch }}"
     install: "{{ tempest_service_available_octavia | bool }}"
-  - name: senlin-tempest-plugin
-    repo: "{{ tempest_plugin_senlin_git_repo }}"
-    branch: "{{ tempest_plugin_senlin_git_install_branch }}"
-    install: "{{ tempest_service_available_senlin | bool }}"
-  - name: sahara-tests
-    repo: "{{ tempest_plugin_sahara_git_repo }}"
-    branch: "{{ tempest_plugin_sahara_git_install_branch }}"
-    install: "{{ tempest_service_available_sahara | bool }}"
   - name: telemetry-tempest-plugin
     repo: "{{ tempest_plugin_telemetry_git_repo }}"
     branch: "{{ tempest_plugin_telemetry_git_install_branch }}"

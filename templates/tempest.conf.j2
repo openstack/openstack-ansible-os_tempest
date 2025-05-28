@@ -53,7 +53,6 @@ ceilometer = {{ tempest_service_available_ceilometer }}
 ironic = {{ tempest_service_available_ironic }}
 horizon = {{ tempest_service_available_horizon }}
 aodh = {{ tempest_service_available_aodh }}
-sahara = {{ tempest_service_available_sahara }}
 zaqar = {{ tempest_service_available_zaqar }}
 magnum = {{ tempest_service_available_magnum }}
 manila = {{ tempest_service_available_manila }}
@@ -112,12 +111,6 @@ build_timeout = 600
 
 {% if tempest_service_available_ironic | bool %}
 [baremetal]
-endpoint_type = {{ tempest_endpoint_type }}
-{% endif %}
-
-
-{% if tempest_service_available_sahara | bool %}
-[data_processing]
 endpoint_type = {{ tempest_endpoint_type }}
 {% endif %}
 
