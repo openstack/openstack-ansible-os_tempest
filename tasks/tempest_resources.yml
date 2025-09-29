@@ -107,13 +107,13 @@
   when:
     - tempest_projects_create | bool
 
-- name: Get tempest tenant data
+- name: Get tempest project data
   delegate_to: "{{ tempest_service_setup_host }}"
   run_once: true
   vars:
     ansible_python_interpreter: "{{ tempest_service_setup_host_python_interpreter }}"
   block:
-    - name: Get tempest tenant UUID
+    - name: Get tempest project UUID
       openstack.cloud.project_info:
         cloud: "{{ tempest_cloud_name }}"
         interface: "{{ tempest_interface_name }}"
@@ -125,7 +125,7 @@
         label: "{{ project }}"
       register: tempest_project_details
 
-- name: Get demo tenant id
+- name: Get demo project ID
   ansible.builtin.set_fact:
     keystone_demo_tenant_id: >-
       {{ (tempest_project_details.results | map(attribute='projects') | list | flatten | map(attribute='id') | list)[0] }}
