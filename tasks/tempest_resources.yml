@@ -236,6 +236,7 @@
         name: router
         filters:
           project_id: "{{ keystone_demo_tenant_id }}"
+      register: tempest_router_details
       when:
         - tempest_service_available_neutron | bool
         - tempest_router_create | bool
@@ -269,8 +270,8 @@
 
 - name: Get router admin state and ip address
   ansible.builtin.set_fact:
-    router_admin_state: "{{ _add_router['routers'][0]['is_admin_state_up'] }}"
-    router_ip: "{{ _add_router['routers'][0]['external_gateway_info']['external_fixed_ips'][0]['ip_address'] }}"
+    router_admin_state: "{{ tempest_router_details['routers'][0]['is_admin_state_up'] }}"
+    router_ip: "{{ tempest_router_details['routers'][0]['external_gateway_info']['external_fixed_ips'][0]['ip_address'] }}"
   when:
     - tempest_service_available_neutron | bool
     - tempest_router_create | bool
