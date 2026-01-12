@@ -73,9 +73,9 @@ image_ref_alt = {{ tempest_glance_image_id_2 }}
 flavor_ref = {{ tempest_nova_flavor_id_1 }}
 flavor_ref_alt = {{ tempest_nova_flavor_id_2 }}
 # do not define fixed_network_name when dynamic credentials are used together with tempest_create_isolated_networks
-{% if not ((tempest_test_accounts | length == 0) and (tempest_create_isolated_networks | bool)) %}
+{%   if not ((tempest_test_accounts | length == 0) and (tempest_create_isolated_networks | bool)) %}
 fixed_network_name = {{ tempest_fixed_network_name }}
-{% endif %}
+{%   endif %}
 endpoint_type = {{ tempest_endpoint_type }}
 build_timeout = 600
 {% endif %}
@@ -118,9 +118,9 @@ endpoint_type = {{ tempest_endpoint_type }}
 
 {% if tempest_service_available_ceilometer | bool %}
 [telemetry]
-{% if tempest_service_available_gnocchi | bool %}
+{%   if tempest_service_available_gnocchi | bool %}
 metric_backends = gnocchi
-{% endif %}
+{%   endif %}
 {% endif %}
 
 
