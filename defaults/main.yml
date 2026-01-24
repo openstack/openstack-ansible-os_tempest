@@ -134,9 +134,6 @@ tempest_plugin_magnum_git_install_branch: master
 tempest_plugin_manila_git_repo: https://opendev.org/openstack/manila-tempest-plugin
 tempest_plugin_manila_git_install_branch: master
 
-tempest_plugin_murano_git_repo: https://opendev.org/openstack/murano-tempest-plugin
-tempest_plugin_murano_git_install_branch: master
-
 tempest_plugin_neutron_git_repo: https://opendev.org/openstack/neutron-tempest-plugin
 tempest_plugin_neutron_git_install_branch: master
 
@@ -250,7 +247,6 @@ tempest_service_available_ironic: "{{ groups['ironic_all'] is defined and groups
 tempest_service_available_magnum: "{{ groups['magnum_all'] is defined and groups['magnum_all'] | length > 0 }}"
 tempest_service_available_manila: "{{ groups['manila_all'] is defined and groups['manila_all'] | length > 0 }}"
 tempest_service_available_mistral: "{{ groups['mistral_all'] is defined and groups['mistral_all'] | length > 0 }}"
-tempest_service_available_murano: "{{ groups['murano_all'] is defined and groups['murano_all'] | length > 0 }}"
 tempest_service_available_neutron: "{{ groups['neutron_all'] is defined and groups['neutron_all'] | length > 0 }}"
 tempest_service_available_neutron_bgpvpn: >-
   {{ (groups['neutron_all'] is defined) and (groups['neutron_all'] | length > 0) and ('bgpvpn' in neutron_plugin_base | default([])) }}
