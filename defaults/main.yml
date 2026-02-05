@@ -116,6 +116,9 @@ tempest_plugin_cloudkitty_git_install_branch: master
 tempest_plugin_designate_git_repo: https://opendev.org/openstack/designate-tempest-plugin
 tempest_plugin_designate_git_install_branch: master
 
+tempest_plugin_freezer_git_repo: https://opendev.org/openstack/freezer-tempest-plugin
+tempest_plugin_freezer_git_install_branch: master
+
 tempest_plugin_glance_git_repo: https://opendev.org/openstack/glance-tempest-plugin
 tempest_plugin_glance_git_install_branch: master
 
@@ -242,6 +245,7 @@ tempest_service_available_ceilometer: "{{ groups['ceilometer_all'] is defined an
 tempest_service_available_cinder: "{{ groups['cinder_all'] is defined and groups['cinder_all'] | length > 0 }}"
 tempest_service_available_cloudkitty: "{{ groups['cloudkitty_all'] is defined and groups['cloudkitty_all'] | length > 0 }}"
 tempest_service_available_designate: "{{ groups['designate_all'] is defined and groups['designate_all'] | length > 0 }}"
+tempest_service_available_freezer: "{{ groups['freezer_all'] is defined and groups['freezer_all'] | length > 0 }}"
 tempest_service_available_glance: "{{ groups['glance_all'] is defined and groups['glance_all'] | length > 0 }}"
 tempest_service_available_gnocchi: "{{ groups['gnocchi_all'] is defined and groups['gnocchi_all'] | length > 0 }}"
 tempest_service_available_heat: "{{ groups['heat_all'] is defined and groups['heat_all'] | length > 0 }}"

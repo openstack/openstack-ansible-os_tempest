@@ -44,6 +44,8 @@ http_timeout = 120
 blazar = {{ tempest_service_available_blazar }}
 cinder = {{ tempest_service_available_cinder }}
 neutron = {{ tempest_service_available_neutron }}
+freezer = {{ tempest_service_available_freezer }}
+freezer-api = {{ tempest_service_available_freezer }}
 glance = {{ tempest_service_available_glance }}
 gnocchi = {{ tempest_service_available_gnocchi }}
 swift = {{ tempest_service_available_swift }}
@@ -91,6 +93,10 @@ catalog_type = block-storage
 build_timeout = 600
 {% endif %}
 
+{% if tempest_service_available_freezer | bool %}
+[backup]
+endpoint_type = {{ tempest_endpoint_type }}
+{% endif %}
 
 {% if tempest_service_available_glance | bool %}
 [image]
