@@ -25,36 +25,42 @@ tempest_images_map:
     - url: "https://download.cirros-cloud.net/0.6.3/cirros-0.6.3-x86_64-disk.img"
       checksum: "87617e24a5e30cb3b87fda8c0764838f"
       format: "qcow2"
-      name: "cirros 0.6"
+      name: "CirrOS 0.6 x86_64"
       visibility: community
+      properties:
+        architecture: "x86_64"
       tags:
         - managed_by_tempest
     - url: "https://download.cirros-cloud.net/0.5.3/cirros-0.5.3-x86_64-disk.img"
       checksum: "14c53503216fa0c8dbe22edf8e0cd074"
       format: "qcow2"
-      name: "cirros 0.5"
+      name: "CirrOS 0.5 x86_64"
       visibility: community
+      properties:
+        architecture: "x86_64"
       tags:
         - managed_by_tempest
   aarch64:
     - url: "https://download.cirros-cloud.net/0.6.3/cirros-0.6.3-aarch64-disk.img"
       checksum: "28009b5399ef386f7720258de40d43cf"
       format: "qcow2"
-      name: "cirros 0.6"
+      name: "CirrOS 0.6 aarch64"
       visibility: community
+      properties:
+        architecture: "aarch64"
+        #   hw_firmware_type: uefi
       tags:
         - managed_by_tempest
-        # properties:
-        #   hw_firmware_type: uefi
     - url: "https://download.cirros-cloud.net/0.5.3/cirros-0.5.3-aarch64-disk.img"
       checksum: "9729d321422932078ac8e78ddfbf66bf"
       format: "qcow2"
-      name: "cirros 0.5"
+      name: "CirrOS 0.5 aarch64"
       visibility: community
+      properties:
+        architecture: "aarch64"
+        #   hw_firmware_type: uefi
       tags:
         - managed_by_tempest
-        # properties:
-        #   hw_firmware_type: uefi
 
 # Each tempest plugin could take the following arguments:
 # - name:
