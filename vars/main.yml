@@ -19,6 +19,7 @@
 # format: format to use when uploading to glance (required)
 # name: name to use when uploading to glance - default is to use the downloaded file's name (optional)
 # properties: a dict of custom properties to attach to the image in glance
+
 tempest_images_map:
   x86_64:
     - url: "https://download.cirros-cloud.net/0.6.3/cirros-0.6.3-x86_64-disk.img"
@@ -111,10 +112,6 @@ _tempest_plugins:
     repo: "{{ tempest_plugin_manila_git_repo }}"
     branch: "{{ tempest_plugin_manila_git_install_branch }}"
     install: "{{ tempest_service_available_manila | bool }}"
-  - name: murano-tempest-plugin
-    repo: "{{ tempest_plugin_murano_git_repo }}"
-    branch: "{{ tempest_plugin_murano_git_install_branch }}"
-    install: "{{ tempest_service_available_murano | bool }}"
   - name: neutron-tempest-plugin
     repo: "{{ tempest_plugin_neutron_git_repo }}"
     branch: "{{ tempest_plugin_neutron_git_install_branch }}"
