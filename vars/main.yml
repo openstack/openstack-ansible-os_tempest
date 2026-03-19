@@ -23,14 +23,14 @@
 tempest_images_map:
   x86_64:
     - url: "https://download.cirros-cloud.net/0.6.3/cirros-0.6.3-x86_64-disk.img"
-      checksum: "md5:87617e24a5e30cb3b87fda8c0764838f"
+      checksum: "87617e24a5e30cb3b87fda8c0764838f"
       format: "qcow2"
       name: "cirros 0.6"
       visibility: community
       tags:
         - managed_by_tempest
     - url: "https://download.cirros-cloud.net/0.5.3/cirros-0.5.3-x86_64-disk.img"
-      checksum: "md5:14c53503216fa0c8dbe22edf8e0cd074"
+      checksum: "14c53503216fa0c8dbe22edf8e0cd074"
       format: "qcow2"
       name: "cirros 0.5"
       visibility: community
@@ -38,7 +38,7 @@ tempest_images_map:
         - managed_by_tempest
   aarch64:
     - url: "https://download.cirros-cloud.net/0.6.3/cirros-0.6.3-aarch64-disk.img"
-      checksum: "md5:28009b5399ef386f7720258de40d43cf"
+      checksum: "28009b5399ef386f7720258de40d43cf"
       format: "qcow2"
       name: "cirros 0.6"
       visibility: community
@@ -47,7 +47,7 @@ tempest_images_map:
         # properties:
         #   hw_firmware_type: uefi
     - url: "https://download.cirros-cloud.net/0.5.3/cirros-0.5.3-aarch64-disk.img"
-      checksum: "md5:9729d321422932078ac8e78ddfbf66bf"
+      checksum: "9729d321422932078ac8e78ddfbf66bf"
       format: "qcow2"
       name: "cirros 0.5"
       visibility: community
