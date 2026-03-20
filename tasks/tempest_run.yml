@@ -22,6 +22,9 @@
         then
         . {{ tempest_venv_bin }}/activate
         fi
+        {% if tempest_service_available_freezer | bool %}
+        PATH=/openstack/venvs/freezer-{{ tempest_venv_tag }}/bin:$PATH
+        {% endif %}
         tempest run \
         {% if tempest_run_concurrency is defined %}
           --concurrency {{ tempest_run_concurrency }} \
