@@ -44,7 +44,6 @@ tempest_plugin_distro_packages:
   - "{{ (tempest_service_available_manila | bool) | ternary('python3-manila-tests-tempest', '') }}"
   - "{{ (tempest_service_available_mistral | bool) | ternary('python3-mistral-tests-tempest', '') }}"
   - "{{ (tempest_service_available_neutron | bool) | ternary('python3-neutron-tests-tempest', '') }}"
-  - "{{ (tempest_service_available_novajoin | bool) | ternary('python3-novajoin-tests-tempest', '') }}"
   - "{{ (tempest_service_available_octavia | bool) | ternary('python3-octavia-tests-tempest', '') }}"
   - "{{ (tempest_service_available_whitebox | bool) | ternary('python3-whitebox-tests-tempest', '') }}"
   - "{{ (tempest_service_available_whitebox_neutron | bool) | ternary('python3-whitebox-neutron-tests-tempest', '') }}"

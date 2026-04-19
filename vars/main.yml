@@ -122,10 +122,6 @@ _tempest_plugins:
     repo: "{{ tempest_plugin_neutron_git_repo }}"
     branch: "{{ tempest_plugin_neutron_git_install_branch }}"
     install: "{{ tempest_service_available_neutron or tempest_service_available_neutron_bgpvpn or tempest_service_available_neutron_vpnaas }}"
-  - name: novajoin-tempest-plugin
-    repo: "{{ tempest_plugin_novajoin_git_repo }}"
-    branch: "{{ tempest_plugin_novajoin_git_install_branch }}"
-    install: "{{ tempest_service_available_novajoin | bool }}"
   - name: octavia-tempest-plugin
     repo: "{{ tempest_plugin_octavia_git_repo }}"
     branch: "{{ tempest_plugin_octavia_git_install_branch }}"
