@@ -143,10 +143,6 @@ _tempest_plugins:
     repo: "{{ tempest_plugin_trove_git_repo }}"
     branch: "{{ tempest_plugin_trove_git_install_branch }}"
     install: "{{ tempest_service_available_trove | bool }}"
-  - name: zaqar-tempest-plugin
-    repo: "{{ tempest_plugin_zaqar_git_repo }}"
-    branch: "{{ tempest_plugin_zaqar_git_install_branch }}"
-    install: "{{ tempest_service_available_zaqar | bool }}"
   - name: zun-tempest-plugin
     repo: "{{ tempest_plugin_zun_git_repo }}"
     branch: "{{ tempest_plugin_zun_git_install_branch }}"
