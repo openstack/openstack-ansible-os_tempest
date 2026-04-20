@@ -149,9 +149,6 @@ tempest_plugin_telemetry_git_install_branch: master
 tempest_plugin_trove_git_repo: https://opendev.org/openstack/trove-tempest-plugin
 tempest_plugin_trove_git_install_branch: master
 
-tempest_plugin_zaqar_git_repo: https://opendev.org/openstack/zaqar-tempest-plugin
-tempest_plugin_zaqar_git_install_branch: master
-
 tempest_plugin_zun_git_repo: https://opendev.org/openstack/zun-tempest-plugin
 tempest_plugin_zun_git_install_branch: master
 
@@ -264,7 +261,6 @@ tempest_service_available_swift: >-
 tempest_service_available_trove: "{{ groups['trove_all'] is defined and groups['trove_all'] | length > 0 }}"
 tempest_service_available_whitebox: false
 tempest_service_available_whitebox_neutron: false
-tempest_service_available_zaqar: "{{ groups['zaqar_all'] is defined and groups['zaqar_all'] | length > 0 }}"
 tempest_service_available_zun: "{{ groups['zun_all'] is defined and groups['zun_all'] | length > 0 }}"
 
 # Var for setting ssl verification
