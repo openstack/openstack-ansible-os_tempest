@@ -63,10 +63,7 @@ zun = {{ tempest_service_available_zun }}
 
 [identity]
 disable_ssl_certificate_validation = {{ tempest_keystone_interface_insecure | bool }}
-uri = {{ keystone_service_internaluri }}/v2.0
 uri_v3 = {{ keystone_service_internalurl }}
-v2_admin_endpoint_type = {{ tempest_endpoint_type }}
-v2_public_endpoint_type = {{ tempest_endpoint_type }}
 v3_endpoint_type = {{ tempest_endpoint_type }}
 
 {% if tempest_service_available_nova | bool %}
