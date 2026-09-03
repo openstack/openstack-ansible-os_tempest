@@ -15,7 +15,7 @@
 
 - name: Generate list of tempest plugins installed from source code
   ansible.builtin.set_fact:
-    tempest_pip_plugins: "{{ tempest_pip_plugins | default([]) + ['git+' ~ item.repo ~ '@' ~ item.branch ~ '#egg=' ~ item.name] }}"
+    tempest_pip_plugins: "{{ tempest_pip_plugins | default([]) + [item.name ~ '@git+' ~ item.repo ~ '@' ~ item.branch] }}"
   with_items: "{{ tempest_plugins }}"
   when: item.repo is defined
 

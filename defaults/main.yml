@@ -269,7 +269,7 @@ tempest_keystone_interface_insecure: "{{ (keystone_service_internaluri_insecure 
 tempest_pip_packages:
   - "{{
       (tempest_git_repo is defined) | ternary(
-        'git+' ~ (tempest_git_repo | default('https://opendev.org/openstack/tempest.git')) ~ '@' ~ tempest_git_install_branch ~ '#egg=tempest',
+        'tempest@git+' ~ (tempest_git_repo | default('https://opendev.org/openstack/tempest.git')) ~ '@' ~ tempest_git_install_branch,
         'tempest')
     }}"
   - cmd2
@@ -357,9 +357,9 @@ tempest_tempestconf_git_constraints:
 tempest_tempestconf_pip_packages:
   - "{{
         (tempest_tempestconf_git_repo is defined) | ternary(
-          'git+' ~ (tempest_tempestconf_git_repo | default(
+          'python_tempestconf@git+' ~ (tempest_tempestconf_git_repo | default(
             'https://opendev.org/openinfra/python-tempestconf')
-          ) ~ '@' ~ tempest_tempestconf_git_install_branch ~ '#egg=python_tempestconf',
+          ) ~ '@' ~ tempest_tempestconf_git_install_branch,
         'python_tempestconf')
     }}"
 tempest_tempestconf_profile:
