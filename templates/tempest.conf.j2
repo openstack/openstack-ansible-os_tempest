@@ -115,6 +115,11 @@ build_timeout = 600
 endpoint_type = {{ tempest_endpoint_type }}
 {% endif %}
 
+[enforce_scope]
+barbican = True
+designate = True
+octavia = True
+nova = True
 
 {% if tempest_service_available_ceilometer | bool %}
 [telemetry]
